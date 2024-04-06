@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sb.moovich.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class SearchFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 

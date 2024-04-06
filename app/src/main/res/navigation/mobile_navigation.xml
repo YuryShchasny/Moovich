@@ -5,6 +5,13 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.sb.moovich.ui.dashboard.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
+
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.sb.moovich.ui.home.HomeFragment"
@@ -12,14 +19,8 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.sb.moovich.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.sb.moovich.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_watch_list"
+        android:name="com.sb.moovich.ui.notifications.WatchListFragment"
+        android:label="@string/title_watch_list"
+        tools:layout="@layout/fragment_watch_list" />
 </navigation>
