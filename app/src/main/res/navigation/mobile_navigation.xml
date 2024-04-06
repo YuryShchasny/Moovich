@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.sb.moovich.ui.dashboard.SearchFragment"
+        android:name="com.sb.moovich.presentation.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.sb.moovich.ui.home.HomeFragment"
+        android:name="com.sb.moovich.presentation.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_watch_list"
-        android:name="com.sb.moovich.ui.notifications.WatchListFragment"
+        android:name="com.sb.moovich.presentation.watch_list.WatchListFragment"
         android:label="@string/title_watch_list"
         tools:layout="@layout/fragment_watch_list" />
 </navigation>
