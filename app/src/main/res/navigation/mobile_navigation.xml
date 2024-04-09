@@ -16,11 +16,20 @@
         android:id="@+id/navigation_home"
         android:name="com.sb.moovich.presentation.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_movieInfoFragment"
+            app:destination="@id/movieInfoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_watch_list"
         android:name="com.sb.moovich.presentation.watch_list.WatchListFragment"
         android:label="@string/title_watch_list"
         tools:layout="@layout/fragment_watch_list" />
+    <fragment
+        android:id="@+id/movieInfoFragment"
+        android:name="com.sb.moovich.presentation.home.movie_info.MovieInfoFragment"
+        android:label="fragment_movie_info"
+        tools:layout="@layout/fragment_movie_info" />
 </navigation>

@@ -3,4 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_watch_list">Watch list</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="see_all">See all</string>
+    <string name="hours">h</string>
+    <string name="minutes">m</string>
+    <string name="watch">Watch</string>
+    <string name="description">Description</string>
+    <string name="actors">Actors</string>
+    <string name="similar_movies">Similar movies</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

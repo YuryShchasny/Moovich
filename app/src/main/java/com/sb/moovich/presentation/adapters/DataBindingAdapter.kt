@@ -1,0 +1,47 @@
+package com.sb.moovich.presentation.adapters
+
+import android.annotation.SuppressLint
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import coil.load
+import com.sb.moovich.R
+
+@BindingAdapter("load")
+fun bindImageView(imageView: ImageView, imageUrl: String?) {
+    imageUrl?.let {
+        imageView.load(imageUrl)
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("stringList")
+fun bindStringList(textView: TextView, genres: List<String>?) {
+    genres?.forEach {
+        textView.text = textView.text.toString() + it + " "
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("stringTime")
+fun bindTime(textView: TextView, movieLength: Int?) {
+    movieLength?.let { movieLength ->
+        if (movieLength <= 0) textView.visibility = View.GONE
+        val hoursChar = textView.context.getString(R.string.hours)
+        val minutesChar = textView.context.getString(R.string.minutes)
+        textView.text = "${movieLength/60} $hoursChar ${movieLength % 60} $minutesChar"
+    }
+}
+@BindingAdapter("year")
+fun bindYear(textView: TextView, year: Int?) {
+    year?.let {
+        textView.text = year.toString()
+    }
+}
+@BindingAdapter("rating")
+fun bindYear(textView: TextView, rating: Double?) {
+    rating?.let {
+        textView.text = String.format("%.1f", rating)
+    }
+}
