@@ -44,6 +44,7 @@
                     android:layout_height="300dp"
                     android:foreground="@drawable/backdrop_foreground"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@string/backdrop"
                     app:load="@{movie.backdrop}"
                     tools:src="@drawable/ic_launcher_background" />
 
@@ -143,6 +144,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginVertical="4dp"
+                        android:contentDescription="@string/bookmark_button"
                         android:src="@drawable/ic_bookmark" />
 
                 </LinearLayout>

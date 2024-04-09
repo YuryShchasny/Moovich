@@ -26,11 +26,11 @@ fun bindStringList(textView: TextView, genres: List<String>?) {
 @SuppressLint("SetTextI18n")
 @BindingAdapter("stringTime")
 fun bindTime(textView: TextView, movieLength: Int?) {
-    movieLength?.let { movieLength ->
-        if (movieLength <= 0) textView.visibility = View.GONE
+    movieLength?.let { length ->
+        if (length <= 0) textView.visibility = View.GONE
         val hoursChar = textView.context.getString(R.string.hours)
         val minutesChar = textView.context.getString(R.string.minutes)
-        textView.text = "${movieLength/60} $hoursChar ${movieLength % 60} $minutesChar"
+        textView.text = "${length/60} $hoursChar ${length % 60} $minutesChar"
     }
 }
 @BindingAdapter("year")

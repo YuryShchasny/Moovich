@@ -4,13 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.sb.moovich.R
 import com.sb.moovich.domain.entity.Actor
-import com.sb.moovich.domain.entity.ShortMovieInfo
-import com.sb.moovich.presentation.adapters.movies.MovieItemListDiffCallback
-import com.sb.moovich.presentation.adapters.movies.MovieItemViewHolder
 
 class ActorItemListAdapter(private val context: Context) : ListAdapter<Actor, ActorItemViewHolder>(
     ActorItemListDiffCallback()

@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:contentDescription="Actor photo"
             tools:src="@drawable/ic_launcher_background" />
     </androidx.cardview.widget.CardView>
     <LinearLayout
