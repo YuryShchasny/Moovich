@@ -4,6 +4,7 @@ import android.app.Application
 
 class MoovichApplication : Application() {
     val component by lazy {
-        DaggerApplicationComponent.factory().create()
+        DaggerApplicationComponent.factory()
+            .create(this)
     }
 }

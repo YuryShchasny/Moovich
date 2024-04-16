@@ -4,28 +4,27 @@ import com.google.gson.annotations.SerializedName
 
 data class MovieInfoDto(
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("description")
-    val description: String,
+    val description: String?,
     @SerializedName("rating")
-    val rating: MovieRating,
+    val rating: MovieRating?,
     @SerializedName("poster")
-    val poster: MoviePoster,
+    val poster: MoviePoster?,
     @SerializedName("backdrop")
-    val backdrop: Backdrop,
+    val backdrop: Backdrop?,
     @SerializedName("movieLength")
-    val movieLength: Int,
+    val movieLength: Int?,
     @SerializedName("type")
-    val type: String,
+    val type: String?,
     @SerializedName("year")
-    val year: Int,
+    val year: Int?,
     @SerializedName("genres")
-    val genres: List<Genre>,
+    val genres: List<Genre>?,
     @SerializedName("persons")
-    val persons: List<Person>,
+    val persons: List<Person>?,
     @SerializedName("similarMovies")
-    val similarMovies: List<ShortInfoMovieDto>?
-
+    val similarMovies: List<ShortMovieInfoDto>?
 )

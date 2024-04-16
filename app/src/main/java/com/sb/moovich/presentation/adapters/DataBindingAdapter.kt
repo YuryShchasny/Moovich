@@ -36,12 +36,20 @@ fun bindTime(textView: TextView, movieLength: Int?) {
 @BindingAdapter("year")
 fun bindYear(textView: TextView, year: Int?) {
     year?.let {
-        textView.text = year.toString()
+        if(year != 0) {
+            textView.text = year.toString()
+        }
     }
 }
 @BindingAdapter("rating")
-fun bindYear(textView: TextView, rating: Double?) {
+fun bindRating(textView: TextView, rating: Double?) {
     rating?.let {
-        textView.text = String.format("%.1f", rating)
+        if(rating == 0.0) {
+            textView.visibility = View.GONE
+        }
+        else {
+            textView.visibility = View.VISIBLE
+            textView.text = String.format("%.1f", rating)
+        }
     }
 }

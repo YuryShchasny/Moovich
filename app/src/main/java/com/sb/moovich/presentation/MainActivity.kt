@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                 binding.navView.visibility = View.GONE
             }
         }
+
         binding.navView.setupWithNavController(navController)
     }
     private fun getNavViewVisibility(destination: NavDestination): Boolean {

@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface MovieApi {
     companion object {
         private const val RECOMMENDED_MOVIES_LIMIT = 10
-        private const val API_KEY = "FTW2R3B-HNWMEVG-PRAXTN4-QAPW8ZF"
+        private const val API_KEY = "R0V497J-ZGYMFXX-JJ9QSFS-96AN48G"
     }
 
     @GET("movie")

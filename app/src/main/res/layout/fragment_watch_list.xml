@@ -1,25 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/frameErrorState"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.watch_list.WatchListFragment">
+        android:visibility="gone"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:layout_marginVertical="@dimen/vertical_margin">
 
-        <TextView
-            android:id="@+id/text_notifications"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/chillax_medium"
+                android:text="@string/oops"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/textViewErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:breakStrategy="high_quality"
+                android:fontFamily="@font/chillax_medium"
+                android:textAlignment="center"
+                android:textColor="?attr/colorPrimary"
+                android:textSize="24sp"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
+                tools:text="@string/error_empty_watch_list" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieGhostAnim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="16dp"
+                app:lottie_rawRes="@raw/panda_anim"
+                android:scaleType="fitCenter"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewWatchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/horizontal_margin"
+        android:layout_marginTop="@dimen/vertical_margin"
+        android:layout_marginBottom="@dimen/bottom_nav_height"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_movie_card"
+        tools:spanCount="3"
+        tools:visibility="gone">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</FrameLayout>
+
 </layout>

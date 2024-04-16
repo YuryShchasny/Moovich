@@ -38,7 +38,9 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
 }
+
 
 dependencies {
 
@@ -63,6 +65,12 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     implementation (libs.dagger)
     ksp (libs.dagger.compiler)
+
+    implementation(libs.lottie)
 }

@@ -7,4 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getRecommendedMovies() : Flow<List<ShortMovieInfo>>
     fun getMovieById(id: Int) : Flow<MovieInfo>
+
+    fun getMovieByIdFromDatabase(id: Int) : Flow<ShortMovieInfo?>
+    fun getWatchMovies() : Flow<List<ShortMovieInfo>>
+
+    suspend fun addMovieToWatchList(movie: ShortMovieInfo)
+
+    suspend fun deleteMovieFromWatchList(movie: ShortMovieInfo)
 }

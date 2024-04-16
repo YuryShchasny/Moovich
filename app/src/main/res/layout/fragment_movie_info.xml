@@ -42,9 +42,9 @@
                     android:id="@+id/imageViewBackdrop"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
+                    android:contentDescription="@string/backdrop"
                     android:foreground="@drawable/backdrop_foreground"
                     android:scaleType="centerCrop"
-                    android:contentDescription="@string/backdrop"
                     app:load="@{movie.backdrop}"
                     tools:src="@drawable/ic_launcher_background" />
 
@@ -200,10 +200,10 @@
                     android:id="@+id/recyclerViewActors"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="true"
                     android:layout_marginHorizontal="@dimen/horizontal_margin"
-                    app:spanCount="2"
+                    android:nestedScrollingEnabled="true"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
                     tools:listitem="@layout/item_actor" />
 
                 <TextView

@@ -2,6 +2,7 @@ package com.sb.moovich.presentation.adapters.movies
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import coil.load
@@ -10,6 +11,9 @@ import com.sb.moovich.domain.entity.ShortMovieInfo
 
 class MovieItemListAdapter(private val context: Context) : ListAdapter<ShortMovieInfo, MovieItemViewHolder>(MovieItemListDiffCallback()) {
 
+companion object {
+    val fakeList = mutableListOf<ShortMovieInfo>().apply { repeat(10) {this.add(ShortMovieInfo(0, "", 0.0, ""),) } }.toList()
+}
 
     var onMovieItemClickListener: ((Int) -> Unit)? = null
 
@@ -21,9 +25,18 @@ class MovieItemListAdapter(private val context: Context) : ListAdapter<ShortMovi
 
     override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val currentMovie = getItem(position)
-        holder.imageViewMoviePoster.load(currentMovie.previewUrl)
+        if(currentMovie.previewUrl.isNotEmpty()) {
+            holder.imageViewMoviePoster.load(currentMovie.previewUrl) {
+                crossfade(true)
+            }
+        }
         holder.textViewMovieName.text = currentMovie.name
-        holder.textViewMovieRating.text = String.format("%.1f", currentMovie.rating)
+        if(currentMovie.rating == 0.0) {
+            holder.textViewMovieRating.visibility = View.GONE
+        }
+        else {
+            holder.textViewMovieRating.text = String.format("%.1f", currentMovie.rating)
+        }
 
         onMovieItemClickListener?.let { listener ->
             holder.itemView.setOnClickListener {

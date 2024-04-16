@@ -1,23 +1,29 @@
 package com.sb.moovich.presentation.home.movie_info
 
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.sb.moovich.R
 import com.sb.moovich.databinding.FragmentMovieInfoBinding
 import com.sb.moovich.di.MoovichApplication
 import com.sb.moovich.di.ViewModelFactory
+import com.sb.moovich.domain.entity.MovieInfo
 import com.sb.moovich.presentation.adapters.actors.ActorItemListAdapter
 import com.sb.moovich.presentation.adapters.movies.MovieItemListAdapter
 import kotlinx.coroutines.launch
@@ -80,9 +86,12 @@ class MovieInfoFragment : Fragment() {
                             binding.progressBar.visibility = View.GONE
                             binding.scrollView.visibility = View.VISIBLE
                             binding.movie = state.currencyMovie
+                            observeBookmark(state.currencyMovie)
                             setButtonWatchClickListener(state)
                             setAdapters(state)
-
+                            binding.imageViewBookmark.setOnClickListener {
+                                viewModel.reverseBookmarkValue()
+                            }
                         }
 
                         is MovieInfoFragmentState.Error -> {
@@ -92,6 +101,25 @@ class MovieInfoFragment : Fragment() {
                         MovieInfoFragmentState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.scrollView.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeBookmark(currencyMovie: MovieInfo) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.bookmarkChecked.collect {isChecked ->
+                    isChecked?.let {
+                        if(it) {
+                            binding.imageViewBookmark.setImageResource(R.drawable.bookmark_anim)
+                            viewModel.addMovieToWatchList(currencyMovie)
+                        }
+                        else {
+                            binding.imageViewBookmark.setImageResource(R.drawable.ic_bookmark)
+                            viewModel.deleteMovieFromWatchList(currencyMovie)
                         }
                     }
                 }
@@ -128,9 +156,8 @@ class MovieInfoFragment : Fragment() {
         } else {
             val similarMoviesAdapter = MovieItemListAdapter(requireContext())
             similarMoviesAdapter.onMovieItemClickListener = { movieId ->
-                findNavController().popBackStack()
                 findNavController().navigate(
-                    R.id.action_navigation_home_to_movieInfoFragment,
+                    R.id.movieInfoFragment,
                     getBundle(movieId)
                 )
             }
