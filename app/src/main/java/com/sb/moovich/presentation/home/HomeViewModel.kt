@@ -3,8 +3,6 @@ package com.sb.moovich.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sb.moovich.domain.usecases.GetRecommendedMoviesUseCase
-import com.sb.moovich.presentation.adapters.movies.MovieItemListAdapter
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -17,10 +15,10 @@ class HomeViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        /*viewModelScope.launch {
+        viewModelScope.launch {
             getRecommendedMoviesUseCase().collect {
                 _state.value = HomeFragmentState.Content(it)
             }
-        }*/
+        }
     }
 }

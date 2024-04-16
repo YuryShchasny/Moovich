@@ -1,13 +1,11 @@
 package com.sb.moovich.presentation.watch_list
 
-import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.animation.doOnCancel
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -23,7 +21,6 @@ import com.sb.moovich.di.MoovichApplication
 import com.sb.moovich.di.ViewModelFactory
 import com.sb.moovich.presentation.adapters.movies.MovieItemListAdapter
 import com.sb.moovich.presentation.home.movie_info.MovieInfoFragment
-import com.sb.moovich.presentation.home.movie_info.MovieInfoViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

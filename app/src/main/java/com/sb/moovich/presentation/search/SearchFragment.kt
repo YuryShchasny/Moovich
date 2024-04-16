@@ -11,7 +11,6 @@ import com.sb.moovich.databinding.FragmentSearchBinding
 import com.sb.moovich.di.MoovichApplication
 import com.sb.moovich.di.ViewModelFactory
 import com.sb.moovich.presentation.adapters.movies.MovieItemListAdapter
-import com.sb.moovich.presentation.home.HomeViewModel
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {

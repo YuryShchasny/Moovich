@@ -2,22 +2,20 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
     <FrameLayout
-        android:id="@+id/frameErrorState"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginVertical="@dimen/vertical_margin">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layoutErrorState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginVertical="@dimen/vertical_margin"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,12 +31,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
                 android:breakStrategy="high_quality"
                 android:fontFamily="@font/chillax_medium"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="24sp"
-                android:layout_marginHorizontal="@dimen/horizontal_margin"
                 tools:text="@string/error_empty_watch_list" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -47,28 +45,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginVertical="16dp"
-                app:lottie_rawRes="@raw/panda_anim"
                 android:scaleType="fitCenter"
                 app:lottie_autoPlay="true"
-                app:lottie_loop="true" />
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/panda_anim" />
         </LinearLayout>
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewWatchList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginTop="@dimen/vertical_margin"
+            android:layout_marginBottom="@dimen/bottom_nav_height"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_movie_card"
+            tools:spanCount="3"
+            tools:visibility="gone">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </FrameLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewWatchList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:layout_marginTop="@dimen/vertical_margin"
-        android:layout_marginBottom="@dimen/bottom_nav_height"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_movie_card"
-        tools:spanCount="3"
-        tools:visibility="gone">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-</FrameLayout>
 
 </layout>

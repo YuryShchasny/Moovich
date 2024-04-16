@@ -4,7 +4,6 @@ import android.app.Application
 import com.sb.moovich.presentation.home.HomeFragment
 import com.sb.moovich.presentation.home.movie_info.MovieInfoFragment
 import com.sb.moovich.presentation.search.SearchFragment
-import com.sb.moovich.presentation.search.SearchViewModel
 import com.sb.moovich.presentation.watch_list.WatchListFragment
 import dagger.BindsInstance
 import dagger.Component
