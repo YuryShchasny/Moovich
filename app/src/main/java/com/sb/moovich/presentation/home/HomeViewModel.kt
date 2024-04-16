@@ -15,10 +15,10 @@ class HomeViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            getRecommendedMoviesUseCase().collect {
-                _state.value = HomeFragmentState.Content(it)
-            }
-        }
+//        viewModelScope.launch {
+//            getRecommendedMoviesUseCase().collect {
+//                _state.value = HomeFragmentState.Content(it)
+//            }
+//        }
     }
 }

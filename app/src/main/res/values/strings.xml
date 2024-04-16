@@ -17,4 +17,7 @@
     <string name="bookmark_button">Bookmark button</string>
     <string name="oops">Oops!…</string>
     <string name="error_empty_watch_list">You haven\'t added anything to "Watch List" </string>
+    <string name="search_hint">Type title, categories, years, etc</string>
+    <string name="recent">Recent</string>
+    <string name="see_all_history">See all history</string>
 </resources>

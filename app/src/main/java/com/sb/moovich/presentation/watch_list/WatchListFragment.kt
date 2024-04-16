@@ -77,7 +77,7 @@ class WatchListFragment : Fragment() {
                         }
                         is WatchListFragmentState.Error -> {
                             binding.recyclerViewWatchList.visibility = View.GONE
-                            binding.frameErrorState.visibility = View.VISIBLE
+                            binding.layoutErrorState.visibility = View.VISIBLE
                             binding.textViewErrorMessage.text = ContextCompat.getString(requireContext(), state.msgResId)
                         }
                         WatchListFragmentState.Loading -> {
