@@ -2,17 +2,19 @@ package com.sb.moovich.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.sb.moovich.data.database.converters.MoviePosterConverter
-import com.sb.moovich.data.database.converters.MovieRatingConverter
-import com.sb.moovich.data.model.ShortMovieInfoDto
+import com.sb.moovich.data.database.converters.StringListConverter
+import com.sb.moovich.data.database.model.RecentMovieDb
+import com.sb.moovich.data.database.model.WatchMovieDb
 
 @Database(
-    entities = [ShortMovieInfoDto::class],
+    entities = [RecentMovieDb::class, WatchMovieDb::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(MovieRatingConverter::class, MoviePosterConverter::class)
+@TypeConverters(StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun movieDao(): MovieDao
+    abstract fun watchMovieDao(): WatchMovieDao
+    abstract fun recentMovieDao(): RecentMovieDao
 }

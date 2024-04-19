@@ -15,7 +15,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.home.movie_info.MovieInfoFragment">
+        tools:context=".presentation.movie_info.MovieInfoFragment">
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -225,7 +225,7 @@
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_movie_card" />
+                    tools:listitem="@layout/item_short_movie_card" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

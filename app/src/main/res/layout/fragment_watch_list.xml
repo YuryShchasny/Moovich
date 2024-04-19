@@ -51,20 +51,32 @@
                 app:lottie_rawRes="@raw/panda_anim" />
         </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewWatchList"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/horizontal_margin"
             android:layout_marginTop="@dimen/vertical_margin"
-            android:layout_marginBottom="@dimen/bottom_nav_height"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_movie_card"
-            tools:spanCount="3"
-            tools:visibility="gone">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/bottom_nav_height">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewGenres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_genre" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewWatchList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_medium_movie_card"
+                tools:visibility="visible" />
+        </LinearLayout>
 
     </FrameLayout>
 

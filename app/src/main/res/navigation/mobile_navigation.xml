@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieInfoFragment"
-        android:name="com.sb.moovich.presentation.home.movie_info.MovieInfoFragment"
+        android:name="com.sb.moovich.presentation.movie_info.MovieInfoFragment"
         android:label="fragment_movie_info"
         tools:layout="@layout/fragment_movie_info" />
 </navigation>

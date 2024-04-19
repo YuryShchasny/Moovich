@@ -19,5 +19,8 @@
     <string name="error_empty_watch_list">You haven\'t added anything to "Watch List" </string>
     <string name="search_hint">Type title, categories, years, etc</string>
     <string name="recent">Recent</string>
+    <string name="results">Results</string>
     <string name="see_all_history">See all history</string>
+    <string name="filter_movies_button">Filter movies button</string>
+    <string name="actor_photo">Actor photo</string>
 </resources>

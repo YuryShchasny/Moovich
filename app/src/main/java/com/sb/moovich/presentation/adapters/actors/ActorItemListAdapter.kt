@@ -25,7 +25,9 @@ class ActorItemListAdapter(private val context: Context) : ListAdapter<Actor, Ac
         val name = currentActor.name
         val parts = name.split(" ")
         holder.textViewActorFirstName.text = parts[0]
-        holder.textViewActorLastName.text = parts[1]
+        if(parts.size > 1) {
+            holder.textViewActorLastName.text = parts[1]
+        }
         holder.textViewActorDescription.text = currentActor.description
     }
 

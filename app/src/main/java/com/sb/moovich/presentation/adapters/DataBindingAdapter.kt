@@ -19,7 +19,7 @@ fun bindImageView(imageView: ImageView, imageUrl: String?) {
 @BindingAdapter("stringList")
 fun bindStringList(textView: TextView, genres: List<String>?) {
     genres?.forEach {
-        textView.text = textView.text.toString() + it + " "
+        textView.text = textView.text.toString() + it + ", "
     }
 }
 

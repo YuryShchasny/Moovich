@@ -49,7 +49,7 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="@dimen/item_movie_card_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie_card" />
+                tools:listitem="@layout/item_short_movie_card" />
 
         </LinearLayout>
     </ScrollView>

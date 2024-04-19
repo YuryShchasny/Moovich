@@ -5,7 +5,8 @@ import androidx.room.Room
 import com.sb.moovich.data.network.MovieApi
 import com.sb.moovich.data.MovieRepositoryImpl
 import com.sb.moovich.data.database.AppDatabase
-import com.sb.moovich.data.database.MovieDao
+import com.sb.moovich.data.database.RecentMovieDao
+import com.sb.moovich.data.database.WatchMovieDao
 import com.sb.moovich.domain.repository.MovieRepository
 import dagger.Binds
 import dagger.Module
@@ -58,8 +59,13 @@ interface DataModule {
 
         @Provides
         @ApplicationScope
-        fun provideScheduleItemDao(database: AppDatabase): MovieDao {
-            return database.movieDao()
+        fun provideWatchMovieDao(database: AppDatabase): WatchMovieDao {
+            return database.watchMovieDao()
+        }
+        @Provides
+        @ApplicationScope
+        fun provideRecentMovieDao(database: AppDatabase): RecentMovieDao {
+            return database.recentMovieDao()
         }
 
         @Provides

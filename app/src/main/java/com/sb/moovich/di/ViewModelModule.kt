@@ -2,7 +2,7 @@ package com.sb.moovich.di
 
 import androidx.lifecycle.ViewModel
 import com.sb.moovich.presentation.home.HomeViewModel
-import com.sb.moovich.presentation.home.movie_info.MovieInfoViewModel
+import com.sb.moovich.presentation.movie_info.MovieInfoViewModel
 import com.sb.moovich.presentation.search.SearchViewModel
 import com.sb.moovich.presentation.watch_list.WatchListViewModel
 import dagger.Binds

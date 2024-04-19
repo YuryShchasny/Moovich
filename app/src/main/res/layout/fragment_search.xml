@@ -53,8 +53,8 @@
                         android:background="@android:color/transparent"
                         android:fontFamily="@font/gilroy_medium"
                         android:hint="@string/search_hint"
-                        android:singleLine="true"
                         android:inputType="text|textAutoComplete|textAutoCorrect|textCapWords"
+                        android:singleLine="true"
                         android:textColor="?attr/colorPrimary"
                         android:textColorHint="@color/hint"
                         android:textSize="12sp" />
@@ -68,11 +68,13 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_filter_background"
+                android:contentDescription="@string/filter_movies_button"
                 android:src="@drawable/ic_filter" />
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/linearLayoutRecent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -80,34 +82,54 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textViewTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/gilroy_medium"
                 android:text="@string/recent"
-                android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textViewSeeAllHistory"
+                android:id="@+id/textViewSearchSeeAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
                 android:fontFamily="@font/gilroy_medium"
                 android:text="@string/see_all_history"
-                android:textSize="16sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewRecent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/bottom_nav_height"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_movie_card"
-            tools:spanCount="3">
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ProgressBar
+                android:id="@+id/progressBarSearch"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/bottom_nav_height">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecentAndResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/bottom_nav_height"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_medium_movie_card">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </ScrollView>
+        </FrameLayout>
     </LinearLayout>
 </layout>

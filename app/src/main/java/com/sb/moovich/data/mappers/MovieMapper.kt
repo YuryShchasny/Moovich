@@ -1,7 +1,8 @@
 package com.sb.moovich.data.mappers
 
-import com.sb.moovich.data.model.MovieInfoDto
-import com.sb.moovich.data.model.Person
+import com.sb.moovich.data.network.model.MediumMovieInfoDto
+import com.sb.moovich.data.network.model.MovieInfoDto
+import com.sb.moovich.data.network.model.Person
 import com.sb.moovich.domain.entity.Actor
 import com.sb.moovich.domain.entity.MovieInfo
 import com.sb.moovich.domain.entity.ShortMovieInfo
@@ -16,7 +17,7 @@ class MovieMapper @Inject constructor() {
 
     fun mapDtoToEntity(movieInfoDto: MovieInfoDto): MovieInfo = MovieInfo(
         id = movieInfoDto.id ?: throw NullPointerException(),
-        name = movieInfoDto.name ?: SOMETHING_WENT_WRONG,
+        name = getName(movieInfoDto),
         description = movieInfoDto.description ?: "",
         rating = movieInfoDto.rating?.kinopoisk ?: movieInfoDto.rating?.imdb ?: 0.0,
         poster = movieInfoDto.poster?.previewUrl ?: "",
@@ -49,6 +50,22 @@ class MovieMapper @Inject constructor() {
             }
         } ?: listOf()
 
+    }
+
+    private fun getName(movieInfoDto: MovieInfoDto) : String {
+        movieInfoDto.apply {
+            name?.let {
+                if(it.isNotEmpty()) {
+                    return name
+                }
+            }
+            alternativeName?.let {
+                if(it.isNotEmpty()) {
+                    return alternativeName
+                }
+            }
+            return SOMETHING_WENT_WRONG
+        }
     }
 
 }

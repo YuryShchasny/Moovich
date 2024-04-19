@@ -17,8 +17,8 @@ import com.sb.moovich.R
 import com.sb.moovich.databinding.FragmentHomeBinding
 import com.sb.moovich.di.MoovichApplication
 import com.sb.moovich.di.ViewModelFactory
-import com.sb.moovich.presentation.adapters.movies.MovieItemListAdapter
-import com.sb.moovich.presentation.home.movie_info.MovieInfoFragment
+import com.sb.moovich.presentation.adapters.movies._short.ShortMovieItemListAdapter
+import com.sb.moovich.presentation.movie_info.MovieInfoFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,13 +32,15 @@ class HomeFragment : Fragment() {
     }
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    internal lateinit var viewModelFactory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
     }
 
-    private lateinit var adapter: MovieItemListAdapter
+    private val adapter by lazy {
+        ShortMovieItemListAdapter(requireContext())
+    }
     private val loadAnimator by lazy {
         AnimatorInflater.loadAnimator(context, R.animator.placeholder_movie_card_anim)
     }
@@ -60,7 +62,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MovieItemListAdapter(requireContext())
         binding.recyclerViewRecommendations.adapter = adapter
         setObservable()
     }
@@ -97,8 +98,9 @@ class HomeFragment : Fragment() {
             )
         }
     }
+
     private fun startLoadAnimation() {
-        adapter.submitList(MovieItemListAdapter.fakeList)
+        adapter.submitList(ShortMovieItemListAdapter.fakeList)
         loadAnimator.apply {
             setTarget(binding.recyclerViewRecommendations)
             //Other views TODO()
