@@ -1,9 +1,8 @@
 package com.sb.moovich.data.network
 
 import com.sb.moovich.data.network.model.MediumMovieDocDto
-import com.sb.moovich.data.network.model.MediumMovieInfoDto
-import com.sb.moovich.data.network.model.ShortMovieDocDto
 import com.sb.moovich.data.network.model.MovieInfoDto
+import com.sb.moovich.data.network.model.ShortMovieDocDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

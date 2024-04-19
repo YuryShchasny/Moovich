@@ -2,7 +2,6 @@ package com.sb.moovich.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.sb.moovich.data.database.converters.StringListConverter
 import com.sb.moovich.data.database.model.RecentMovieDb

@@ -2,7 +2,6 @@ package com.sb.moovich.presentation.adapters.genres
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup

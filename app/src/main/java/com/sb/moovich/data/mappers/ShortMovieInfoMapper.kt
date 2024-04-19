@@ -1,8 +1,5 @@
 package com.sb.moovich.data.mappers
 
-import com.sb.moovich.data.network.model.MovieInfoDto
-import com.sb.moovich.data.network.model.MoviePoster
-import com.sb.moovich.data.network.model.MovieRating
 import com.sb.moovich.data.network.model.ShortMovieInfoDto
 import com.sb.moovich.domain.entity.ShortMovieInfo
 import javax.inject.Inject

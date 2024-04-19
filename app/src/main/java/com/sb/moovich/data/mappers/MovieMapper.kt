@@ -1,6 +1,5 @@
 package com.sb.moovich.data.mappers
 
-import com.sb.moovich.data.network.model.MediumMovieInfoDto
 import com.sb.moovich.data.network.model.MovieInfoDto
 import com.sb.moovich.data.network.model.Person
 import com.sb.moovich.domain.entity.Actor

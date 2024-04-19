@@ -2,7 +2,6 @@ package com.sb.moovich.data.mappers
 
 import com.sb.moovich.data.database.model.RecentMovieDb
 import com.sb.moovich.domain.entity.MediumMovieInfo
-import com.sb.moovich.domain.entity.ShortMovieInfo
 import javax.inject.Inject
 
 class RecentMovieMapper @Inject constructor() {

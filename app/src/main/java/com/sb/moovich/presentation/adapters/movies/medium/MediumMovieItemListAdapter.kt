@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
-import coil.clear
 import coil.dispose
 import coil.load
 import com.sb.moovich.R
 import com.sb.moovich.domain.entity.MediumMovieInfo
-import com.sb.moovich.domain.entity.ShortMovieInfo
-import com.sb.moovich.presentation.adapters.movies._short.ShortMovieItemListAdapter
 
 class MediumMovieItemListAdapter(private val context: Context) :
     ListAdapter<MediumMovieInfo, MediumMovieItemViewHolder>(

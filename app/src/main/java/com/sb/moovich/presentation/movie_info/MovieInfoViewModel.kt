@@ -4,12 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sb.moovich.domain.entity.MediumMovieInfo
 import com.sb.moovich.domain.entity.MovieInfo
-import com.sb.moovich.domain.entity.ShortMovieInfo
 import com.sb.moovich.domain.usecases.AddMovieToRecentUseCase
 import com.sb.moovich.domain.usecases.AddMovieToWatchListUseCase
 import com.sb.moovich.domain.usecases.DeleteMovieFromWatchListUseCase
-import com.sb.moovich.domain.usecases.GetWatchMovieByIdUseCase
 import com.sb.moovich.domain.usecases.GetMovieByIdUseCase
+import com.sb.moovich.domain.usecases.GetWatchMovieByIdUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

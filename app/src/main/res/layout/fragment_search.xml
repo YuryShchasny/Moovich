@@ -39,7 +39,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="4dp"
                     android:src="@drawable/ic_search"
-                    app:tint="@color/hint" />
+                    app:tint="@color/hint"
+                    android:contentDescription="@string/search_icon" />
 
                 <ScrollView
 
@@ -57,7 +58,8 @@
                         android:singleLine="true"
                         android:textColor="?attr/colorPrimary"
                         android:textColorHint="@color/hint"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:importantForAutofill="no" />
                 </ScrollView>
             </LinearLayout>
 
