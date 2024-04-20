@@ -5,21 +5,39 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.sb.moovich.presentation.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_movieInfoFragment"
+            app:destination="@id/movieInfoFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.sb.moovich.ui.home.HomeFragment"
+        android:name="com.sb.moovich.presentation.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_movieInfoFragment"
+            app:destination="@id/movieInfoFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.sb.moovich.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
+        android:id="@+id/navigation_watch_list"
+        android:name="com.sb.moovich.presentation.watch_list.WatchListFragment"
+        android:label="@string/title_watch_list"
+        tools:layout="@layout/fragment_watch_list" >
+        <action
+            android:id="@+id/action_navigation_watch_list_to_movieInfoFragment"
+            app:destination="@id/movieInfoFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.sb.moovich.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/movieInfoFragment"
+        android:name="com.sb.moovich.presentation.movie_info.MovieInfoFragment"
+        android:label="fragment_movie_info"
+        tools:layout="@layout/fragment_movie_info" />
 </navigation>

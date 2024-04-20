@@ -1,0 +1,76 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="19dp"
+            android:height="30dp"
+            android:viewportWidth="19"
+            android:viewportHeight="30">
+            <path
+                android:name="path"
+                android:pathData="M 15 3 L 4 3 C 2.895 3 2 3.895 2 5 L 2 24.478 C 2 25.384 3.108 25.823 3.728 25.163 L 8.772 19.803 C 9.167 19.383 9.833 19.383 10.228 19.803 L 15.272 25.163 C 15.892 25.823 17 25.384 17 24.478 L 17 5 C 17 3.895 16.105 3 15 3 Z"
+                android:fillColor="#d4ff5b"
+                android:strokeColor="#000000"
+                android:strokeWidth="2"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="add_path">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="fillColor"
+                    android:duration="300"
+                    android:valueFrom="#ffffff"
+                    android:valueTo="#b6ea21"
+                    android:valueType="colorType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeColor"
+                    android:duration="300"
+                    android:valueFrom="#ffffff"
+                    android:valueTo="#000000"
+                    android:valueType="colorType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="trimPathEnd"
+                    android:duration="500"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+            </set>
+        </aapt:attr>
+    </target>
+
+    <target android:name="delete_path">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="fillColor"
+                    android:duration="300"
+                    android:valueFrom="#b6ea21"
+                    android:valueTo="#ffffff"
+                    android:valueType="colorType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeColor"
+                    android:duration="300"
+                    android:valueFrom="#000000"
+                    android:valueTo="#ffffff"
+                    android:valueType="colorType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+                <objectAnimator
+                    android:propertyName="trimPathEnd"
+                    android:duration="500"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/accelerate_interpolator"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

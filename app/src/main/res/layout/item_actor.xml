@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="30dp"
+    android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:cardCornerRadius="100pt">
+
+        <ImageView
+            android:id="@+id/imageViewActorPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/actor_photo"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_launcher_background" />
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewActorFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="high_quality"
+            android:fontFamily="@font/gilroy_medium"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="Jason" />
+
+        <TextView
+            android:id="@+id/textViewActorLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="high_quality"
+            android:fontFamily="@font/gilroy_medium"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            tools:text="Momoa" />
+
+        <TextView
+            android:id="@+id/textViewActorDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:breakStrategy="high_quality"
+            android:fontFamily="@font/gilroy_medium"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            tools:text="Duncan Idaho" />
+    </LinearLayout>
+
+</LinearLayout>
