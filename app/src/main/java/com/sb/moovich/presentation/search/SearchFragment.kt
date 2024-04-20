@@ -19,6 +19,7 @@ import com.sb.moovich.di.MoovichApplication
 import com.sb.moovich.di.ViewModelFactory
 import com.sb.moovich.presentation.adapters.movies.medium.MediumMovieItemListAdapter
 import com.sb.moovich.presentation.movie_info.MovieInfoFragment
+import com.sb.moovich.presentation.search.SearchViewModel.Companion.MAX_SEARCH_COUNT
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -100,6 +101,8 @@ class SearchFragment : Fragment() {
                            binding.recyclerViewRecentAndResults.visibility = View.GONE
                             binding.progressBarSearch.visibility = View.VISIBLE
                         }
+
+                        SearchFragmentState.Filters -> TODO()
                     }
                 }
             }
@@ -115,14 +118,26 @@ class SearchFragment : Fragment() {
             )
         }
         binding.textViewSearchSeeAll.setOnClickListener {
-            if(state is SearchFragmentState.Content.RecentList) {
-                adapter.submitList(state.recentList)
-                binding.recyclerViewRecentAndResults.scrollToPosition(0)
+            state.seeAll = !state.seeAll
+            if (state.seeAll) {
+                binding.textViewSearchSeeAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.primary))
+                if(state is SearchFragmentState.Content.RecentList) {
+                    adapter.submitList(state.recentList)
+                }
+                else if(state is SearchFragmentState.Content.FindList) {
+                    viewModel.findMovie(state.searchName, MAX_SEARCH_COUNT)
+                }
             }
-            else if(state is SearchFragmentState.Content.FindList) {
-                viewModel.findMovie(state.searchName, 30)
-                binding.recyclerViewRecentAndResults.scrollToPosition(0)
+            else {
+                binding.textViewSearchSeeAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                if(state is SearchFragmentState.Content.RecentList) {
+                    adapter.submitList(state.recentList.take(10))
+                }
+                else if(state is SearchFragmentState.Content.FindList) {
+                    viewModel.findMovie(state.searchName, 10)
+                }
             }
+            binding.recyclerViewRecentAndResults.scrollToPosition(0)
         }
     }
 

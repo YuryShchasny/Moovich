@@ -20,6 +20,9 @@ class SearchViewModel @Inject constructor(
     val state = _state.mergeWith(
         getRecentMoviesUseCase().map { SearchFragmentState.Content.RecentList(it) }
     )
+    companion object {
+        const val MAX_SEARCH_COUNT = 30
+    }
 
     fun findMovie(name: String, count: Int) {
         if (name.isNotEmpty()) {
@@ -30,7 +33,8 @@ class SearchViewModel @Inject constructor(
                         SearchFragmentState.Content.FindList(
                             list.filter { it.name != "" }
                                 .sortedByDescending { it.year },
-                            name
+                            name,
+                            count == MAX_SEARCH_COUNT
                         )
                     }
                 }

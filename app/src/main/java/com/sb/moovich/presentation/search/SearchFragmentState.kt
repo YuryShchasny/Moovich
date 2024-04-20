@@ -6,15 +6,19 @@ sealed class SearchFragmentState {
     data object Loading : SearchFragmentState()
 
     data class Error(val msg: String) : SearchFragmentState()
-    sealed class Content(val list: List<MediumMovieInfo>) : SearchFragmentState() {
+
+    data object Filters : SearchFragmentState()
+    sealed class Content(val list: List<MediumMovieInfo>, var seeAll: Boolean) : SearchFragmentState() {
         data class FindList(
             val findList: List<MediumMovieInfo>,
-            val searchName: String
-        ) : Content(findList)
+            val searchName: String,
+            val seeAllFindList: Boolean = false,
+        ) : Content(findList, seeAllFindList)
 
         data class RecentList(
-            val recentList: List<MediumMovieInfo>
-        ) : Content(recentList)
+            val recentList: List<MediumMovieInfo>,
+            val seeAllRecentList: Boolean = false,
+        ) : Content(recentList, seeAllRecentList)
     }
 
 }
