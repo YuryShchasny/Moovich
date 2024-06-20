@@ -1,42 +1,30 @@
 package com.sb.moovich.presentation.home
 
 import android.animation.AnimatorInflater
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.animation.doOnCancel
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.sb.moovich.R
 import com.sb.moovich.databinding.FragmentHomeBinding
-import com.sb.moovich.di.MoovichApplication
-import com.sb.moovich.di.ViewModelFactory
 import com.sb.moovich.presentation.adapters.movies._short.ShortMovieItemListAdapter
 import com.sb.moovich.presentation.movie_info.MovieInfoFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val component by lazy {
-        (requireActivity().application as MoovichApplication).component
-    }
-
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
-    }
+    private val viewModel: HomeViewModel by viewModels()
 
     private val adapter by lazy {
         ShortMovieItemListAdapter(requireContext())
@@ -45,22 +33,19 @@ class HomeFragment : Fragment() {
         AnimatorInflater.loadAnimator(context, R.animator.placeholder_movie_card_anim)
     }
 
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewRecommendations.adapter = adapter
         setObservable()
@@ -78,7 +63,6 @@ class HomeFragment : Fragment() {
                         }
 
                         is HomeFragmentState.Error -> {
-
                         }
 
                         HomeFragmentState.Loading -> {
@@ -94,7 +78,7 @@ class HomeFragment : Fragment() {
         adapter.onMovieItemClickListener = { movieId ->
             findNavController().navigate(
                 R.id.action_navigation_home_to_movieInfoFragment,
-                MovieInfoFragment.getBundle(movieId)
+                MovieInfoFragment.getBundle(movieId),
             )
         }
     }
@@ -103,7 +87,7 @@ class HomeFragment : Fragment() {
         adapter.submitList(ShortMovieItemListAdapter.fakeList)
         loadAnimator.apply {
             setTarget(binding.recyclerViewRecommendations)
-            //Other views TODO()
+            // Other views TODO()
             doOnCancel { binding.recyclerViewRecommendations.alpha = 1f }
             start()
         }

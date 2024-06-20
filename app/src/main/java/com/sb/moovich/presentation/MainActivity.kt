@@ -8,9 +8,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.sb.moovich.R
 import com.sb.moovich.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.navView.setupWithNavController(navController)
     }
-    private fun getNavViewVisibility(destination: NavDestination): Boolean {
-        return (destination.id == R.id.navigation_home || destination.id == R.id.navigation_search ||
-                destination.id == R.id.navigation_watch_list)
-    }
+
+    private fun getNavViewVisibility(destination: NavDestination): Boolean =
+        (
+            destination.id == R.id.navigation_home ||
+                destination.id == R.id.navigation_search ||
+                destination.id == R.id.navigation_watch_list
+        )
 }

@@ -1,6 +1,5 @@
 package com.sb.moovich.presentation.movie_info
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,21 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.sb.moovich.R
 import com.sb.moovich.databinding.FragmentMovieInfoBinding
-import com.sb.moovich.di.MoovichApplication
-import com.sb.moovich.di.ViewModelFactory
 import com.sb.moovich.domain.entity.MovieInfo
 import com.sb.moovich.presentation.adapters.actors.ActorItemListAdapter
 import com.sb.moovich.presentation.adapters.movies._short.ShortMovieItemListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class MovieInfoFragment : Fragment() {
     companion object {
         private const val MOVIE_ID = "movie_id"
@@ -38,33 +36,21 @@ class MovieInfoFragment : Fragment() {
     private var _binding: FragmentMovieInfoBinding? = null
     private val binding get() = _binding!!
 
-    private val component by lazy {
-        (requireActivity().application as MoovichApplication).component
-    }
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[MovieInfoViewModel::class.java]
-    }
-
-    override fun onAttach(context: Context) {
-        component.inject(this)
-        super.onAttach(context)
-    }
-
+    private val viewModel: MovieInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMovieInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         observeState()
         arguments?.let {
@@ -103,17 +89,15 @@ class MovieInfoFragment : Fragment() {
         }
     }
 
-
     private fun observeBookmark(currencyMovie: MovieInfo) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.bookmarkChecked.collect {isChecked ->
+                viewModel.bookmarkChecked.collect { isChecked ->
                     isChecked?.let {
-                        if(it) {
+                        if (it) {
                             binding.imageViewBookmark.setImageResource(R.drawable.bookmark_anim)
                             viewModel.addMovieToWatchList(currencyMovie)
-                        }
-                        else {
+                        } else {
                             binding.imageViewBookmark.setImageResource(R.drawable.ic_bookmark)
                             viewModel.deleteMovieFromWatchList(currencyMovie)
                         }
@@ -125,20 +109,21 @@ class MovieInfoFragment : Fragment() {
 
     private fun setButtonSeeAllClickListener(
         state: MovieInfoFragmentState.Content,
-        adapter: ActorItemListAdapter
+        adapter: ActorItemListAdapter,
     ) {
         binding.textViewSeeAll.setOnClickListener {
-            state.seeAllActors = when (state.seeAllActors) {
-                true -> {
-                    adapter.submitList(state.currencyMovie.actors.take(6))
-                    false
-                }
+            state.seeAllActors =
+                when (state.seeAllActors) {
+                    true -> {
+                        adapter.submitList(state.currencyMovie.actors.take(6))
+                        false
+                    }
 
-                false -> {
-                    adapter.submitList(state.currencyMovie.actors)
-                    true
+                    false -> {
+                        adapter.submitList(state.currencyMovie.actors)
+                        true
+                    }
                 }
-            }
         }
     }
 
@@ -154,7 +139,7 @@ class MovieInfoFragment : Fragment() {
             similarMoviesAdapter.onMovieItemClickListener = { movieId ->
                 findNavController().navigate(
                     R.id.movieInfoFragment,
-                    getBundle(movieId)
+                    getBundle(movieId),
                 )
             }
             binding.recyclerViewSimilarMovies.adapter = similarMoviesAdapter

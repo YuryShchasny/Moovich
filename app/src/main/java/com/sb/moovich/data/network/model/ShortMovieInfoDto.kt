@@ -2,7 +2,6 @@ package com.sb.moovich.data.network.model
 
 import com.google.gson.annotations.SerializedName
 
-
 data class ShortMovieInfoDto(
     @SerializedName("id")
     val id: Int?,
@@ -13,5 +12,5 @@ data class ShortMovieInfoDto(
     @SerializedName("poster")
     val poster: MoviePoster?,
     @SerializedName("rating")
-    val rating: MovieRating?
+    val rating: MovieRating?,
 )

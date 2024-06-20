@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kspAnnotationPlugin)
     alias(libs.plugins.kapt)
 }
@@ -38,7 +39,9 @@ android {
     buildFeatures {
         dataBinding = true
     }
-
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 
@@ -59,18 +62,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
     implementation(libs.coil)
+    implementation(libs.lottie)
+
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    implementation (libs.dagger)
-    ksp (libs.dagger.compiler)
-
-    implementation(libs.lottie)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.kapt)
 }

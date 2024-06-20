@@ -1,10 +1,7 @@
 package com.sb.moovich.di
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class MoovichApplication : Application() {
-    val component by lazy {
-        DaggerApplicationComponent.factory()
-            .create(this)
-    }
-}
+@HiltAndroidApp
+class MoovichApplication : Application()

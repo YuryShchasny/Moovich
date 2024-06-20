@@ -21,20 +21,21 @@ interface MovieApi {
         @Header("X-API-KEY") apiKey: String = API_KEY,
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = RECOMMENDED_MOVIES_LIMIT,
-        @Query("selectFields") selectFields: List<String> = listOf(
-            "id",
-            "name",
-            "rating",
-            "poster"
-        ),
+        @Query("selectFields") selectFields: List<String> =
+            listOf(
+                "id",
+                "name",
+                "rating",
+                "poster",
+            ),
         @Query("releaseYears.end") releaseYearEnd: String = "2023-2024",
-        @Query("rating.kp") rating: String = "8-10"
+        @Query("rating.kp") rating: String = "8-10",
     ): Response<ShortMovieDocDto>
 
     @GET("movie/{id}")
     suspend fun getMovieById(
         @Path("id") id: Int,
-        @Header("X-API-KEY") apiKey: String = API_KEY
+        @Header("X-API-KEY") apiKey: String = API_KEY,
     ): Response<MovieInfoDto>
 
     @GET("movie/search")
@@ -42,6 +43,6 @@ interface MovieApi {
         @Header("X-API-KEY") apiKey: String = API_KEY,
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = SEARCH_MOVIES_LIMIT,
-        @Query("query") name: String
+        @Query("query") name: String,
     ): Response<MediumMovieDocDto>
 }

@@ -1,6 +1,6 @@
 package com.sb.moovich.domain.entity
 
-data class MediumMovieInfo (
+data class MediumMovieInfo(
     val id: Int,
     val name: String,
     val description: String,
