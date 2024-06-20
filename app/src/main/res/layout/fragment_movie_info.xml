@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="movie"
             type="com.sb.moovich.domain.entity.MovieInfo" />
@@ -125,25 +122,24 @@
                     <Button
                         android:id="@+id/buttonWatch"
                         style="@style/Widget.Material3.Button"
-                        android:layout_width="300dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gilroy_medium"
                         android:text="@string/watch"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="0.9"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/imageViewBookmark"
-                        android:layout_width="64dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginVertical="4dp"
+                        android:layout_weight="0.1"
                         android:contentDescription="@string/bookmark_button"
                         android:src="@drawable/ic_bookmark" />
 

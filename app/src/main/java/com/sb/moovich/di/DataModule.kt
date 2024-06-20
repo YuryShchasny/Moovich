@@ -31,17 +31,14 @@ interface DataModule {
 
         @Provides
         @ApplicationScope
-        fun provideRetrofit(application: Application) : Retrofit {
+        fun provideRetrofit() : Retrofit {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
-            val cache = Cache(application.cacheDir, cacheSize)
             val httpClient = OkHttpClient.Builder()
-                .cache(cache)
                 .addInterceptor(interceptor)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build()
 
             return Retrofit.Builder()

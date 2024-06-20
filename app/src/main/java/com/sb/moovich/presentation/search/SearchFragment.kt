@@ -74,7 +74,7 @@ class SearchFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setObservable() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.state.collect {state ->
                     when(state) {
                         is SearchFragmentState.Content -> {
