@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WatchMovieDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: WatchMovieDb)
 
@@ -22,5 +21,4 @@ interface WatchMovieDao {
 
     @Delete
     suspend fun deleteMovie(movie: WatchMovieDb)
-
 }

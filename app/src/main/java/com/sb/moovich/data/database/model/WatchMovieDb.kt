@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("watch")
-data class WatchMovieDb (
+data class WatchMovieDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,

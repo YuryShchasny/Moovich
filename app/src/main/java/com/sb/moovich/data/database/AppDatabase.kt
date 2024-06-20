@@ -10,10 +10,11 @@ import com.sb.moovich.data.database.model.WatchMovieDb
 @Database(
     entities = [RecentMovieDb::class, WatchMovieDb::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 @TypeConverters(StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun watchMovieDao(): WatchMovieDao
+
     abstract fun recentMovieDao(): RecentMovieDao
 }

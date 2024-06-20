@@ -4,5 +4,5 @@ data class ShortMovieInfo(
     val id: Int,
     val name: String,
     val rating: Double,
-    val previewUrl: String
+    val previewUrl: String,
 )

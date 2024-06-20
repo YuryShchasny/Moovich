@@ -10,5 +10,5 @@ data class Person(
     @SerializedName("description")
     val description: String?,
     @SerializedName("enProfession")
-    val enProfession: String?
+    val enProfession: String?,
 )

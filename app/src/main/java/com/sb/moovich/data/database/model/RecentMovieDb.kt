@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("recent")
-data class RecentMovieDb (
+data class RecentMovieDb(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String,

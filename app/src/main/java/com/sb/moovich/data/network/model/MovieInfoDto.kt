@@ -28,5 +28,5 @@ data class MovieInfoDto(
     @SerializedName("persons")
     val persons: List<Person>?,
     @SerializedName("similarMovies")
-    val similarMovies: List<ShortMovieInfoDto>?
+    val similarMovies: List<ShortMovieInfoDto>?,
 )

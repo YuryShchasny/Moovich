@@ -5,10 +5,16 @@ import com.sb.moovich.domain.entity.MediumMovieInfo
 sealed class SearchFragmentState {
     data object Loading : SearchFragmentState()
 
-    data class Error(val msg: String) : SearchFragmentState()
+    data class Error(
+        val msg: String,
+    ) : SearchFragmentState()
 
     data object Filters : SearchFragmentState()
-    sealed class Content(val list: List<MediumMovieInfo>, var seeAll: Boolean) : SearchFragmentState() {
+
+    sealed class Content(
+        val list: List<MediumMovieInfo>,
+        var seeAll: Boolean,
+    ) : SearchFragmentState() {
         data class FindList(
             val findList: List<MediumMovieInfo>,
             val searchName: String,
@@ -20,5 +26,4 @@ sealed class SearchFragmentState {
             val seeAllRecentList: Boolean = false,
         ) : Content(recentList, seeAllRecentList)
     }
-
 }
