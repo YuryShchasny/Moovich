@@ -33,9 +33,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getNavViewVisibility(destination: NavDestination): Boolean =
-        (
-            destination.id == R.id.navigation_home ||
-                destination.id == R.id.navigation_search ||
-                destination.id == R.id.navigation_watch_list
-        )
+        when (destination.id) {
+            R.id.navigation_home,
+            R.id.navigation_search,
+            R.id.navigation_watch_list -> true
+            else -> false
+        }
 }

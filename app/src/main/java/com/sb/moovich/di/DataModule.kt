@@ -2,12 +2,17 @@ package com.sb.moovich.di
 
 import android.app.Application
 import androidx.room.Room
-import com.sb.moovich.data.MovieRepositoryImpl
-import com.sb.moovich.data.database.AppDatabase
-import com.sb.moovich.data.database.RecentMovieDao
-import com.sb.moovich.data.database.WatchMovieDao
-import com.sb.moovich.data.network.MovieApi
-import com.sb.moovich.domain.repository.MovieRepository
+import com.sb.moovich.data.local.AppDatabase
+import com.sb.moovich.data.local.dao.ActorDao
+import com.sb.moovich.data.local.dao.RecentMovieDao
+import com.sb.moovich.data.local.dao.WatchMovieDao
+import com.sb.moovich.data.remote.api.MovieApi
+import com.sb.moovich.data.repository.RecentMovieRepositoryImpl
+import com.sb.moovich.data.repository.RemoteMovieRepositoryImpl
+import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
+import com.sb.moovich.domain.repository.RecentMovieRepository
+import com.sb.moovich.domain.repository.RemoteMovieRepository
+import com.sb.moovich.domain.repository.WatchMovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -25,7 +30,15 @@ import javax.inject.Singleton
 interface DataModule {
     @Binds
     @Singleton
-    fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
+    fun bindRemoteMovieRepository(impl: RemoteMovieRepositoryImpl): RemoteMovieRepository
+
+    @Binds
+    @Singleton
+    fun bindRecentMovieRepository(impl: RecentMovieRepositoryImpl): RecentMovieRepository
+
+    @Binds
+    @Singleton
+    fun bindWatchMovieRepository(impl: WatchMovieRepositoryImpl): WatchMovieRepository
 
     companion object {
         private const val KINOPOISK_API_URL = "https://api.kinopoisk.dev/v1.4/"
@@ -55,6 +68,10 @@ interface DataModule {
         @Provides
         @Singleton
         fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
+
+        @Provides
+        @Singleton
+        fun provideActorDao(database: AppDatabase): ActorDao = database.actorDao()
 
         @Provides
         @Singleton

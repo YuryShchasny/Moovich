@@ -1,3 +1,5 @@
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google {
@@ -21,3 +23,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "Moovich"
 include(":app")
+include(":presentation")
+include(":presentation:home")
+include(":core")
+include(":presentation:search")
+include(":presentation:favourites")
+include(":presentation:info")
+include(":data")
+include(":domain")
