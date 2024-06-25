@@ -3,14 +3,14 @@ agp = "8.5.0"
 coil = "2.6.0"
 converterGson = "2.11.0"
 dagger-hilt = "2.51.1"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.7.0"
-kotlinxCoroutinesAndroid = "1.8.0"
-lottie = "6.4.0"
+kotlinxCoroutinesAndroid = "1.8.1"
+lottie = "6.4.1"
 material = "1.12.0"
 constraintlayout = "2.1.4"
 lifecycleViewmodelKtx = "2.8.2"
@@ -19,11 +19,13 @@ navigationUiKtx = "2.7.7"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
-symbolProcessingApi = "1.9.22-1.0.17"
+symbolProcessingApi = "1.9.23-1.0.20"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.8.2"
 fragmentKtx = "1.8.0"
 kapt = "1.9.23"
+jetbrainsKotlinJvm = "1.9.23"
+javax-inject = "1"
 
 [libraries]
 #---Core---#
@@ -58,6 +60,7 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 #---DI---#
 dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt" }
 dagger-hilt-kapt = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt" }
+javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -65,4 +68,6 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt" }
 kspAnnotationPlugin = { id = "com.google.devtools.ksp", version.ref = "symbolProcessingApi" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 

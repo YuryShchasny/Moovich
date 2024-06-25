@@ -5,10 +5,9 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
-
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.sb.moovich.presentation.search.SearchFragment"
+        android:name="com.sb.moovich.presentation.search.ui.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -18,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.sb.moovich.presentation.home.HomeFragment"
+        android:name="com.sb.moovich.presentation.home.ui.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -28,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_watch_list"
-        android:name="com.sb.moovich.presentation.watch_list.WatchListFragment"
+        android:name="com.sb.moovich.presentation.favourites.ui.WatchListFragment"
         android:label="@string/title_watch_list"
         tools:layout="@layout/fragment_watch_list" >
         <action
@@ -37,7 +36,13 @@
     </fragment>
     <fragment
         android:id="@+id/movieInfoFragment"
-        android:name="com.sb.moovich.presentation.movie_info.MovieInfoFragment"
+        android:name="com.sb.moovich.presentation.info.ui.MovieInfoFragment"
         android:label="fragment_movie_info"
-        tools:layout="@layout/fragment_movie_info" />
+        tools:layout="@layout/fragment_movie_info">
+        <deepLink
+            app:uri="@string/fragment_info_deeplink" />
+        <argument
+            android:name="@string/fragment_info_argument"
+            app:argType="integer" />
+    </fragment>
 </navigation>
