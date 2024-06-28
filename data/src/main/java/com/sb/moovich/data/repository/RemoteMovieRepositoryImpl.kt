@@ -1,15 +1,14 @@
 package com.sb.moovich.data.repository
 
+import com.sb.moovich.data.di.FakeMovieApiProvide
 import com.sb.moovich.data.mapper.MovieDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.domain.repository.RemoteMovieRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteMovieRepositoryImpl @Inject constructor(
-    private val movieApi: MovieApi,
+    @FakeMovieApiProvide private val movieApi: MovieApi,
     private val movieDtoMapper: MovieDtoMapper
 ) : RemoteMovieRepository {
 

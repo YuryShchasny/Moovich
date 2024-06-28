@@ -2,10 +2,13 @@ package com.sb.moovich.di
 
 import android.app.Application
 import androidx.room.Room
+import com.sb.moovich.data.di.FakeMovieApiProvide
+import com.sb.moovich.data.di.MovieApiProvide
 import com.sb.moovich.data.local.AppDatabase
 import com.sb.moovich.data.local.dao.ActorDao
 import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao
+import com.sb.moovich.data.remote.api.FakeMovieApi
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.repository.RecentMovieRepositoryImpl
 import com.sb.moovich.data.repository.RemoteMovieRepositoryImpl
@@ -28,6 +31,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
+
     @Binds
     @Singleton
     fun bindRemoteMovieRepository(impl: RemoteMovieRepositoryImpl): RemoteMovieRepository
@@ -65,9 +69,15 @@ interface DataModule {
                 .build()
         }
 
+        @MovieApiProvide
         @Provides
         @Singleton
         fun provideMovieApi(retrofit: Retrofit): MovieApi = retrofit.create(MovieApi::class.java)
+
+        @FakeMovieApiProvide
+        @Provides
+        @Singleton
+        fun provideFakeMovieApi(): MovieApi = FakeMovieApi()
 
         @Provides
         @Singleton
