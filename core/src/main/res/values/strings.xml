@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Moovich</string>
     <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
+    <string name="search">Search</string>
     <string name="title_watch_list">Watch list</string>
     <string name="recommendations">Recommendations</string>
     <string name="see_all">See all</string>
@@ -24,4 +24,10 @@
     <string name="filter_movies_button">Filter movies button</string>
     <string name="actor_photo">Actor photo</string>
     <string name="search_icon">Search icon</string>
+    <string name="filter">Filter</string>
+    <string name="reset">Reset</string>
+    <string name="all">All</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <string name="cartoons">Cartoons</string>
 </resources>

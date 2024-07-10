@@ -8,11 +8,14 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.sb.moovich.presentation.search.ui.SearchFragment"
-        android:label="@string/title_search"
+        android:label="@string/search"
         tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_navigation_search_to_movieInfoFragment"
             app:destination="@id/movieInfoFragment" />
+        <action
+            android:id="@+id/action_navigation_search_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
 
     <fragment
@@ -44,5 +47,13 @@
         <argument
             android:name="@string/fragment_info_argument"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.sb.moovich.presentation.search.ui.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter">
+        <deepLink
+            app:uri="@string/fragment_filter_deeplink" />
     </fragment>
 </navigation>

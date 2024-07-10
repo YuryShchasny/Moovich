@@ -2,5 +2,6 @@
 <!-- You can add a deep link and its arguments for navigation between modules. Use DeepLinkRequestBuilder to navigate-->
 <resources>
     <string name="fragment_info_deeplink">moovich://info?movie_id={movie_id}</string>
+    <string name="fragment_filter_deeplink">moovich://filter</string>
     <string name="fragment_info_argument">movie_id</string>
 </resources>

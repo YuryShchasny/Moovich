@@ -126,6 +126,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun setClickListeners(state: SearchFragmentState.Content) {
+        binding.filterButton.setOnClickListener {
+            DeepLinkRequestBuilder(
+                findNavController(),
+                R.string.fragment_filter_deeplink
+            )
+                .setNavigateAfterBuild(true)
+                .build()
+        }
         adapter.onMovieItemClickListener = { movieId ->
             DeepLinkRequestBuilder(
                 findNavController(),

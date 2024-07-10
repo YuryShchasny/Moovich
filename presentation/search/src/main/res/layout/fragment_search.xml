@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/gilroy_medium"
-            android:text="@string/title_search"
+            android:text="@string/search"
             android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -121,6 +121,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/filterButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"

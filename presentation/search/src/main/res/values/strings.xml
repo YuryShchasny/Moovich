@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sort_by">Sort by</string>
+    <string name="popularity">Popularity</string>
+    <string name="latest_release">Latest release</string>
+    <string name="rating">Rating</string>
+    <string name="genre">Genre</string>
+    <string name="year">Year</string>
+    <string name="country">Country</string>
+    <string name="apply_filters">Apply filters (%d)</string>
+</resources>
