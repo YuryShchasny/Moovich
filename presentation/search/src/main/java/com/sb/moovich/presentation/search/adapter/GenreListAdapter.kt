@@ -9,7 +9,7 @@ class GenreListAdapter : ListAdapter<GenreItem, GenreViewHolder>(
         GenreListDiffCallback(),
     ) {
 
-    var onItemClickListener: ((String) -> Unit)? = null
+    var onItemClickListener: ((String, Boolean) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +27,7 @@ class GenreListAdapter : ListAdapter<GenreItem, GenreViewHolder>(
         holder.genreTextView.text = currentGenre.genre
         holder.genreCheckBox.isChecked = currentGenre.isChecked
         holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(currentGenre.genre)
+            onItemClickListener?.invoke(currentGenre.genre, !holder.genreCheckBox.isChecked)
         }
     }
 }

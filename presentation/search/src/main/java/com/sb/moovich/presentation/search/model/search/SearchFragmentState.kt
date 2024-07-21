@@ -1,4 +1,4 @@
-package com.sb.moovich.presentation.search.ui
+package com.sb.moovich.presentation.search.model.search
 
 import com.sb.moovich.domain.entity.Movie
 

@@ -3,22 +3,16 @@ package com.sb.moovich.core.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
-import com.entexy.core.view.SpinnerAdapter
-import com.entexy.core.view.SpinnerItem
 import com.sb.moovich.core.R
-import com.sb.moovich.core.extensions.dpToPx
 
 class CustomSpinner(context: Context, attrs: AttributeSet?) :
     LinearLayout(context, attrs) {
     private val listPopupWindow: ListPopupWindow = ListPopupWindow(context, attrs)
-
-    private var itemList: List<SpinnerItem>? = null
     private var clickListener: ((Boolean) -> Unit)? = null
+    var popUpAdapter: SpinnerAdapter? = null
 
     init {
         this.setOnClickListener {
@@ -26,6 +20,7 @@ class CustomSpinner(context: Context, attrs: AttributeSet?) :
         }
         listPopupWindow.anchorView = this
         listPopupWindow.isModal = true
+        listPopupWindow.height = 900
         listPopupWindow.setBackgroundDrawable(
             ContextCompat.getDrawable(
                 context,
@@ -40,20 +35,20 @@ class CustomSpinner(context: Context, attrs: AttributeSet?) :
     @SuppressLint("ClickableViewAccessibility")
     override fun performClick(): Boolean {
         clickListener?.invoke(listPopupWindow.isShowing)
-        if (listPopupWindow.isShowing) {
-            listPopupWindow.dismiss()
-        }
         return true
     }
 
     fun setPopupAdapter(adapter: SpinnerAdapter) {
+        this.popUpAdapter = adapter
         listPopupWindow.setAdapter(adapter)
-        itemList = adapter.items
     }
 
-    fun setPopupHeight(height: Int) {
-        listPopupWindow.height = height
-        listPopupWindow.verticalOffset = (-40).dpToPx()
+    fun getPopupScrolledOn(): Int {
+        return listPopupWindow.selectedItemPosition
+    }
+
+    fun updateItems(items: List<SpinnerItem>) {
+        popUpAdapter?.updateItems(items)
     }
 
     fun setClickListener(listener: (Boolean) -> Unit) {
@@ -61,5 +56,8 @@ class CustomSpinner(context: Context, attrs: AttributeSet?) :
     }
     fun showPopup() {
         listPopupWindow.show()
+    }
+    fun dismissPopup() {
+        listPopupWindow.dismiss()
     }
 }

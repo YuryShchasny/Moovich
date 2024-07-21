@@ -1,4 +1,4 @@
-package com.entexy.core.view
+package com.sb.moovich.core.views
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,9 +12,10 @@ import com.sb.moovich.core.R
 class SpinnerAdapter(
     context: Context,
     private val resource: Int,
-    val items: List<SpinnerItem>,
+    var items: List<SpinnerItem>,
 ) : ArrayAdapter<SpinnerItem>(context, resource, items) {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    var onItemCheckBoxChanged: ((String, Boolean) -> Unit)? = null
 
     override fun getView(
         position: Int,
@@ -22,6 +23,11 @@ class SpinnerAdapter(
         parent: ViewGroup,
     ): View {
         return createViewFromResource(inflater, convertView, parent, position)
+    }
+
+    fun updateItems(items: List<SpinnerItem>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 
     private fun createViewFromResource(
@@ -32,16 +38,15 @@ class SpinnerAdapter(
     ): View {
         val view: View = convertView ?: inflater.inflate(resource, parent, false)
         try {
-            val item = getItem(position)
+            val item = items[position]
             val countryTextView: TextView = view.findViewById(R.id.countryTextView)
-            item?.let {
-                countryTextView.text = it.country
-                if (resource == R.layout.item_spinner_dropdown) {
-                    val checkbox: CheckBox = view.findViewById(R.id.checkboxCountry)
-                    checkbox.isChecked = it.isChecked
-                    view.setOnClickListener {
-                        checkbox.isChecked = !checkbox.isChecked
-                    }
+            countryTextView.text = item.country
+            if (resource == R.layout.item_spinner_dropdown) {
+                val checkbox: CheckBox = view.findViewById(R.id.checkboxCountry)
+                checkbox.isChecked = item.isChecked
+                checkbox.isClickable = false
+                view.setOnClickListener {
+                    onItemCheckBoxChanged?.invoke(item.country, !checkbox.isChecked)
                 }
             }
         } catch (_: Exception) {

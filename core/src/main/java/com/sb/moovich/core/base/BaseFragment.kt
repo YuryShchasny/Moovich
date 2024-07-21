@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
@@ -49,5 +51,17 @@ abstract class BaseFragment<ViewBindingType : ViewDataBinding> : Fragment() {
     fun addAnimator(vararg animator: Animator) {
         listOfAnimators.addAll(animator)
     }
+
+    fun addOnBackPressedCallback(callback: () -> Unit) {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            callback.invoke()
+        }
+    }
+
+    fun getStringCompat(id: Int) = ContextCompat.getString(requireContext(), id)
+
+    fun getColorCompat(id: Int) = ContextCompat.getColor(requireContext(), id)
+
+    fun getDrawableCompat(id: Int) = ContextCompat.getDrawable(requireContext(), id)
 
 }

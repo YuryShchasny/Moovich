@@ -1,7 +1,6 @@
 package com.sb.moovich.presentation.search.ui
 
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieInfo
@@ -19,6 +17,7 @@ import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.base.DeepLinkRequestBuilder
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
+import com.sb.moovich.presentation.search.model.search.SearchFragmentState
 import com.sb.moovich.presentation.search.viewmodel.SearchViewModel
 import com.sb.moovich.presentation.search.viewmodel.SearchViewModel.Companion.MAX_SEARCH_COUNT
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,27 +1,45 @@
 package com.sb.moovich.presentation.search.ui
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
-import com.entexy.core.view.SpinnerAdapter
-import com.entexy.core.view.SpinnerItem
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.sb.moovich.core.views.SpinnerAdapter
+import com.sb.moovich.core.views.SpinnerItem
 import com.google.android.material.slider.RangeSlider
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.extensions.dpToPx
+import com.sb.moovich.domain.entity.Filter
+import com.sb.moovich.domain.entity.MovieType
+import com.sb.moovich.domain.entity.SortType
 import com.sb.moovich.presentation.search.R
 import com.sb.moovich.presentation.search.adapter.GenreItem
 import com.sb.moovich.presentation.search.adapter.GenreListAdapter
 import com.sb.moovich.presentation.search.databinding.FragmentFilterBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import com.sb.moovich.presentation.search.model.filter.FilterFragmentEvent
+import com.sb.moovich.presentation.search.model.filter.FilterFragmentState
+import com.sb.moovich.presentation.search.viewmodel.FilterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import java.util.Locale
 
+@AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding>() {
+    private val viewModel: FilterViewModel by viewModels()
     private val genreListAdapter = GenreListAdapter()
 
     override fun setupViewBinding(
@@ -33,96 +51,168 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.typeChooser.selectTab(binding.typeChooser.getTabAt(0))
-        setRanges()
-        setCountrySpinner(
-            listOf(
-                SpinnerItem("USA", false),
-                SpinnerItem("Russia", false),
-                SpinnerItem("Ukraine", false),
-                SpinnerItem("Belarus", false),
-                SpinnerItem("Poland", false),
-                SpinnerItem("Italy", false),
-            )
-        )
-        setGenreList(
-            listOf(
-                GenreItem("All", false),
-                GenreItem("Family", false),
-                GenreItem("Action", false),
-                GenreItem("Fantasy", false),
-                GenreItem("Adventure", false),
-                GenreItem("Fantastic", false),
-                GenreItem("Anime", false),
-                GenreItem("History", false),
-                GenreItem("Horror", false),
-                GenreItem("All", false),
-                GenreItem("Family", false),
-                GenreItem("Action", false),
-                GenreItem("Fantasy", false),
-                GenreItem("Adventure", false),
-                GenreItem("Fantastic", false),
-                GenreItem("Anime", false),
-                GenreItem("History", false),
-                GenreItem("Horror", false),
-            )
-        )
+        lifecycleScope.launch {
+            viewModel.state
+                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .collect { state ->
+                    when (state) {
+                        is FilterFragmentState.Content -> {
+                            setRanges()
+                            setGenreList(state.filter, state.genres)
+                            setCountrySpinner(state.filter, state.countries)
+                            setClickListeners()
+                            binding.progressBar.visibility = View.GONE
+                            binding.scrollView.visibility = View.VISIBLE
+                            viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(state.filter))
+                        }
+
+                        FilterFragmentState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.scrollView.visibility = View.GONE
+                        }
+
+                        is FilterFragmentState.FilterState -> {
+                            updateCountries(state.filter)
+                            updateGenreList(state.filter)
+                            updateSortBy(state.filter)
+                            updateTabLayout(state.filter)
+                            setApplyButton(state.filter)
+                            binding.applyTextView.text = String.format(
+                                Locale.getDefault(),
+                                getStringCompat(R.string.apply_filters),
+                                state.filter.getFiltersCount()
+                            )
+                        }
+                    }
+
+                }
+        }
     }
 
-    private fun setGenreList(genreList: List<GenreItem>) {
-        binding.genreRecyclerView.adapter = genreListAdapter
-        genreListAdapter.submitList(genreList)
+    private fun updateGenreList(filter: Filter) {
+        val items = genreListAdapter.currentList
+        val newItems =
+            items.map { item -> item.copy(isChecked = filter.genres.contains(item.genre)) }
+        genreListAdapter.onItemClickListener = { genre, isChecked ->
+            val newList = filter.genres.toMutableList().apply {
+                if (isChecked) add(genre)
+                else remove(genre)
+            }
+            viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(filter.copy(genres = newList)))
+        }
+        genreListAdapter.submitList(newItems)
     }
 
-    private fun setCountrySpinner(countryList: List<SpinnerItem>) {
-        val checkedCountry = countryList.filter { it.isChecked }
+    private fun updateCountries(filter: Filter) {
+        val items = binding.countrySpinner.popUpAdapter?.items
+        items?.let {
+            val newItems =
+                it.map { item -> item.copy(isChecked = filter.countries.contains(item.country)) }
+            binding.countrySpinner.updateItems(newItems)
+        }
+        binding.countrySpinner.popUpAdapter?.onItemCheckBoxChanged = { country, isChecked ->
+            val newList = filter.countries.toMutableList().apply {
+                if (isChecked) add(country)
+                else remove(country)
+            }
+            viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(filter.copy(countries = newList)))
+        }
+        val checkedCountry = filter.countries
         val countryText =
             if (checkedCountry.isNotEmpty()) {
-                binding.selectedCountryTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        com.sb.moovich.core.R.color.secondary
-                    )
-                )
-                binding.countryTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        com.sb.moovich.core.R.color.secondary
-                    )
-                )
+                binding.selectedCountryTextView.setTextColor(getColorCompat(com.sb.moovich.core.R.color.secondary))
+                binding.countryTextView.setTextColor(getColorCompat(com.sb.moovich.core.R.color.secondary))
                 if (checkedCountry.size > 1) checkedCountry.size.toString()
-                else checkedCountry.first().country
+                else checkedCountry.firstOrNull()
             } else {
-                binding.selectedCountryTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        com.sb.moovich.core.R.color.white
-                    )
-                )
-                binding.countryTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        com.sb.moovich.core.R.color.white
-                    )
-                )
-                ContextCompat.getString(requireContext(), com.sb.moovich.core.R.string.all)
+                binding.selectedCountryTextView.setTextColor(getColorCompat(com.sb.moovich.core.R.color.white))
+                binding.countryTextView.setTextColor(getColorCompat(com.sb.moovich.core.R.color.white))
+                getStringCompat(com.sb.moovich.core.R.string.all)
             }
         binding.selectedCountryTextView.text = countryText
+    }
+
+    private fun updateSortBy(filter: Filter) {
+        val sortViewList =
+            listOf(binding.sortByPopularity, binding.sortByLatest, binding.sortByRating)
+        sortViewList.forEachIndexed { index, textView ->
+            textView.setOnClickListener {
+                viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(filter.copy(sortType = SortType.entries[index])))
+            }
+            (textView.background as GradientDrawable).apply {
+                val newColor =
+                    if (SortType.entries.indexOf(filter.sortType) == index)
+                        getColorCompat(com.sb.moovich.core.R.color.secondary)
+                    else Color.TRANSPARENT
+                val newStrokeColor = if (SortType.entries.indexOf(filter.sortType) == index)
+                    getColorCompat(com.sb.moovich.core.R.color.secondary)
+                else getColorCompat(com.sb.moovich.core.R.color.white)
+                color = ColorStateList.valueOf(newColor)
+                setStroke(1.dpToPx(), newStrokeColor)
+            }
+        }
+    }
+
+    private fun updateTabLayout(filter: Filter) {
+        binding.typeChooser.setOnTabClickListener { position ->
+            viewModel.fetchEvent(
+                FilterFragmentEvent.UpdateFilter(
+                    filter.copy(
+                        type = MovieType.entries[position]
+                    )
+                )
+            )
+        }
+    }
+
+    private fun setClickListeners() {
+        binding.buttonBack.setOnClickListener { findNavController().navigateUp() }
+        binding.buttonReset.setOnClickListener {
+            viewModel.fetchEvent(FilterFragmentEvent.Reset)
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun setApplyButton(filter: Filter) {
+        binding.applyButton.setOnClickListener {
+            val yearFrom = binding.rangeYearSlider.valueFrom.toInt()
+            val yearTo = binding.rangeYearSlider.valueTo.toInt()
+            val ratingFrom = binding.rangeRatingSlider.valueFrom.toInt()
+            val ratingTo = binding.rangeRatingSlider.valueTo.toInt()
+            viewModel.fetchEvent(
+                FilterFragmentEvent.SaveFilter(
+                    filter.copy(
+                        yearFrom = yearFrom,
+                        yearTo = yearTo,
+                        ratingFrom = ratingFrom,
+                        ratingTo = ratingTo
+                    )
+                )
+            )
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun setGenreList(filter: Filter, genreList: List<String>) {
+        val genres = genreList.map {
+            GenreItem(it, filter.genres.contains(it))
+        }
+        binding.genreRecyclerView.adapter = genreListAdapter
+        genreListAdapter.submitList(genres)
+    }
+
+    private fun setCountrySpinner(filter: Filter, countryList: List<String>) {
+        val countries = countryList.map {
+            SpinnerItem(it, filter.countries.contains(it))
+        }
         binding.countrySpinner.setPopupAdapter(
             SpinnerAdapter(
-                requireContext(), com.sb.moovich.core.R.layout.item_spinner_dropdown, countryList
+                requireContext(), com.sb.moovich.core.R.layout.item_spinner_dropdown, countries
             )
         )
-        binding.countrySpinner.setPopupHeight(600)
         binding.countrySpinner.setClickListener { isPopupShowing ->
-            val newHeight = if (isPopupShowing) 0 else 600
-            binding.spaceForPopup.updateLayoutParams { height = newHeight }
-            CoroutineScope(Dispatchers.Main).launch {
-                while (binding.spaceForPopup.height != newHeight) {
-                    delay(100)
-                }
-                binding.countrySpinner.showPopup()
-            }
+            if (isPopupShowing) binding.countrySpinner.dismissPopup()
+            else binding.countrySpinner.showPopup()
         }
     }
 

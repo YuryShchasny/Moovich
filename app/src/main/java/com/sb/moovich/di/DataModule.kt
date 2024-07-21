@@ -1,20 +1,28 @@
 package com.sb.moovich.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.sb.moovich.data.di.FakeInfoApiProvide
 import com.sb.moovich.data.di.FakeMovieApiProvide
+import com.sb.moovich.data.di.InfoApiProvide
 import com.sb.moovich.data.di.MovieApiProvide
 import com.sb.moovich.data.local.AppDatabase
 import com.sb.moovich.data.local.dao.ActorDao
 import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao
+import com.sb.moovich.data.remote.api.FakeInfoApi
 import com.sb.moovich.data.remote.api.FakeMovieApi
+import com.sb.moovich.data.remote.api.InfoApi
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.repository.RecentMovieRepositoryImpl
 import com.sb.moovich.data.repository.RemoteMovieRepositoryImpl
+import com.sb.moovich.data.repository.SearchFilterRepositoryImpl
 import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
 import com.sb.moovich.domain.repository.RecentMovieRepository
 import com.sb.moovich.domain.repository.RemoteMovieRepository
+import com.sb.moovich.domain.repository.SearchFilterRepository
 import com.sb.moovich.domain.repository.WatchMovieRepository
 import dagger.Binds
 import dagger.Module
@@ -43,6 +51,11 @@ interface DataModule {
     @Binds
     @Singleton
     fun bindWatchMovieRepository(impl: WatchMovieRepositoryImpl): WatchMovieRepository
+
+    @Binds
+    @Singleton
+    fun bindSearchFilterRepository(impl: SearchFilterRepositoryImpl): SearchFilterRepository
+
 
     companion object {
         private const val KINOPOISK_API_URL = "https://api.kinopoisk.dev/v1.4/"
@@ -100,5 +113,21 @@ interface DataModule {
                     AppDatabase::class.java,
                     "moovich.db",
                 ).build()
+
+        @Provides
+        @Singleton
+        fun provideSharedPreferences(application: Application): SharedPreferences {
+            return application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        }
+
+        @InfoApiProvide
+        @Provides
+        @Singleton
+        fun provideInfoApi(retrofit: Retrofit): InfoApi = retrofit.create(InfoApi::class.java)
+
+        @FakeInfoApiProvide
+        @Provides
+        @Singleton
+        fun provideFakeInfoApi(): InfoApi = FakeInfoApi()
     }
 }

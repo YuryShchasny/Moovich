@@ -32,6 +32,7 @@ class TypeChooserView @JvmOverloads constructor(
     private val dividerHeight = 16f.dpToPx()
     private var indicatorDrawable = ContextCompat.getDrawable(context, R.drawable.tab_layout_indicator)
     private var selectedBeforeClick = 0
+    private var onTabSelectedListener: ((Int) -> Unit)? = null
 
     init {
         setTabTextColors(ContextCompat.getColor(context, R.color.white), ContextCompat.getColor(context, R.color.white))
@@ -45,6 +46,7 @@ class TypeChooserView @JvmOverloads constructor(
                     InsetDrawable(it, insetLeft, 0, insetRight, 0)
                 }
                 setSelectedTabIndicator(insetDrawable)
+                onTabSelectedListener?.invoke(tab?.position ?: 0)
             }
             override fun onTabUnselected(tab: Tab?) {}
             override fun onTabReselected(tab: Tab?) {}
@@ -73,7 +75,10 @@ class TypeChooserView @JvmOverloads constructor(
                 canvas.drawRect(endX, (this.height / 2) - (dividerHeight / 2), endX + dividerWidth, (this.height / 2) + (dividerHeight / 2), dividerPaint)
             }
         }
-        Log.d("MY_TAG", "$selectedBeforeClick : $selectedTabPosition")
         selectedBeforeClick = selectedTabPosition
+    }
+
+    fun setOnTabClickListener(listener:(Int)->Unit) {
+        this.onTabSelectedListener = listener
     }
 }
