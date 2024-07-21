@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kspAnnotationPlugin)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.androidx.navigation.safeargs.ktx)
 }
 
 android {
@@ -68,9 +69,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.coil)
-    implementation(libs.lottie)
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)

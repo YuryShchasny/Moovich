@@ -10,14 +10,6 @@
         android:name="com.sb.moovich.presentation.search.ui.SearchFragment"
         android:label="@string/search"
         tools:layout="@layout/fragment_search" >
-        <action
-            android:id="@+id/action_navigation_search_to_movieInfoFragment"
-            app:destination="@id/movieInfoFragment"
-            app:enterAnim="@anim/screens_slide_right_in"
-            app:exitAnim="@anim/screens_slide_right_out" />
-        <action
-            android:id="@+id/action_navigation_search_to_filterFragment"
-            app:destination="@id/filterFragment" />
     </fragment>
 
     <fragment
@@ -25,13 +17,6 @@
         android:name="com.sb.moovich.presentation.home.ui.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_movieInfoFragment"
-            app:destination="@id/movieInfoFragment"
-            app:enterAnim="@anim/screens_slide_right_in"
-            app:exitAnim="@anim/screens_slide_right_out"
-            app:popEnterAnim="@anim/screens_slide_left_in"
-            app:popExitAnim="@anim/screens_slide_left_out" />
     </fragment>
 
     <fragment
@@ -39,27 +24,36 @@
         android:name="com.sb.moovich.presentation.favourites.ui.WatchListFragment"
         android:label="@string/title_watch_list"
         tools:layout="@layout/fragment_watch_list" >
-        <action
-            android:id="@+id/action_navigation_watch_list_to_movieInfoFragment"
-            app:destination="@id/movieInfoFragment" />
     </fragment>
+
+    <action
+        android:id="@+id/toMovie"
+        app:destination="@id/movieInfoFragment"
+        app:enterAnim="@anim/screens_slide_right_in"
+        app:exitAnim="@anim/screens_slide_left_out"
+        app:popEnterAnim="@anim/screens_slide_left_in"
+        app:popExitAnim="@anim/screens_slide_right_out" />
     <fragment
         android:id="@+id/movieInfoFragment"
         android:name="com.sb.moovich.presentation.info.ui.MovieInfoFragment"
         android:label="fragment_movie_info"
         tools:layout="@layout/fragment_movie_info">
-        <deepLink
-            app:uri="@string/fragment_info_deeplink" />
         <argument
-            android:name="@string/fragment_info_argument"
+            android:name="movie_id"
             app:argType="integer" />
     </fragment>
+
+    <action
+        android:id="@+id/toFilter"
+        app:destination="@id/filterFragment"
+        app:enterAnim="@anim/screens_slide_right_in"
+        app:exitAnim="@anim/screens_slide_left_out"
+        app:popEnterAnim="@anim/screens_slide_left_in"
+        app:popExitAnim="@anim/screens_slide_right_out" />
     <fragment
         android:id="@+id/filterFragment"
         android:name="com.sb.moovich.presentation.search.ui.FilterFragment"
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filter">
-        <deepLink
-            app:uri="@string/fragment_filter_deeplink" />
     </fragment>
 </navigation>

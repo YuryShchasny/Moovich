@@ -43,10 +43,6 @@ class CustomSpinner(context: Context, attrs: AttributeSet?) :
         listPopupWindow.setAdapter(adapter)
     }
 
-    fun getPopupScrolledOn(): Int {
-        return listPopupWindow.selectedItemPosition
-    }
-
     fun updateItems(items: List<SpinnerItem>) {
         popUpAdapter?.updateItems(items)
     }

@@ -4,24 +4,20 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.sb.moovich.core.views.SpinnerAdapter
-import com.sb.moovich.core.views.SpinnerItem
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.dpToPx
+import com.sb.moovich.core.navigation.INavigation
+import com.sb.moovich.core.views.SpinnerAdapter
+import com.sb.moovich.core.views.SpinnerItem
 import com.sb.moovich.domain.entity.Filter
 import com.sb.moovich.domain.entity.MovieType
 import com.sb.moovich.domain.entity.SortType
@@ -36,9 +32,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding>() {
+    @Inject lateinit var navigation: INavigation
     private val viewModel: FilterViewModel by viewModels()
     private val genreListAdapter = GenreListAdapter()
 
@@ -166,10 +164,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
     }
 
     private fun setClickListeners() {
-        binding.buttonBack.setOnClickListener { findNavController().navigateUp() }
+        binding.buttonBack.setOnClickListener { navigation.navigateUp() }
         binding.buttonReset.setOnClickListener {
             viewModel.fetchEvent(FilterFragmentEvent.Reset)
-            findNavController().navigateUp()
+            navigation.navigateUp()
         }
     }
 
@@ -189,7 +187,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
                     )
                 )
             )
-            findNavController().navigateUp()
+            navigation.navigateUp()
         }
     }
 

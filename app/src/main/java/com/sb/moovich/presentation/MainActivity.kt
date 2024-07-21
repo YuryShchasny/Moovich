@@ -14,11 +14,14 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.sb.moovich.R
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject lateinit var navigation: INavigation
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 window.navigationBarColor = ContextCompat.getColor(this, com.sb.moovich.core.R.color.black)
             }
         }
-
+        navigation.setNavController(navController)
         binding.navView.setupWithNavController(navController)
     }
 

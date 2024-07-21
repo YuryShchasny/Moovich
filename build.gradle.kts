@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.kapt) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.androidx.navigation.safeargs.ktx) apply false
 }

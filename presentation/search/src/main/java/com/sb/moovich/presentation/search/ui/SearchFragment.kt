@@ -10,24 +10,23 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieInfo
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.base.DeepLinkRequestBuilder
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
 import com.sb.moovich.presentation.search.model.search.SearchFragmentState
 import com.sb.moovich.presentation.search.viewmodel.SearchViewModel
 import com.sb.moovich.presentation.search.viewmodel.SearchViewModel.Companion.MAX_SEARCH_COUNT
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>() {
-
+    @Inject lateinit var navigation: INavigation
     private val viewModel: SearchViewModel by viewModels()
-
     private val adapter = MediumMovieItemListAdapter()
 
     override fun setupViewBinding(
@@ -126,21 +125,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private fun setClickListeners(state: SearchFragmentState.Content) {
         binding.filterButton.setOnClickListener {
-            DeepLinkRequestBuilder(
-                findNavController(),
-                R.string.fragment_filter_deeplink
-            )
-                .setNavigateAfterBuild(true)
-                .build()
+            navigation.navigateToFilter()
         }
         adapter.onMovieItemClickListener = { movieId ->
-            DeepLinkRequestBuilder(
-                findNavController(),
-                R.string.fragment_info_deeplink
-            )
-                .setNavigateAfterBuild(true)
-                .addArguments(R.string.fragment_info_argument to movieId)
-                .build()
+           navigation.navigateToMovie(movieId)
         }
         binding.textViewSearchSeeAll.setOnClickListener {
             state.seeAll = !state.seeAll

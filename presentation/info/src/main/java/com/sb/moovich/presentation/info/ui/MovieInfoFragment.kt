@@ -7,18 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.fragment.findNavController
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieInfo
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.base.DeepLinkRequestBuilder
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.info.R
 import com.sb.moovich.presentation.info.adapter.actors.ActorItemListAdapter
@@ -26,9 +23,13 @@ import com.sb.moovich.presentation.info.databinding.FragmentMovieInfoBinding
 import com.sb.moovich.presentation.info.viewmodel.MovieInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
+    @Inject lateinit var navigation: INavigation
+    private val viewModel: MovieInfoViewModel by viewModels()
+    private val actorAdapter = ActorItemListAdapter()
 
     override fun setupViewBinding(
         inflater: LayoutInflater,
@@ -36,9 +37,6 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
     ): FragmentMovieInfoBinding {
         return FragmentMovieInfoBinding.inflate(inflater, container, false)
     }
-
-    private val viewModel: MovieInfoViewModel by viewModels()
-    private val actorAdapter = ActorItemListAdapter()
 
     override fun onViewCreated(
         view: View,
@@ -129,13 +127,7 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
         } else {
             val similarMoviesAdapter = ShortMovieItemListAdapter()
             similarMoviesAdapter.onMovieItemClickListener = { movieId ->
-                DeepLinkRequestBuilder(
-                    findNavController(),
-                    com.sb.moovich.core.R.string.fragment_info_deeplink
-                )
-                    .setNavigateAfterBuild(true)
-                    .addArguments(com.sb.moovich.core.R.string.fragment_info_argument to movieId)
-                    .build()
+               navigation.navigateToMovie(movieId)
             }
             binding.recyclerViewSimilarMovies.adapter = similarMoviesAdapter
             similarMoviesAdapter.submitList(state.currencyMovie.similarMovies.map {

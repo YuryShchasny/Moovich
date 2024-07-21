@@ -1,31 +1,29 @@
 package com.sb.moovich.presentation.home.ui
 
 import android.animation.AnimatorInflater
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.animation.doOnCancel
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.fragment.findNavController
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieInfo
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.base.DeepLinkRequestBuilder
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.home.R
 import com.sb.moovich.presentation.home.databinding.FragmentHomeBinding
 import com.sb.moovich.presentation.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+    @Inject lateinit var navigation: INavigation
     private val viewModel: HomeViewModel by viewModels()
     private val adapter = ShortMovieItemListAdapter()
     private val loadAnimator by lazy {
@@ -79,13 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setClickListener() {
         adapter.onMovieItemClickListener = { movieId ->
-            DeepLinkRequestBuilder(
-                findNavController(),
-                com.sb.moovich.core.R.string.fragment_info_deeplink
-            )
-                .setNavigateAfterBuild(true)
-                .addArguments(com.sb.moovich.core.R.string.fragment_info_argument to movieId)
-                .build()
+            navigation.navigateToMovie(movieId)
         }
     }
 
