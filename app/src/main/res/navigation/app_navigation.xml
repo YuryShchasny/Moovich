@@ -3,28 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
-    <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.sb.moovich.presentation.search.ui.SearchFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_search" >
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.sb.moovich.presentation.home.ui.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_watch_list"
-        android:name="com.sb.moovich.presentation.favourites.ui.WatchListFragment"
-        android:label="@string/title_watch_list"
-        tools:layout="@layout/fragment_watch_list" >
-    </fragment>
+    app:startDestination="@id/homeFlowFragment">
 
     <action
         android:id="@+id/toMovie"
@@ -56,4 +35,9 @@
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filter">
     </fragment>
+    <fragment
+        android:id="@+id/homeFlowFragment"
+        android:name="com.sb.moovich.navigation.HomeFlowFragment"
+        android:label="HomeFlowFragment"
+        tools:layout="@layout/home_flow_fragment"/>
 </navigation>
