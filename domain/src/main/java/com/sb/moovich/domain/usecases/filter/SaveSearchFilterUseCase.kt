@@ -7,5 +7,5 @@ import javax.inject.Inject
 class SaveSearchFilterUseCase @Inject constructor(
     private val repository: SearchFilterRepository,
 ) {
-    operator fun invoke(filter: Filter) = repository.saveFilter(filter)
+    suspend operator fun invoke(filter: Filter) = repository.saveFilter(filter)
 }

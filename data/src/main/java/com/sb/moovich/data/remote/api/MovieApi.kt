@@ -39,4 +39,18 @@ interface MovieApi {
         @Query("limit") limit: Int = SEARCH_MOVIES_LIMIT,
         @Query("query") name: String,
     ): Response<MovieDocDto>
+
+    @GET("movie")
+    suspend fun filterMovie(
+        @Header("X-API-KEY") apiKey: String = API_KEY,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = SEARCH_MOVIES_LIMIT,
+        @Query("type") type: String?,
+        @Query("year") year: String,
+        @Query("rating.kp") rating: String,
+        @Query("genres.name") genres: Array<String>,
+        @Query("countries.name") countries: Array<String>,
+    ): Response<MovieDocDto>
+
+
 }

@@ -11,8 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.sb.moovich.core.adapters.shortmovies.ShortMovieInfo
+import com.sb.moovich.core.adapters.shortmovies.ShortMovie
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.navigation.INavigation
@@ -27,7 +26,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
-    @Inject lateinit var navigation: INavigation
+    @Inject
+    lateinit var navigation: INavigation
     private val viewModel: MovieInfoViewModel by viewModels()
     private val actorAdapter = ActorItemListAdapter()
 
@@ -51,8 +51,9 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
 
     private fun observeState() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.state.collect { state ->
+            viewModel.state
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { state ->
                     when (state) {
                         is MovieInfoFragmentState.Content -> {
                             binding.progressBar.visibility = View.GONE
@@ -76,14 +77,13 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
                         }
                     }
                 }
-            }
         }
     }
 
     private fun observeBookmark(currencyMovie: Movie) {
         lifecycleScope.launch {
             viewModel.bookmarkChecked
-                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { isChecked ->
                     isChecked?.let {
                         if (it) {
@@ -127,11 +127,11 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
         } else {
             val similarMoviesAdapter = ShortMovieItemListAdapter()
             similarMoviesAdapter.onMovieItemClickListener = { movieId ->
-               navigation.navigateToMovie(movieId)
+                navigation.navigateToMovie(movieId)
             }
             binding.recyclerViewSimilarMovies.adapter = similarMoviesAdapter
             similarMoviesAdapter.submitList(state.currencyMovie.similarMovies.map {
-                ShortMovieInfo(it.id, it.name, it.rating, it.poster)
+                ShortMovie.ShortMovieInfo(it.id, it.name, it.rating, it.poster)
             })
         }
     }

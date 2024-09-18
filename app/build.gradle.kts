@@ -23,11 +23,15 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
         }
     }
     compileOptions {
@@ -39,6 +43,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
     kapt {
         correctErrorTypes = true

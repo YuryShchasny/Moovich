@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.favourites.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,11 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
     private val moviesAdapter = MediumMovieItemListAdapter()
     private val genresAdapter = GenreItemListAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("MY_TAG", "Favourites onCreate")
+    }
+
     override fun setupViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -48,7 +54,7 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
     private fun observeWatchList() {
         lifecycleScope.launch {
             viewModel.state
-                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
                     when (state) {
                         is WatchListFragmentState.Content -> {

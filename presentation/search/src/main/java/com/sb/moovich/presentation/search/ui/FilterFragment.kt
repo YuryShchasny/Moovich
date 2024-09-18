@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.core.views.SpinnerAdapter
 import com.sb.moovich.core.views.SpinnerItem
 import com.sb.moovich.domain.entity.Filter
+import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.domain.entity.MovieType
 import com.sb.moovich.domain.entity.SortType
 import com.sb.moovich.presentation.search.R
@@ -36,7 +38,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding>() {
-    @Inject lateinit var navigation: INavigation
+    @Inject
+    lateinit var navigation: INavigation
     private val viewModel: FilterViewModel by viewModels()
     private val genreListAdapter = GenreListAdapter()
 
@@ -51,14 +54,15 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             viewModel.state
-                .flowWithLifecycle(lifecycle, Lifecycle.State.CREATED)
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
                     when (state) {
                         is FilterFragmentState.Content -> {
-                            setRanges()
+                            setRanges(state.filter)
                             setGenreList(state.filter, state.genres)
                             setCountrySpinner(state.filter, state.countries)
                             setClickListeners()
+                            setTabLayout(state.filter)
                             binding.progressBar.visibility = View.GONE
                             binding.scrollView.visibility = View.VISIBLE
                             viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(state.filter))
@@ -75,16 +79,16 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
                             updateSortBy(state.filter)
                             updateTabLayout(state.filter)
                             setApplyButton(state.filter)
-                            binding.applyTextView.text = String.format(
-                                Locale.getDefault(),
-                                getStringCompat(R.string.apply_filters),
-                                state.filter.getFiltersCount()
-                            )
                         }
                     }
 
                 }
         }
+    }
+
+    private fun setTabLayout(filter: Filter) {
+        val position = MovieType.entries.indexOf(filter.type)
+        binding.typeChooser.selectTab(binding.typeChooser.getTabAt(position))
     }
 
     private fun updateGenreList(filter: Filter) {
@@ -173,22 +177,27 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
 
     private fun setApplyButton(filter: Filter) {
         binding.applyButton.setOnClickListener {
-            val yearFrom = binding.rangeYearSlider.valueFrom.toInt()
-            val yearTo = binding.rangeYearSlider.valueTo.toInt()
-            val ratingFrom = binding.rangeRatingSlider.valueFrom.toInt()
-            val ratingTo = binding.rangeRatingSlider.valueTo.toInt()
             viewModel.fetchEvent(
                 FilterFragmentEvent.SaveFilter(
-                    filter.copy(
-                        yearFrom = yearFrom,
-                        yearTo = yearTo,
-                        ratingFrom = ratingFrom,
-                        ratingTo = ratingTo
-                    )
+                    filter
                 )
             )
             navigation.navigateUp()
         }
+        binding.applyButton.apply {
+            if (filter.hasFilters()) {
+                setCardBackgroundColor(getColorCompat(com.sb.moovich.core.R.color.primary))
+                isClickable = true
+            } else {
+                setCardBackgroundColor(getColorCompat(com.sb.moovich.core.R.color.pre_black))
+                isClickable = false
+            }
+        }
+        binding.applyTextView.text = String.format(
+            Locale.getDefault(),
+            getStringCompat(R.string.apply_filters),
+            filter.getFiltersCount()
+        )
     }
 
     private fun setGenreList(filter: Filter, genreList: List<String>) {
@@ -214,7 +223,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         }
     }
 
-    private fun setRanges() {
+    private fun setRanges(filter: Filter) {
         setRange(
             binding.rangeYearSlider,
             YEAR_FROM,
@@ -229,6 +238,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
             binding.startRatingTextView,
             binding.endRatingTextView
         )
+        binding.rangeYearSlider.values[0] = filter.yearFrom.toFloat()
+        binding.rangeYearSlider.values[1] = filter.yearTo.toFloat()
+        binding.rangeRatingSlider.values[0] = filter.ratingFrom.toFloat()
+        binding.rangeRatingSlider.values[1] = filter.ratingTo.toFloat()
     }
 
     private fun setRange(
@@ -248,6 +261,14 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         range.addOnChangeListener { slider, _, _ ->
             startTextView.text = slider.values.first().toInt().toString()
             endTextView.text = slider.values.last().toInt().toString()
+            viewModel.fetchEvent(
+                FilterFragmentEvent.UpdateSliders(
+                    binding.rangeYearSlider.values.first().toInt(),
+                    binding.rangeYearSlider.values.last().toInt(),
+                    binding.rangeRatingSlider.values.first().toInt(),
+                    binding.rangeRatingSlider.values.last().toInt(),
+                )
+            )
         }
     }
 

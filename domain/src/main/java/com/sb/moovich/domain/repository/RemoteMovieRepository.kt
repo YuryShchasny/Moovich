@@ -1,6 +1,6 @@
 package com.sb.moovich.domain.repository
+import com.sb.moovich.domain.entity.Filter
 import com.sb.moovich.domain.entity.Movie
-import kotlinx.coroutines.flow.Flow
 
 interface RemoteMovieRepository {
     suspend fun getRecommendedMovies(): List<Movie>
@@ -11,4 +11,6 @@ interface RemoteMovieRepository {
         name: String,
         count: Int,
     ): List<Movie>
+
+    suspend fun findMoviesWithFilter(filter: Filter, count: Int): List<Movie>
 }

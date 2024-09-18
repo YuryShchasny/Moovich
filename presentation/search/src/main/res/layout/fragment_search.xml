@@ -21,6 +21,57 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/search_plain_text_background"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/search_icon"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/hint" />
+
+                <EditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:hint="@string/search_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="text|textAutoComplete|textAutoCorrect|textCapWords"
+                    android:singleLine="true"
+                    android:textColor="?attr/colorPrimary"
+                    android:textColorHint="@color/hint"
+                    android:textCursorDrawable="@drawable/search_cursor"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/filterButton"
+                style="@style/clickable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_weight="0"
+                android:background="@drawable/ic_filter_background"
+                android:contentDescription="@string/filter_movies_button"
+                android:src="@drawable/ic_filter" />
+        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -40,7 +91,7 @@
                         android:id="@+id/linearLayoutRecent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="48dp"
+                        android:layout_marginTop="24dp"
                         android:layout_marginBottom="16dp"
                         android:orientation="horizontal">
 
@@ -56,6 +107,7 @@
 
                         <TextView
                             android:id="@+id/textViewSearchSeeAll"
+                            style="@style/clickable"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end|center_vertical"
@@ -63,6 +115,33 @@
                             android:text="@string/see_all_history"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
+
+                        <LinearLayout
+                            android:id="@+id/filterCountLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/filter_count_shape"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/filterCountText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="10dp"
+                                android:fontFamily="@font/gilroy_medium"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:id="@+id/filterResetIcon"
+                                style="@style/clickable_rounded"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                app:srcCompat="@drawable/ic_close" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -77,65 +156,42 @@
             </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/layoutErrorState"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:background="@drawable/search_background"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
+                android:layout_marginVertical="@dimen/vertical_margin"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/search_plain_text_background"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="4dp"
-                        android:contentDescription="@string/search_icon"
-                        android:src="@drawable/ic_search"
-                        app:tint="@color/hint" />
-
-                    <ScrollView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/searchEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:fontFamily="@font/gilroy_medium"
-                            android:hint="@string/search_hint"
-                            android:importantForAutofill="no"
-                            android:inputType="text|textAutoComplete|textAutoCorrect|textCapWords"
-                            android:singleLine="true"
-                            android:textColor="?attr/colorPrimary"
-                            android:textColorHint="@color/hint"
-                            android:textSize="12sp" />
-                    </ScrollView>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/filterButton"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="0"
-                    android:background="@drawable/ic_filter_background"
-                    android:contentDescription="@string/filter_movies_button"
-                    android:src="@drawable/ic_filter" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/chillax_medium"
+                    android:text="@string/oops"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/horizontal_margin"
+                    android:breakStrategy="high_quality"
+                    android:fontFamily="@font/chillax_medium"
+                    android:text="@string/unfortunately_nothing_was_found_for_your_request"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="24sp" />
+
             </LinearLayout>
 
-            <ProgressBar
+            <com.sb.moovich.core.views.SearchProgressBar
                 android:id="@+id/progressBarSearch"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
         </FrameLayout>

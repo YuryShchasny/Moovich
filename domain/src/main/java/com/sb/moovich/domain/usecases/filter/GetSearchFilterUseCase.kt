@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetSearchFilterUseCase @Inject constructor(
     private val repository: SearchFilterRepository,
 ) {
-    operator fun invoke() = repository.getFilter()
+    suspend operator fun invoke() = repository.getFilter()
 }

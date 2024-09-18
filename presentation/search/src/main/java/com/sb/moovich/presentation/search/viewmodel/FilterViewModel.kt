@@ -22,8 +22,7 @@ class FilterViewModel @Inject constructor(
     getSearchFilterUseCase: GetSearchFilterUseCase,
     getGenresUseCase: GetGenresUseCase,
     getCountriesUseCase: GetCountriesUseCase,
-    private val saveSearchFilterUseCase: SaveSearchFilterUseCase
-
+    private val saveSearchFilterUseCase: SaveSearchFilterUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow<FilterFragmentState>(FilterFragmentState.Loading)
     val state = _state.asStateFlow()
@@ -40,17 +39,37 @@ class FilterViewModel @Inject constructor(
     fun fetchEvent(event: FilterFragmentEvent) {
         when (event) {
             FilterFragmentEvent.Reset -> {
-                saveSearchFilterUseCase(Filter())
+                viewModelScope.launch {
+                    saveSearchFilterUseCase(Filter())
+                }
             }
+
             is FilterFragmentEvent.SaveFilter -> {
-                saveSearchFilterUseCase(event.filter)
+                viewModelScope.launch {
+                    saveSearchFilterUseCase(event.filter)
+                }
             }
 
             is FilterFragmentEvent.UpdateFilter -> _state.update {
-                when(it) {
+                when (it) {
                     is FilterFragmentState.Content -> FilterFragmentState.FilterState(event.filter)
                     is FilterFragmentState.FilterState -> FilterFragmentState.FilterState(event.filter)
                     FilterFragmentState.Loading -> throw RuntimeException("Incorrect FilterFragmentState")
+                }
+            }
+
+            is FilterFragmentEvent.UpdateSliders -> {
+                (state.value as? FilterFragmentState.FilterState)?.filter?.let { filter ->
+                    fetchEvent(
+                        FilterFragmentEvent.UpdateFilter(
+                            filter.copy(
+                                yearFrom = event.yearFrom,
+                                yearTo = event.yearTo,
+                                ratingFrom = event.ratingFrom,
+                                ratingTo = event.ratingTo
+                            )
+                        )
+                    )
                 }
             }
         }

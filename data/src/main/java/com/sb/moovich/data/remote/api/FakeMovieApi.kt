@@ -7,6 +7,7 @@ import com.sb.moovich.data.remote.dto.MovieDto
 import com.sb.moovich.data.remote.dto.MoviePosterDto
 import com.sb.moovich.data.remote.dto.MovieRatingDto
 import com.sb.moovich.data.remote.dto.PersonDto
+import kotlinx.coroutines.delay
 import retrofit2.Response
 
 class FakeMovieApi : MovieApi {
@@ -19,6 +20,7 @@ class FakeMovieApi : MovieApi {
         releaseYearEnd: String,
         rating: String
     ): Response<MovieDocDto> {
+        delay(1000)
         return Response.success(
             MovieDocDto(
                 listOf(
@@ -268,6 +270,7 @@ class FakeMovieApi : MovieApi {
     }
 
     override suspend fun getMovieById(id: Int, apiKey: String): Response<MovieDto> {
+        delay(1000)
         return Response.success(
             MovieDto(
                 263531,
@@ -493,6 +496,7 @@ class FakeMovieApi : MovieApi {
         limit: Int,
         name: String
     ): Response<MovieDocDto> {
+        delay(1000)
         return Response.success(
             MovieDocDto(
                 listOf(
@@ -559,5 +563,19 @@ class FakeMovieApi : MovieApi {
                 ).filter { it.name?.contains(name, ignoreCase = true) ?: false}
             )
         )
+    }
+
+    override suspend fun filterMovie(
+        apiKey: String,
+        page: Int,
+        limit: Int,
+        type: String?,
+        year: String,
+        rating: String,
+        genres: Array<String>,
+        countries: Array<String>
+    ): Response<MovieDocDto> {
+        delay(1000)
+        return findMovie("", 0, 0, "")
     }
 }
