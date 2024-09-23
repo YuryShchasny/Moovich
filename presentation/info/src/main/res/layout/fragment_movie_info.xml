@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="com.sb.moovich.domain.entity.Movie" />
@@ -39,7 +40,7 @@
                     android:contentDescription="@string/backdrop"
                     android:foreground="@drawable/backdrop_foreground"
                     android:scaleType="centerCrop"
-                    app:load="@{movie.backdrop}"/>
+                    app:load="@{movie.backdrop}" />
 
                 <TextView
                     android:id="@+id/textViewName"
@@ -120,10 +121,10 @@
                         style="@style/Widget.Material3.Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gilroy_medium"
-                        android:text="@string/watch"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="0.9"
+                        android:fontFamily="@font/gilroy_medium"
+                        android:text="@string/watch"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -181,8 +182,8 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        style="@style/clickable"
                         android:id="@+id/textViewSeeAll"
+                        style="@style/clickable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gilroy_medium"
@@ -216,6 +217,7 @@
                     android:id="@+id/recyclerViewSimilarMovies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/item_movie_card_margin"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:orientation="horizontal"

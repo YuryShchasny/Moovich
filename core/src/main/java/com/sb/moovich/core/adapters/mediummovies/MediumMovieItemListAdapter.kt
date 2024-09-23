@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.sb.moovich.core.R
+import com.sb.moovich.core.extensions.dpToPx
 import com.sb.moovich.domain.entity.Movie
 import java.util.Locale
 
@@ -17,7 +20,7 @@ class MediumMovieItemListAdapter :
         MediumMovieItemListDiffCallback()
     ) {
     var onMovieItemClickListener: ((Int) -> Unit)? = null
-    var topPadding = 0
+    var topMargin = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediumMovieItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -62,7 +65,9 @@ class MediumMovieItemListAdapter :
             }
         }
 
-        holder.itemView.setPadding(0, if(position == 0) topPadding else 0, 0, 0)
+        holder.itemView.updateLayoutParams<RecyclerView.LayoutParams> {
+            setMargins(0, (if(position == 0) this@MediumMovieItemListAdapter.topMargin else 0) + 8.dpToPx(), 0, 8.dpToPx())
+        }
     }
 
     // TODO DATA BINDING

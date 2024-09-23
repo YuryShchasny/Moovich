@@ -1,7 +1,6 @@
 package com.sb.moovich.presentation.favourites.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.sb.moovich.core.adapters.mediummovies.MediumMovieInfo
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.dpToPx
@@ -93,7 +91,7 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
     }
 
     private fun initRecyclerViews() {
-        binding.recyclerViewWatchList.adapter = moviesAdapter.apply { topPadding = 60.dpToPx() }
+        binding.recyclerViewWatchList.adapter = moviesAdapter.apply { topMargin = 60.dpToPx() }
         binding.recyclerViewGenres.adapter = genresAdapter
     }
 

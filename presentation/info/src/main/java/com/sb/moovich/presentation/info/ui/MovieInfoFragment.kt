@@ -16,7 +16,6 @@ import com.sb.moovich.core.adapters.shortmovies.ShortMovie
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.navigation.INavigation
-import com.sb.moovich.presentation.info.R
 import com.sb.moovich.presentation.info.adapter.actors.ActorItemListAdapter
 import com.sb.moovich.presentation.info.databinding.FragmentMovieInfoBinding
 import com.sb.moovich.presentation.info.viewmodel.MovieInfoViewModel
