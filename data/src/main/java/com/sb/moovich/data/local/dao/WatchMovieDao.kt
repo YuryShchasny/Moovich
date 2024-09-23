@@ -16,6 +16,9 @@ interface WatchMovieDao {
     @Query("SELECT * FROM watch")
     fun getMovies(): List<WatchMovieDbo>
 
-    @Delete
-    suspend fun deleteMovie(movie: WatchMovieDbo)
+    @Query("DELETE FROM watch WHERE id = :id")
+    suspend fun deleteMovie(id: Int)
+
+    @Query("SELECT * FROM watch WHERE id = :id")
+    suspend fun getMovieById(id: Int): WatchMovieDbo?
 }

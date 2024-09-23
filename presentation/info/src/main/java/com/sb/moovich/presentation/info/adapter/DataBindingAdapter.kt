@@ -26,9 +26,7 @@ fun bindStringList(
     textView: TextView,
     genres: List<String>?,
 ) {
-    genres?.forEach {
-        textView.text = textView.text.toString() + it + ", "
-    }
+    textView.text = genres?.joinToString { "$it, " }
 }
 
 @SuppressLint("SetTextI18n")

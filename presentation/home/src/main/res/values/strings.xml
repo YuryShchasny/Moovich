@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_10_months">Top 10 Months</string>
+    <string name="collections">Collections</string>
+    <string name="top_10_series">Top 10 Series</string>
+    <string name="genre">Genre</string>
+</resources>

@@ -24,4 +24,7 @@ interface RecentMovieDao {
 
     @Query("SELECT COUNT(*) FROM recent")
     fun getCount(): Int
+
+    @Query("SELECT * FROM recent WHERE id = :id")
+    suspend fun getMovieById(id: Int): RecentMovieDbo?
 }

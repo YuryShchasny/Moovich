@@ -30,4 +30,5 @@
     <string name="movies">Movies</string>
     <string name="series">Series</string>
     <string name="cartoons">Cartoons</string>
+    <string name="count">Количество: %d</string>
 </resources>

@@ -7,21 +7,26 @@ import com.sb.moovich.domain.entity.Actor
 import com.sb.moovich.domain.entity.Movie
 import javax.inject.Inject
 
-class MovieDtoMapper @Inject constructor() {
+class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
     companion object {
         private const val KINOPOISK_URL = "https://www.kinopoisk.ru/film/"
-        private const val UNDEFINED = "undefined"
         private const val KINOPOISK_POSTER_PLACEHOLDER =
             "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-logo/placeholder.svg"
     }
 
-    fun mapDataToEntity(data: MovieDto, withSimilarMovies: Boolean = true) = Movie(
+    override suspend fun mapDataToEntity(data: MovieDto): Movie = mapDataToEntity(data, true)
+
+    override suspend fun mapEntityToData(entity: Movie): MovieDto {
+        throw UnsupportedOperationException()
+    }
+
+    suspend fun mapDataToEntity(data: MovieDto, withSimilarMovies: Boolean) = Movie(
         id = data.id ?: throw DataException.NoMovieWithThisID(data.id),
         name = getName(data),
-        description = data.description ?: UNDEFINED,
+        description = data.description ?: "",
         rating = data.rating?.kinopoisk ?: data.rating?.imdb ?: 0.0,
-        poster = data.poster?.previewUrl ?: KINOPOISK_POSTER_PLACEHOLDER,
-        backdrop = data.backdrop?.url ?: "",
+        poster = getPoster(data),
+        backdrop = data.backdrop?.url ?: getPoster(data),
         movieLength = data.movieLength ?: 0,
         urlWatch = "$KINOPOISK_URL${data.id}",
         year = data.year ?: 0,
@@ -37,7 +42,7 @@ class MovieDtoMapper @Inject constructor() {
         else emptyList()
     )
 
-    fun mapDataToEntityList(data: List<MovieDto>): List<Movie> = data.map { mapDataToEntity(it) }
+    suspend fun mapDataToEntityList(data: List<MovieDto>): List<Movie> = data.map { mapDataToEntity(it) }
 
     private fun mapPersonsToActors(persons: List<PersonDto>?): List<Actor> =
         persons?.let { list ->
@@ -64,7 +69,9 @@ class MovieDtoMapper @Inject constructor() {
                     return alternativeName
                 }
             }
-            return UNDEFINED
+            return ""
         }
     }
+
+    private fun getPoster(data: MovieDto) = data.poster?.previewUrl ?: data.poster?.url ?: KINOPOISK_POSTER_PLACEHOLDER
 }

@@ -26,7 +26,6 @@ sealed class SearchFragmentState {
         data class FilterList(
             val findList: List<Movie>,
             val filtersCount: Int,
-            val seeAllFilterList: Boolean
-        ) : Content(seeAllFilterList)
+        ) : Content(false)
     }
 }

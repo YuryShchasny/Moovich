@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.sb.moovich.R
+import com.sb.moovich.core.views.MoovichBottomNavigationView
 import com.sb.moovich.databinding.HomeFlowFragmentBinding
 
-class HomeFlowFragment: Fragment() {
+class HomeFlowFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,7 +20,26 @@ class HomeFlowFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = HomeFlowFragmentBinding.inflate(inflater, container, false)
-        val host = childFragmentManager.findFragmentById(R.id.homeFlowFragmentContainer) as NavHostFragment
+        val host =
+            childFragmentManager.findFragmentById(R.id.homeFlowFragmentContainer) as NavHostFragment
+        val menu = listOf(
+            MoovichBottomNavigationView.MenuItem(
+                "navigation_search",
+                ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_search)!!,
+                getString(com.sb.moovich.core.R.string.search)
+            ),
+            MoovichBottomNavigationView.MenuItem(
+                "navigation_home",
+                ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_home)!!,
+                getString(com.sb.moovich.core.R.string.title_home)
+            ),
+            MoovichBottomNavigationView.MenuItem(
+                "navigation_watch_list",
+                ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_watch_list)!!,
+                getString(com.sb.moovich.core.R.string.title_watch_list)
+            ),
+        )
+        binding.bottomNavigationView.setNavMenu(menu)
         binding.bottomNavigationView.setupWithNavController(host.navController)
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView) { v, insets ->
             v.setPadding(0, 0, 0, 0)

@@ -3,17 +3,17 @@ package com.sb.moovich.presentation.search.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sb.moovich.domain.entity.Filter
-import com.sb.moovich.domain.usecases.FindMovieUseCase
-import com.sb.moovich.domain.usecases.FindMovieWithFilterUseCase
-import com.sb.moovich.domain.usecases.GetRecentMoviesUseCase
+import com.sb.moovich.domain.usecases.all.MovieNextPageUseCase
 import com.sb.moovich.domain.usecases.filter.GetSearchFilterUseCase
 import com.sb.moovich.domain.usecases.filter.SaveSearchFilterUseCase
+import com.sb.moovich.domain.usecases.find.FindMovieUseCase
+import com.sb.moovich.domain.usecases.find.FindMovieWithFilterUseCase
+import com.sb.moovich.domain.usecases.recent.GetRecentMoviesUseCase
 import com.sb.moovich.presentation.search.model.search.SearchFragmentEvent
 import com.sb.moovich.presentation.search.model.search.SearchFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,6 +27,7 @@ class SearchViewModel @Inject constructor(
     private val findMovieUseCase: FindMovieUseCase,
     private val findMovieWithFilterUseCase: FindMovieWithFilterUseCase,
     private val saveSearchFilterUseCase: SaveSearchFilterUseCase,
+    private val movieNextPageUseCase: MovieNextPageUseCase
 ) : ViewModel() {
     companion object {
         const val DEFAULT_SEARCH_COUNT = 10
@@ -54,6 +55,14 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun nextPage() {
+        if(_state.value is SearchFragmentState.Content.FilterList) {
+            viewModelScope.launch(Dispatchers.IO) {
+                movieNextPageUseCase()
+            }
+        }
+    }
+
     private fun resetFilters() {
         viewModelScope.launch(Dispatchers.IO) {
             saveSearchFilterUseCase.invoke(Filter())
@@ -73,14 +82,20 @@ class SearchViewModel @Inject constructor(
         _state.update { SearchFragmentState.Loading }
         filterJob?.cancel()
         filterJob = viewModelScope.launch(Dispatchers.IO) {
-            val list = findMovieWithFilterUseCase(filter, count)
-            _state.update {
-                SearchFragmentState.Content.FilterList(
-                    list.filter { it.name.isNotEmpty() }
-                        .sortedByDescending { it.year },
-                    filter.getFiltersCount(),
-                    count == MAX_SEARCH_COUNT
-                )
+            findMovieWithFilterUseCase(filter, count).collect { list ->
+                _state.update { state ->
+                    if(state is SearchFragmentState.Content.FilterList) {
+                        state.copy(
+                            findList = state.findList + list.filter { it.name.isNotEmpty() },
+                            filtersCount = filter.getFiltersCount()
+                        )
+                    } else {
+                        SearchFragmentState.Content.FilterList(
+                            list.filter { it.name.isNotEmpty() },
+                            filter.getFiltersCount(),
+                        )
+                    }
+                }
             }
         }
     }

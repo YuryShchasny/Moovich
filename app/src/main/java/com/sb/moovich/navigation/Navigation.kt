@@ -3,6 +3,10 @@ package com.sb.moovich.navigation
 import androidx.navigation.NavController
 import com.sb.moovich.R
 import com.sb.moovich.core.navigation.INavigation
+import com.sb.moovich.domain.entity.Collection
+import com.sb.moovich.domain.entity.GetAllType
+import com.sb.moovich.presentation.all.ui.AllMoviesFragmentArgs
+import com.sb.moovich.presentation.collection.ui.CollectionFragmentArgs
 import com.sb.moovich.presentation.info.ui.MovieInfoFragmentArgs
 import javax.inject.Inject
 
@@ -24,5 +28,19 @@ class Navigation @Inject constructor(): INavigation {
     override fun navigateToMovie(movieId: Int) {
         val args = MovieInfoFragmentArgs(movieId)
         navController?.navigate(R.id.toMovie, args.toBundle())
+    }
+
+    override fun navigateToAllMovies(type: GetAllType) {
+        val args = AllMoviesFragmentArgs(type)
+        navController?.navigate(R.id.toAllMovies, args.toBundle())
+    }
+
+    override fun navigateToAllCollections() {
+        navController?.navigate(R.id.toAllCollections)
+    }
+
+    override fun navigateToCollection(collection: Collection) {
+        val args = CollectionFragmentArgs(collection)
+        navController?.navigate(R.id.toCollection, args.toBundle())
     }
 }

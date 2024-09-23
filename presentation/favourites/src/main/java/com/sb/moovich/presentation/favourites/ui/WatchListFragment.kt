@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieInfo
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.extensions.dpToPx
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.favourites.adapter.Genre
 import com.sb.moovich.presentation.favourites.adapter.GenreItemListAdapter
@@ -28,11 +29,6 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
     private val viewModel: WatchListViewModel by viewModels()
     private val moviesAdapter = MediumMovieItemListAdapter()
     private val genresAdapter = GenreItemListAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("MY_TAG", "Favourites onCreate")
-    }
 
     override fun setupViewBinding(
         inflater: LayoutInflater,
@@ -60,18 +56,7 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
                         is WatchListFragmentState.Content -> {
                             binding.progressBar.visibility = View.GONE
                             setClickListener()
-                            moviesAdapter.submitList(state.movieList.map {
-                                MediumMovieInfo(
-                                    it.id,
-                                    it.name,
-                                    it.description,
-                                    it.rating,
-                                    it.poster,
-                                    it.year,
-                                    it.movieLength,
-                                    it.genres
-                                )
-                            })
+                            moviesAdapter.submitList(state.movieList)
                             val genresList = mutableSetOf<String>()
                             state.movieList.forEach {
                                 genresList.addAll(it.genres)
@@ -87,18 +72,7 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
                                             filteredMovieList.filter { it.genres.contains(genre.name) }
                                     }
                                 }
-                                moviesAdapter.submitList(filteredMovieList.map {
-                                    MediumMovieInfo(
-                                        it.id,
-                                        it.name,
-                                        it.description,
-                                        it.rating,
-                                        it.poster,
-                                        it.year,
-                                        it.movieLength,
-                                        it.genres
-                                    )
-                                })
+                                moviesAdapter.submitList(filteredMovieList)
                             }
                         }
 
@@ -119,7 +93,7 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
     }
 
     private fun initRecyclerViews() {
-        binding.recyclerViewWatchList.adapter = moviesAdapter
+        binding.recyclerViewWatchList.adapter = moviesAdapter.apply { topPadding = 60.dpToPx() }
         binding.recyclerViewGenres.adapter = genresAdapter
     }
 

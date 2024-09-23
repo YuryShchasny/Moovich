@@ -13,11 +13,12 @@
     <color name="white_30">#4DFFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
     <color name="white_track_inactive">#EEF1F4</color>
-    <color name="gray">#5E5E5E</color>
+    <color name="grey">#5E5E5E</color>
     <color name="hint">#9FA6B0</color>
-    <color name="gray2">#282828</color>
+    <color name="grey2">#282828</color>
     <color name="secondary">#8686DC</color>
     <color name="secondary_30">#4D8686DC</color>
     <color name="primary">#B6EA21</color>
     <color name="on_background">#1C1C1C</color>
+    <color name="on_nav_bar">#313131</color>
 </resources>

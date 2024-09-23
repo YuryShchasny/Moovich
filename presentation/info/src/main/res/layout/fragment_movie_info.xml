@@ -14,15 +14,12 @@
         android:layout_height="match_parent"
         tools:context=".presentation.movie_info.MovieInfoFragment">
 
-        <ProgressBar
+        <com.sb.moovich.core.views.SearchProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
-            android:progress="@color/primary"
-            android:visibility="gone">
-
-        </ProgressBar>
+            android:visibility="gone" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
@@ -145,6 +142,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/descriptionTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/horizontal_margin"
@@ -166,6 +164,7 @@
                     tools:text="A mythic and emotionally charged hero's journey, Dune tells the story of Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, who must travel to the most dangerous planet in the universe to ensure the future of his family and his people. " />
 
                 <LinearLayout
+                    android:id="@+id/actorsTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/horizontal_margin"
@@ -182,6 +181,7 @@
                         android:textSize="20sp" />
 
                     <TextView
+                        style="@style/clickable"
                         android:id="@+id/textViewSeeAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

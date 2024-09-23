@@ -53,8 +53,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:breakStrategy="high_quality"
+            android:ellipsize="end"
             android:fontFamily="@font/gilroy_medium"
-            android:textColor="@color/gray"
+            android:maxLines="1"
+            android:textColor="@color/grey"
             android:textSize="12sp"
             tools:text="Duncan Idaho" />
     </LinearLayout>

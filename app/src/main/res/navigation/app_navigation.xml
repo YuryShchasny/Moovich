@@ -33,11 +33,57 @@
         android:id="@+id/filterFragment"
         android:name="com.sb.moovich.presentation.search.ui.FilterFragment"
         android:label="FilterFragment"
-        tools:layout="@layout/fragment_filter">
-    </fragment>
+        tools:layout="@layout/fragment_filter" />
     <fragment
         android:id="@+id/homeFlowFragment"
         android:name="com.sb.moovich.navigation.HomeFlowFragment"
         android:label="HomeFlowFragment"
-        tools:layout="@layout/home_flow_fragment"/>
+        tools:layout="@layout/home_flow_fragment" />
+
+    <action
+        android:id="@+id/toAllMovies"
+        app:destination="@id/allMoviesFragment"
+        app:enterAnim="@anim/screens_slide_right_in"
+        app:exitAnim="@anim/screens_slide_left_out"
+        app:popEnterAnim="@anim/screens_slide_left_in"
+        app:popExitAnim="@anim/screens_slide_right_out" />
+    <fragment
+        android:id="@+id/allMoviesFragment"
+        android:name="com.sb.moovich.presentation.all.ui.AllMoviesFragment"
+        android:label="AllMoviesFragment"
+        tools:layout="@layout/fragment_all_movies">
+        <argument
+            android:name="type"
+            app:argType="com.sb.moovich.domain.entity.GetAllType" />
+    </fragment>
+
+    <action
+        android:id="@+id/toAllCollections"
+        app:destination="@id/allCollectionsFragment"
+        app:enterAnim="@anim/screens_slide_right_in"
+        app:exitAnim="@anim/screens_slide_left_out"
+        app:popEnterAnim="@anim/screens_slide_left_in"
+        app:popExitAnim="@anim/screens_slide_right_out" />
+    <fragment
+        android:id="@+id/allCollectionsFragment"
+        android:name="com.sb.moovich.presentation.all.ui.AllCollectionsFragment"
+        android:label="AllCollectionsFragment"
+        tools:layout="@layout/fragment_all_collections" />
+
+    <action
+        android:id="@+id/toCollection"
+        app:destination="@id/collectionFragment"
+        app:enterAnim="@anim/screens_slide_right_in"
+        app:exitAnim="@anim/screens_slide_left_out"
+        app:popEnterAnim="@anim/screens_slide_left_in"
+        app:popExitAnim="@anim/screens_slide_right_out" />
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.sb.moovich.presentation.collection.ui.CollectionFragment"
+        android:label="CollectionFragment"
+        tools:layout="@layout/fragment_collection" >
+        <argument
+            android:name="collection"
+            app:argType="com.sb.moovich.domain.entity.Collection" />
+    </fragment>
 </navigation>

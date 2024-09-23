@@ -3,7 +3,6 @@ package com.sb.moovich.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.room.Room
 import com.sb.moovich.BuildConfig
 import com.sb.moovich.data.di.FakeMovieApiProvide
@@ -14,21 +13,19 @@ import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao
 import com.sb.moovich.data.remote.api.FakeMovieApi
 import com.sb.moovich.data.remote.api.MovieApi
-import com.sb.moovich.data.repository.RecentMovieRepositoryImpl
-import com.sb.moovich.data.repository.RemoteMovieRepositoryImpl
-import com.sb.moovich.data.repository.SearchFilterRepositoryImpl
+import com.sb.moovich.data.repository.MovieRepositoryImpl
+import com.sb.moovich.data.repository.SearchRepositoryImpl
 import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
-import com.sb.moovich.domain.repository.RecentMovieRepository
-import com.sb.moovich.domain.repository.RemoteMovieRepository
-import com.sb.moovich.domain.repository.SearchFilterRepository
+import com.sb.moovich.domain.repository.MovieRepository
+import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.domain.repository.WatchMovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -40,19 +37,15 @@ interface DataModule {
 
     @Binds
     @Singleton
-    fun bindRemoteMovieRepository(impl: RemoteMovieRepositoryImpl): RemoteMovieRepository
+    fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
 
     @Binds
     @Singleton
-    fun bindRecentMovieRepository(impl: RecentMovieRepositoryImpl): RecentMovieRepository
+    fun bindSearchRepository(impl: SearchRepositoryImpl): SearchRepository
 
     @Binds
     @Singleton
     fun bindWatchMovieRepository(impl: WatchMovieRepositoryImpl): WatchMovieRepository
-
-    @Binds
-    @Singleton
-    fun bindSearchFilterRepository(impl: SearchFilterRepositoryImpl): SearchFilterRepository
 
 
     companion object {
@@ -60,12 +53,18 @@ interface DataModule {
         @Provides
         @Singleton
         fun provideRetrofit(): Retrofit {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
             val httpClient =
                 OkHttpClient
                     .Builder()
-                    .addInterceptor(interceptor)
+                    .addInterceptor(
+                        Interceptor { chain ->
+                            val request = chain.request().newBuilder()
+                                .addHeader("accept", "application/json")
+                                .addHeader("X-API-KEY", BuildConfig.API_KEY)
+                                .build()
+                            chain.proceed(request)
+                        }
+                    )
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)

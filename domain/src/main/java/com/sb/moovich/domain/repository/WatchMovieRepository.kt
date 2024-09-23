@@ -8,5 +8,7 @@ interface WatchMovieRepository {
 
     suspend fun addMovieToWatchList(movie: Movie)
 
-    suspend fun deleteMovieFromWatchList(movie: Movie)
+    suspend fun deleteMovieFromWatchList(movieId: Int)
+
+    suspend fun getWatchMovieById(movieId: Int): Movie?
 }

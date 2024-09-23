@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.search.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import coil.clear
-import coil.dispose
-import coil.load
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.mapper.MovieToUIMapper
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
 import com.sb.moovich.presentation.search.model.search.SearchFragmentEvent
@@ -33,7 +32,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     lateinit var navigation: INavigation
     private val viewModel: SearchViewModel by viewModels()
     private val adapter = MediumMovieItemListAdapter()
-    private val movieToUIMapper = MovieToUIMapper()
 
     override fun setupViewBinding(
         inflater: LayoutInflater,
@@ -48,6 +46,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewRecentAndResults.adapter = adapter
+        binding.recyclerViewRecentAndResults.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    (recyclerView.layoutManager as? LinearLayoutManager)?.let { layoutManager ->
+                        if (layoutManager.findLastCompletelyVisibleItemPosition() == adapter.itemCount - 1) {
+                            viewModel.nextPage()
+                        }
+                    }
+                }
+            }
+        )
         viewModel.init()
         setObservable()
         setSearchListener()
@@ -88,9 +98,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                                             getStringCompat(R.string.results)
                                         binding.textViewSearchSeeAll.text =
                                             getStringCompat(R.string.see_all)
-                                        adapter.submitList(state.findList.map {
-                                            movieToUIMapper.mapToMediumMovie(it)
-                                        })
+                                        adapter.submitList(state.findList)
                                     }
 
                                     is SearchFragmentState.Content.RecentList -> {
@@ -98,9 +106,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                                             getStringCompat(R.string.recent)
                                         binding.textViewSearchSeeAll.text =
                                             getStringCompat(R.string.see_all_history)
-                                        adapter.submitList(state.recentList.take(10).map {
-                                            movieToUIMapper.mapToMediumMovie(it)
-                                        })
+                                        adapter.submitList(state.recentList.take(10))
                                     }
 
                                     is SearchFragmentState.Content.FilterList -> {
@@ -111,9 +117,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                                             }
                                         binding.textViewTitle.text =
                                             getStringCompat(R.string.results)
-                                        adapter.submitList(state.findList.map {
-                                            movieToUIMapper.mapToMediumMovie(it)
-                                        })
+                                        adapter.submitList(state.findList)
                                     }
                                 }
                                 setClickListeners(state)
@@ -149,9 +153,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     ),
                 )
                 if (state is SearchFragmentState.Content.RecentList) {
-                    adapter.submitList(state.recentList.map {
-                        movieToUIMapper.mapToMediumMovie(it)
-                    })
+                    val scrollState = binding.recyclerViewRecentAndResults.layoutManager?.onSaveInstanceState()
+                    adapter.submitList(state.recentList) {
+                        binding.recyclerViewRecentAndResults.layoutManager?.onRestoreInstanceState(
+                            scrollState
+                        )
+                    }
                 } else if (state is SearchFragmentState.Content.FindList) {
                     viewModel.fetchEvent(
                         SearchFragmentEvent.FindMovie(
@@ -168,9 +175,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     ),
                 )
                 if (state is SearchFragmentState.Content.RecentList) {
-                    adapter.submitList(state.recentList.take(10).map {
-                        movieToUIMapper.mapToMediumMovie(it)
-                    })
+                    val scrollState = binding.recyclerViewRecentAndResults.layoutManager?.onSaveInstanceState()
+                    adapter.submitList(state.recentList.take(10)) {
+                        binding.recyclerViewRecentAndResults.layoutManager?.onRestoreInstanceState(
+                            scrollState
+                        )
+                    }
                 } else if (state is SearchFragmentState.Content.FindList) {
                     viewModel.fetchEvent(
                         SearchFragmentEvent.FindMovie(
@@ -180,7 +190,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     )
                 }
             }
-            binding.recyclerViewRecentAndResults.scrollToPosition(0)
         }
         binding.filterResetIcon.setOnClickListener {
             viewModel.fetchEvent(SearchFragmentEvent.ResetFilters)

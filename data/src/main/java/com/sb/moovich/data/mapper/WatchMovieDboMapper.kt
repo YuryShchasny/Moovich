@@ -42,6 +42,9 @@ class WatchMovieDboMapper @Inject constructor(
         urlWatch = entity.urlWatch,
         year = entity.year,
         genres = entity.genres,
-        actors = entity.actors.map { it.id }
+        actors = entity.actors.map {
+            actorDao.insertActor(actorDboMapper.mapEntityToData(it))
+            it.id
+        }
     )
 }

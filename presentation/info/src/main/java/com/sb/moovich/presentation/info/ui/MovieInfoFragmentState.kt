@@ -11,6 +11,7 @@ sealed class MovieInfoFragmentState {
 
     data class Content(
         val currencyMovie: Movie,
-        var seeAllActors: Boolean = false,
+        val bookMarkChecked: Boolean = false,
+        val seeAllActors: Boolean = false,
     ) : MovieInfoFragmentState()
 }

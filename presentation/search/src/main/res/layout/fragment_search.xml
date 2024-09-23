@@ -75,16 +75,11 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/bottom_nav_height"
             android:layout_weight="1">
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -148,12 +143,11 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewRecentAndResults"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/bottom_nav_height"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_medium_movie_card" />
                 </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
 
             <LinearLayout
                 android:id="@+id/layoutErrorState"

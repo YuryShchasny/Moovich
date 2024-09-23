@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        style="@style/clickable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/backdrop_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/image_gradient"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/poster_placeholder"
+            tools:tint="@color/secondary_30" />
+
+        <LinearLayout
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="38dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                tools:text="Euphoria" />
+
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/gilroy"
+                android:maxLines="2"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:text="The highly anticipated second season, highly acclaimed by critics" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>

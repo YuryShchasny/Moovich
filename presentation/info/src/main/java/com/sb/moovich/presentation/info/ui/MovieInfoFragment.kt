@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.info.ui
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +16,6 @@ import com.sb.moovich.core.adapters.shortmovies.ShortMovie
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.navigation.INavigation
-import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.info.R
 import com.sb.moovich.presentation.info.adapter.actors.ActorItemListAdapter
 import com.sb.moovich.presentation.info.databinding.FragmentMovieInfoBinding
@@ -59,12 +59,13 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
                             binding.progressBar.visibility = View.GONE
                             binding.scrollView.visibility = View.VISIBLE
                             binding.movie = state.currencyMovie
-                            observeBookmark(state.currencyMovie)
+                            binding.descriptionTitle.visibility =
+                                if (state.currencyMovie.description.isEmpty()) View.GONE else View.VISIBLE
+                            binding.actorsTitle.visibility =
+                                if (state.currencyMovie.actors.isEmpty()) View.GONE else View.VISIBLE
                             setButtonWatchClickListener(state)
                             setAdapters(state)
-                            binding.imageViewBookmark.setOnClickListener {
-                                viewModel.reverseBookmarkValue()
-                            }
+                            setBookMarkView(state.bookMarkChecked)
                         }
 
                         is MovieInfoFragmentState.Error -> {
@@ -80,47 +81,33 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
         }
     }
 
-    private fun observeBookmark(currencyMovie: Movie) {
-        lifecycleScope.launch {
-            viewModel.bookmarkChecked
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { isChecked ->
-                    isChecked?.let {
-                        if (it) {
-                            binding.imageViewBookmark.setImageResource(R.drawable.bookmark_anim)
-                            viewModel.addMovieToWatchList(currencyMovie)
-                        } else {
-                            binding.imageViewBookmark.setImageResource(com.sb.moovich.core.R.drawable.ic_bookmark)
-                            viewModel.deleteMovieFromWatchList(currencyMovie)
-                        }
-                    }
-                }
+    private fun setBookMarkView(isChecked: Boolean) {
+        binding.imageViewBookmark.imageTintList = ColorStateList.valueOf(
+            if (isChecked) getColorCompat(com.sb.moovich.core.R.color.primary)
+            else getColorCompat(com.sb.moovich.core.R.color.white)
+        )
+        binding.imageViewBookmark.setOnClickListener {
+            viewModel.reverseBookmarkValue()
         }
     }
 
-    private fun setButtonSeeAllClickListener(
-        state: MovieInfoFragmentState.Content,
-        adapter: ActorItemListAdapter,
-    ) {
+    private fun setButtonSeeAll(seeAll: Boolean) {
+        binding.textViewSeeAll.setTextColor(
+            getColorCompat(
+                if (seeAll) com.sb.moovich.core.R.color.primary
+                else com.sb.moovich.core.R.color.white
+            )
+        )
         binding.textViewSeeAll.setOnClickListener {
-            state.seeAllActors =
-                when (state.seeAllActors) {
-                    true -> {
-                        adapter.submitList(state.currencyMovie.actors.take(6))
-                        false
-                    }
-
-                    false -> {
-                        adapter.submitList(state.currencyMovie.actors)
-                        true
-                    }
-                }
+            viewModel.seeAll()
         }
     }
 
     private fun setAdapters(state: MovieInfoFragmentState.Content) {
-        setButtonSeeAllClickListener(state, actorAdapter)
-        actorAdapter.submitList(state.currencyMovie.actors.take(6))
+        setButtonSeeAll(state.seeAllActors)
+        val actors = if (state.seeAllActors) state.currencyMovie.actors
+        else state.currencyMovie.actors.take(6)
+        actorAdapter.submitList(actors)
         binding.recyclerViewActors.adapter = actorAdapter
         if (state.currencyMovie.similarMovies.isEmpty()) {
             binding.textViewSimilarMovies.visibility = View.GONE
@@ -131,7 +118,7 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
             }
             binding.recyclerViewSimilarMovies.adapter = similarMoviesAdapter
             similarMoviesAdapter.submitList(state.currencyMovie.similarMovies.map {
-                ShortMovie.ShortMovieInfo(it.id, it.name, it.rating, it.poster)
+                ShortMovie(it.id, it.name, it.rating, it.poster)
             })
         }
     }

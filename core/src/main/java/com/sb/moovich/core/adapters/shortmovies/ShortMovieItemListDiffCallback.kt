@@ -7,17 +7,13 @@ class ShortMovieItemListDiffCallback : DiffUtil.ItemCallback<ShortMovie>() {
         oldItem: ShortMovie,
         newItem: ShortMovie,
     ): Boolean {
-        return if (oldItem is ShortMovie.ShortMovieInfo && newItem is ShortMovie.ShortMovieInfo) {
-            oldItem.id == newItem.id
-        } else oldItem === newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
         oldItem: ShortMovie,
         newItem: ShortMovie,
     ): Boolean {
-        return if (oldItem is ShortMovie.ShortMovieInfo && newItem is ShortMovie.ShortMovieInfo) {
-            oldItem == newItem
-        } else oldItem == newItem
+        return oldItem == newItem
     }
 }

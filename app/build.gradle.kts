@@ -29,9 +29,11 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
+            buildConfigField("String", "API_KEY", "\"R0V497J-ZGYMFXX-JJ9QSFS-96AN48G\"")
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
+            buildConfigField("String", "API_KEY", "\"R0V497J-ZGYMFXX-JJ9QSFS-96AN48G\"")
         }
     }
     compileOptions {
@@ -58,6 +60,8 @@ dependencies {
     implementation(projects.presentation.info)
     implementation(projects.presentation.favourites)
     implementation(projects.presentation.search)
+    implementation(projects.presentation.all)
+    implementation(projects.presentation.collection)
     implementation(projects.core)
 
     implementation(libs.androidx.core.ktx)
