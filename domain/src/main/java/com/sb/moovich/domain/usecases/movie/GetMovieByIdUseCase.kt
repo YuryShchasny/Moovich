@@ -1,4 +1,4 @@
-package com.sb.moovich.domain.usecases
+package com.sb.moovich.domain.usecases.movie
 
 import com.sb.moovich.domain.repository.MovieRepository
 import javax.inject.Inject

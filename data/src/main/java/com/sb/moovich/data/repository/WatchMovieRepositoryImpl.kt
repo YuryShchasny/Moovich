@@ -1,6 +1,6 @@
 package com.sb.moovich.data.repository
 
-import com.sb.moovich.data.local.MovieLocalDataSource
+import com.sb.moovich.data.local.datasource.MovieLocalDataSource
 import com.sb.moovich.data.local.dao.WatchMovieDao
 import com.sb.moovich.data.mapper.WatchMovieDboMapper
 import com.sb.moovich.domain.entity.Movie

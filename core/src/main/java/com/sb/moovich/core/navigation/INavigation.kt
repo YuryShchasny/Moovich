@@ -18,4 +18,6 @@ interface INavigation {
     fun navigateToAllCollections()
 
     fun navigateToCollection(collection: Collection)
+
+    fun navigateToHome()
 }

@@ -1,4 +1,4 @@
-package com.sb.moovich.data.local
+package com.sb.moovich.data.local.datasource
 
 import android.content.SharedPreferences
 import com.google.gson.Gson

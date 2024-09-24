@@ -1,7 +1,6 @@
-package com.sb.moovich.data.remote
+package com.sb.moovich.data.remote.datasource
 
 import com.sb.moovich.data.di.FakeMovieApiProvide
-import com.sb.moovich.data.di.MovieApiProvide
 import com.sb.moovich.data.mapper.MovieDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.remote.pagination.IPaginator

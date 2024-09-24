@@ -1,8 +1,8 @@
 package com.sb.moovich.data.repository
 
-import com.sb.moovich.data.local.FilterLocalDataSource
-import com.sb.moovich.data.local.MovieLocalDataSource
-import com.sb.moovich.data.remote.MovieRemoteDataSource
+import com.sb.moovich.data.local.datasource.FilterLocalDataSource
+import com.sb.moovich.data.local.datasource.MovieLocalDataSource
+import com.sb.moovich.data.remote.datasource.MovieRemoteDataSource
 import com.sb.moovich.domain.entity.Filter
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.domain.entity.MovieType

@@ -1,8 +1,8 @@
 package com.sb.moovich.data.repository
 
-import com.sb.moovich.data.local.MovieLocalDataSource
-import com.sb.moovich.data.remote.CollectionRemoteDataSource
-import com.sb.moovich.data.remote.MovieRemoteDataSource
+import com.sb.moovich.data.local.datasource.MovieLocalDataSource
+import com.sb.moovich.data.remote.datasource.CollectionRemoteDataSource
+import com.sb.moovich.data.remote.datasource.MovieRemoteDataSource
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.domain.entity.GetAllType
 import com.sb.moovich.domain.entity.Movie

@@ -13,9 +13,12 @@ import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao
 import com.sb.moovich.data.remote.api.FakeMovieApi
 import com.sb.moovich.data.remote.api.MovieApi
+import com.sb.moovich.data.remote.interceptor.TokenInterceptor
+import com.sb.moovich.data.repository.AuthRepositoryImpl
 import com.sb.moovich.data.repository.MovieRepositoryImpl
 import com.sb.moovich.data.repository.SearchRepositoryImpl
 import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
+import com.sb.moovich.domain.repository.AuthRepository
 import com.sb.moovich.domain.repository.MovieRepository
 import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.domain.repository.WatchMovieRepository
@@ -47,36 +50,35 @@ interface DataModule {
     @Singleton
     fun bindWatchMovieRepository(impl: WatchMovieRepositoryImpl): WatchMovieRepository
 
+    @Binds
+    @Singleton
+    fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 
     companion object {
 
         @Provides
         @Singleton
-        fun provideRetrofit(): Retrofit {
-            val httpClient =
-                OkHttpClient
-                    .Builder()
-                    .addInterceptor(
-                        Interceptor { chain ->
-                            val request = chain.request().newBuilder()
-                                .addHeader("accept", "application/json")
-                                .addHeader("X-API-KEY", BuildConfig.API_KEY)
-                                .build()
-                            chain.proceed(request)
-                        }
-                    )
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .writeTimeout(60, TimeUnit.SECONDS)
-                    .build()
-
-            return Retrofit
+        fun provideHttpClient(
+            interceptor: TokenInterceptor
+        ): OkHttpClient =
+            OkHttpClient
                 .Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient)
+                .addInterceptor(interceptor)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build()
-        }
+
+        @Provides
+        @Singleton
+        fun provideRetrofit(
+            okHttpClient: OkHttpClient
+        ): Retrofit = Retrofit
+            .Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
 
         @MovieApiProvide
         @Provides

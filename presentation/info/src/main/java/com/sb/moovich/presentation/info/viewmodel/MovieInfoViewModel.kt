@@ -2,8 +2,7 @@ package com.sb.moovich.presentation.info.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sb.moovich.domain.entity.Movie
-import com.sb.moovich.domain.usecases.GetMovieByIdUseCase
+import com.sb.moovich.domain.usecases.movie.GetMovieByIdUseCase
 import com.sb.moovich.domain.usecases.recent.AddMovieToRecentUseCase
 import com.sb.moovich.domain.usecases.watch.AddMovieToWatchListUseCase
 import com.sb.moovich.domain.usecases.watch.DeleteMovieFromWatchListUseCase

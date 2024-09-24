@@ -1,4 +1,4 @@
-package com.sb.moovich.data.local
+package com.sb.moovich.data.local.datasource
 
 import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao

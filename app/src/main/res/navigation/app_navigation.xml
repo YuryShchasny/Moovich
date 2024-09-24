@@ -81,9 +81,14 @@
         android:id="@+id/collectionFragment"
         android:name="com.sb.moovich.presentation.collection.ui.CollectionFragment"
         android:label="CollectionFragment"
-        tools:layout="@layout/fragment_collection" >
+        tools:layout="@layout/fragment_collection">
         <argument
             android:name="collection"
             app:argType="com.sb.moovich.domain.entity.Collection" />
     </fragment>
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.sb.moovich.presentation.authorization.ui.AuthorizationFragment"
+        android:label="AuthorizationFragment"
+        tools:layout="@layout/fragment_authorization" />
 </navigation>

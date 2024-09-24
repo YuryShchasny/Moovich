@@ -1,9 +1,9 @@
 [versions]
-agp = "8.5.1"
-coil = "2.6.0"
+agp = "8.5.2"
+coil = "2.7.0"
 converterGson = "2.11.0"
 dagger-hilt = "2.51.1"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,26 +13,29 @@ kotlinxCoroutinesAndroid = "1.8.1"
 lottie = "6.4.1"
 material = "1.12.0"
 constraintlayout = "2.1.4"
-lifecycleViewmodelKtx = "2.8.3"
-navigationFragmentKtx = "2.7.7"
-navigationUiKtx = "2.7.7"
+lifecycleViewmodelKtx = "2.8.6"
+navigationFragmentKtx = "2.8.1"
+navigationUiKtx = "2.8.1"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
-symbolProcessingApi = "2.0.0-1.0.22"
+symbolProcessingApi = "2.0.20-1.0.24"
 legacySupportV4 = "1.0.0"
-lifecycleLivedataKtx = "2.8.3"
-fragmentKtx = "1.8.1"
+lifecycleLivedataKtx = "2.8.6"
+fragmentKtx = "1.8.3"
 kapt = "1.9.23"
-jetbrainsKotlinJvm = "2.0.0"
+jetbrainsKotlinJvm = "2.0.20"
 javax-inject = "1"
-safeargs = "2.7.7"
+safeargs = "2.8.1"
+datastorePreferences = "1.1.1"
+coreSplashscreen = "1.0.1"
 
 [libraries]
 #---Core---#
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 #---UI---#
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -63,6 +66,8 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt" }
 dagger-hilt-kapt = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
+#---DATA---#
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

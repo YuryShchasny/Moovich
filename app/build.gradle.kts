@@ -62,6 +62,7 @@ dependencies {
     implementation(projects.presentation.search)
     implementation(projects.presentation.all)
     implementation(projects.presentation.collection)
+    implementation(projects.presentation.authorization)
     implementation(projects.core)
 
     implementation(libs.androidx.core.ktx)
@@ -78,6 +79,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging.interceptor)

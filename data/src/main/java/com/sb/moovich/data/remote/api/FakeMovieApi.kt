@@ -267,6 +267,14 @@ class FakeMovieApi : MovieApi {
         )
     }
 
+    override suspend fun checkToken(
+        page: Int,
+        limit: Int,
+        selectFields: List<String>
+    ): Response<MovieDocDto> {
+        return Response.success(MovieDocDto(emptyList()))
+    }
+
     override suspend fun filterMovie(
         page: Int,
         limit: Int,
