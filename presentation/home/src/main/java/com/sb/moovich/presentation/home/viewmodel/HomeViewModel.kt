@@ -1,7 +1,7 @@
 package com.sb.moovich.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.usecases.filter.GetGenresUseCase
 import com.sb.moovich.domain.usecases.home.GetCollectionsUseCase
 import com.sb.moovich.domain.usecases.home.GetMainBoardMoviesUseCase
@@ -10,11 +10,9 @@ import com.sb.moovich.domain.usecases.home.GetTop10MonthMoviesUseCase
 import com.sb.moovich.domain.usecases.home.GetTop10SeriesUseCase
 import com.sb.moovich.presentation.home.ui.HomeFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +28,7 @@ class HomeViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch {
             _state.update {
                 HomeFragmentState.Content(
                     getMainBoardMoviesUseCase(),

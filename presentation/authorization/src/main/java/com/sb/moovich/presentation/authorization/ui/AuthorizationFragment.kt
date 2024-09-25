@@ -1,6 +1,10 @@
 package com.sb.moovich.presentation.authorization.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.authorization.databinding.FragmentAuthorizationBinding
 import com.sb.moovich.presentation.authorization.viewmodel.AuthorizationViewModel
@@ -32,8 +37,44 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservable()
+        setEditText()
+        setClickListeners()
+    }
+
+    private fun setEditText() {
+        binding.tokenEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used in this case}
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Not used in this case
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    val upperCaseText = it.toString().uppercase()
+                    val resultText = upperCaseText.replace(Regex("[^a-zA-Z0-9\\s-]"), "")
+                    if (resultText != it.toString()) {
+                        it.replace(0, it.length, resultText)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setClickListeners() {
         binding.loginButton.setOnClickListener {
-            viewModel.login(binding.tokenEditText.text.toString())
+            viewModel.login(binding.tokenEditText.text.toString().uppercase())
+        }
+        binding.botLink.setOnClickListener {
+            openTelegramBot()
+        }
+        binding.apiLink.setOnClickListener {
+            openApiDocumentation()
+        }
+        binding.kinopoiskLink.setOnClickListener {
+            openKinopoisk()
         }
     }
 
@@ -42,8 +83,29 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
             viewModel.state
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
-                    if(state.isAuthorized) navigation.navigateToHome()
+                    if (state.isAuthorized) navigation.navigateToHome()
                 }
         }
+        lifecycleScope.launch {
+            viewModel.error
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
+                .collect { it.showMessage(requireContext()) }
+        }
+    }
+
+    private fun openTelegramBot() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("tg://resolve?domain=kinopoiskdev_bot"))
+        startActivity(intent)
+    }
+
+    private fun openApiDocumentation() {
+        val intent =
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://api.kinopoisk.dev/documentation"))
+        startActivity(intent)
+    }
+
+    private fun openKinopoisk() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.kinopoisk.ru"))
+        startActivity(intent)
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="authorization">Authorization</string>
+    <string name="auth_description">
+        Данное приложение является бесплатным и не предназначено для коммерческого использования.
+        \n\nПриложение использует предоставляемую информацию сервиса Кинопоиск и неофициальное открытое API.
+        \n\nРазработчик никак не связан с предоставляемым API и не несет ответственность за предоставляемую информацию и работу сервера.
+        \n\nДля того, чтобы войти в приложение, вам необходимо авторизоваться у бота в Telegram и получить личный токен, который будет использоваться в приложении.
+        \n\nОт токена будет зависеть ограничение по запросам к серверу. Если вы достигните лимита по запросам, приложение работать не будет.
+    </string>
+    <string name="your_auth_key">Your authorization key</string>
+    <string name="login">Log in</string>
+    <string name="get_api_key"><u>Get the api-key</u></string>
+    <string name="kinopoisk"><u>Kinopoisk</u></string>
+    <string name="api_documentation"><u>API Documentation</u></string>
+</resources>

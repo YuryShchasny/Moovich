@@ -34,11 +34,18 @@
         android:name="com.sb.moovich.presentation.search.ui.FilterFragment"
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filter" />
+
+    <action
+        android:id="@+id/toHome"
+        app:destination="@id/homeFlowFragment"
+        app:popUpTo="@id/authorizationFragment"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/homeFlowFragment"
         android:name="com.sb.moovich.navigation.HomeFlowFragment"
         android:label="HomeFlowFragment"
-        tools:layout="@layout/home_flow_fragment" />
+        tools:layout="@layout/home_flow_fragment" >
+    </fragment>
 
     <action
         android:id="@+id/toAllMovies"

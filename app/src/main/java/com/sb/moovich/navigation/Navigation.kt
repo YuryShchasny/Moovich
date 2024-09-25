@@ -1,8 +1,8 @@
 package com.sb.moovich.navigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.navOptions
+import com.sb.moovich.MobileNavigationDirections
 import com.sb.moovich.R
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Collection
@@ -47,11 +47,13 @@ class Navigation @Inject constructor(): INavigation {
     }
 
     override fun navigateToHome() {
-        val options = navOptions {
-            popUpTo(R.id.authorizationFragment) {
-                inclusive = true
+        navController?.let {
+            val options = navOptions {
+                popUpTo(it.graph.startDestinationId) {
+                    inclusive = true
+                }
             }
+            navController?.navigate(MobileNavigationDirections.toHome(), options)
         }
-        navController?.navigate(R.id.homeFlowFragment, options)
     }
 }

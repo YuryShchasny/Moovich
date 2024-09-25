@@ -1,16 +1,14 @@
 package com.sb.moovich.presentation.favourites.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.sb.moovich.core.R
+import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.usecases.watch.GetWatchMoviesUseCase
 import com.sb.moovich.presentation.favourites.ui.WatchListFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +22,7 @@ constructor(
     val state = _state.asStateFlow()
 
     fun getMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch {
             _state.update {
                 val list = getWatchMoviesUseCase()
                 if (list.isEmpty()) {

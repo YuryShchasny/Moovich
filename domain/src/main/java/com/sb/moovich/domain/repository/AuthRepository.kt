@@ -1,8 +1,8 @@
 package com.sb.moovich.domain.repository
 
-import kotlinx.coroutines.flow.Flow
+import com.sb.moovich.domain.entity.DataResult
 
 interface AuthRepository {
-    suspend fun login(token: String)
-    suspend fun checkLogin(): Flow<Boolean>
+    suspend fun login(token: String): DataResult
+    suspend fun checkLogin(): Boolean
 }

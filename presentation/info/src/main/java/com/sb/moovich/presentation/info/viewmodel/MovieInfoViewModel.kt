@@ -1,7 +1,7 @@
 package com.sb.moovich.presentation.info.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.usecases.movie.GetMovieByIdUseCase
 import com.sb.moovich.domain.usecases.recent.AddMovieToRecentUseCase
 import com.sb.moovich.domain.usecases.watch.AddMovieToWatchListUseCase
@@ -9,11 +9,9 @@ import com.sb.moovich.domain.usecases.watch.DeleteMovieFromWatchListUseCase
 import com.sb.moovich.domain.usecases.watch.GetWatchMovieByIdUseCase
 import com.sb.moovich.presentation.info.ui.MovieInfoFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +26,7 @@ class MovieInfoViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getMovieById(movieId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch {
             getMovieByIdUseCase(movieId)?.let { movieInfo ->
                 val filteredMovie =
                     movieInfo.copy(
@@ -48,7 +46,7 @@ class MovieInfoViewModel @Inject constructor(
     fun reverseBookmarkValue() {
         _state.update { state ->
             (state as MovieInfoFragmentState.Content).let {
-                viewModelScope.launch(Dispatchers.IO) {
+                launch {
                     if(it.bookMarkChecked) deleteMovieFromWatchListUseCase(it.currencyMovie.id)
                     else addMovieToWatchListUseCase(it.currencyMovie)
                 }

@@ -1,16 +1,14 @@
 package com.sb.moovich.presentation.all.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.usecases.all.CollectionsNextPageUseCase
 import com.sb.moovich.domain.usecases.all.GetAllCollectionsUseCase
 import com.sb.moovich.presentation.all.ui.AllCollectionsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +20,7 @@ class AllCollectionsViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch {
             getAllCollectionsUseCase().collect { list ->
                 _state.update {
                     if(it is AllCollectionsState.Collections) it.copy(collections = it.collections + list)
@@ -33,7 +31,7 @@ class AllCollectionsViewModel @Inject constructor(
     }
 
     fun nextPage() {
-        viewModelScope.launch(Dispatchers.IO) {
+        launch {
             collectionsNextPageUseCase()
         }
     }

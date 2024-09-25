@@ -1,35 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="16dp"
+        tools:background="@color/black">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="@string/authorization"
+            android:textColor="@color/primary"
+            android:textSize="32sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gilroy_medium"
+            android:text="@string/auth_description"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/clickable"
+            android:id="@+id/botLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/get_api_key"
+            android:textColor="@color/primary" />
+
+        <EditText
+            android:id="@+id/tokenEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="@string/your_auth_key"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="31"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_30"
+            tools:ignore="LabelFor" />
 
-            <EditText
-                android:id="@+id/tokenEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="32dp"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLength="31"
-                android:maxLines="1"
-                tools:ignore="LabelFor" />
+        <androidx.cardview.widget.CardView
+            style="@style/clickable"
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/secondary"
+            app:cardCornerRadius="24dp">
 
-            <Button
-                android:id="@+id/loginButton"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="login" />
-        </LinearLayout>
-    </FrameLayout>
+                android:layout_margin="10dp"
+                android:fontFamily="@font/gilroy_heavy"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/kinopoiskLink"
+            style="@style/clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gilroy_medium"
+            android:gravity="center"
+            android:text="@string/kinopoisk"
+            android:textColor="@color/white_30"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/apiLink"
+            style="@style/clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/gilroy_medium"
+            android:gravity="center"
+            android:text="@string/api_documentation"
+            android:textColor="@color/white_30"
+            android:textSize="16sp" />
+    </LinearLayout>
 </layout>

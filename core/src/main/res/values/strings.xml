@@ -30,5 +30,10 @@
     <string name="movies">Movies</string>
     <string name="series">Series</string>
     <string name="cartoons">Cartoons</string>
-    <string name="count">Количество: %d</string>
+    <string name="count">Amount: %d</string>
+    <string name="auth_error">Your key is not valid, try again with a different authorization key</string>
+    <string name="server_error">The server is currently unavailable, please try again later</string>
+    <string name="not_found_error">No results found for this search</string>
+    <string name="bad_request_error">There is an error in the application, please report it to the developer</string>
+    <string name="another_error">Looks like there was an error %s</string>
 </resources>

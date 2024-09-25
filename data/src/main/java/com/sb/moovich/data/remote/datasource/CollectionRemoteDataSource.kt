@@ -1,6 +1,6 @@
 package com.sb.moovich.data.remote.datasource
 
-import com.sb.moovich.data.di.FakeMovieApiProvide
+import com.sb.moovich.data.di.MovieApiProvide
 import com.sb.moovich.data.mapper.CollectionDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.remote.pagination.IPaginator
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class CollectionRemoteDataSource @Inject constructor(
-    @FakeMovieApiProvide private val movieApi: MovieApi,
+    @MovieApiProvide private val movieApi: MovieApi,
     private val collectionDtoMapper: CollectionDtoMapper,
 ) {
     private var collectionPaginator: IPaginator<Collection>? = null
