@@ -30,8 +30,8 @@
             android:textSize="14sp" />
 
         <TextView
-            style="@style/clickable"
             android:id="@+id/botLink"
+            style="@style/clickable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -55,8 +55,8 @@
             tools:ignore="LabelFor" />
 
         <androidx.cardview.widget.CardView
-            style="@style/clickable"
             android:id="@+id/loginButton"
+            style="@style/clickable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -100,6 +100,18 @@
             android:fontFamily="@font/gilroy_medium"
             android:gravity="center"
             android:text="@string/api_documentation"
+            android:textColor="@color/white_30"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/developerLink"
+            style="@style/clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/gilroy_medium"
+            android:gravity="center"
+            android:text="@string/developer_info"
             android:textColor="@color/white_30"
             android:textSize="16sp" />
     </LinearLayout>

@@ -43,6 +43,7 @@
     <string name="get_api_key"><u>Получить API-ключ</u></string>
     <string name="kinopoisk"><u>Кинопоиск</u></string>
     <string name="api_documentation"><u>Документация по API</u></string>
+    <string name="developer_info"><u>Информация о разработчике</u></string>
     <string name="top_10_months">Топ 10 Месяца</string>
     <string name="collections">Коллекции</string>
     <string name="top_10_series">Топ 10 сериалов</string>

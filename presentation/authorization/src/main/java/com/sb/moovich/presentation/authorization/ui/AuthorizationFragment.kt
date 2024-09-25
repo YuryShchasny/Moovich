@@ -76,6 +76,9 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
         binding.kinopoiskLink.setOnClickListener {
             openKinopoisk()
         }
+        binding.developerLink.setOnClickListener {
+            openDeveloper()
+        }
     }
 
     private fun setObservable() {
@@ -106,6 +109,11 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
 
     private fun openKinopoisk() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.kinopoisk.ru"))
+        startActivity(intent)
+    }
+
+    private fun openDeveloper() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/YuryShchasny"))
         startActivity(intent)
     }
 }
