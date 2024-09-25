@@ -36,4 +36,29 @@
     <string name="not_found_error">No results found for this search</string>
     <string name="bad_request_error">There is an error in the application, please report it to the developer</string>
     <string name="another_error">Looks like there was an error %s</string>
+    <string name="authorization">Authorization</string>
+    <string name="auth_description">
+        Данное приложение является бесплатным и не предназначено для коммерческого использования.
+        \n\nПриложение использует предоставляемую информацию сервиса Кинопоиск и неофициальное открытое API.
+        \n\nРазработчик никак не связан с предоставляемым API и не несет ответственность за предоставляемую информацию и работу сервера.
+        \n\nДля того, чтобы войти в приложение, вам необходимо авторизоваться у бота в Telegram и получить личный токен, который будет использоваться в приложении.
+        \n\nОт токена будет зависеть ограничение по запросам к серверу. Если вы достигните лимита по запросам, приложение работать не будет.
+    </string>
+    <string name="your_auth_key">Your authorization key</string>
+    <string name="login">Log in</string>
+    <string name="get_api_key"><u>Get the api-key</u></string>
+    <string name="kinopoisk"><u>Kinopoisk</u></string>
+    <string name="api_documentation"><u>API Documentation</u></string>
+    <string name="top_10_months">Top 10 Months</string>
+    <string name="collections">Collections</string>
+    <string name="top_10_series">Top 10 Series</string>
+    <string name="genre">Genre</string>
+    <string name="sort_by">Sort by</string>
+    <string name="popularity">Popularity</string>
+    <string name="latest_release">Latest release</string>
+    <string name="rating">Rating</string>
+    <string name="year">Year</string>
+    <string name="country">Country</string>
+    <string name="apply_filters">Apply filters (%d)</string>
+    <string name="unfortunately_nothing_was_found_for_your_request">Unfortunately, nothing was found for your request.</string>
 </resources>

@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController
     }
 
+    private var isReady = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                         graph.setStartDestination(startDestination)
                         navController.graph = graph
                         navigation.setNavController(navController)
+                        isReady = true
                     }
                 }
         }
@@ -72,17 +75,8 @@ class MainActivity : AppCompatActivity() {
             object : ViewTreeObserver.OnPreDrawListener {
                 @SuppressLint("ResourceType")
                 override fun onPreDraw(): Boolean {
-                    return if (viewModel.isReady) {
+                    return if (isReady) {
                         content.viewTreeObserver.removeOnPreDrawListener(this)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            window.decorView.windowInsetsController?.setSystemBarsAppearance(
-                                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-                                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-                            )
-                        } else {
-                            window.decorView.systemUiVisibility =
-                                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                        }
                         true
                     } else {
                         false

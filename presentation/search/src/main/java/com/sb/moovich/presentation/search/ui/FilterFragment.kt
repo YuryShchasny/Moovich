@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,10 +19,8 @@ import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.core.views.SpinnerAdapter
 import com.sb.moovich.core.views.SpinnerItem
 import com.sb.moovich.domain.entity.Filter
-import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.domain.entity.MovieType
 import com.sb.moovich.domain.entity.SortType
-import com.sb.moovich.presentation.search.R
 import com.sb.moovich.presentation.search.adapter.GenreItem
 import com.sb.moovich.presentation.search.adapter.GenreListAdapter
 import com.sb.moovich.presentation.search.databinding.FragmentFilterBinding
@@ -195,7 +192,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         }
         binding.applyTextView.text = String.format(
             Locale.getDefault(),
-            getStringCompat(R.string.apply_filters),
+            getStringCompat(com.sb.moovich.core.R.string.apply_filters),
             filter.getFiltersCount()
         )
     }

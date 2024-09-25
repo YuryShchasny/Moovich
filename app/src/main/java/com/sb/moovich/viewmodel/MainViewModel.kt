@@ -13,8 +13,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     checkLoginUseCase: CheckLoginUseCase
 ) : ViewModel() {
-    var isReady = false
-        private set
 
     private val _isLoggedIn = MutableStateFlow<Boolean?>(null)
     val isLoggedIn = _isLoggedIn.asStateFlow()
@@ -22,7 +20,6 @@ class MainViewModel @Inject constructor(
     init {
         launch {
             _isLoggedIn.update { checkLoginUseCase() }
-            isReady = true
         }
     }
 }
