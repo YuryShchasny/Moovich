@@ -29,11 +29,9 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
-            buildConfigField("String", "API_KEY", "\"R0V497J-ZGYMFXX-JJ9QSFS-96AN48G\"")
         }
         debug {
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
-            buildConfigField("String", "API_KEY", "\"R0V497J-ZGYMFXX-JJ9QSFS-96AN48G\"")
         }
     }
     compileOptions {
