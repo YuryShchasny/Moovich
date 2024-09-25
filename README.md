@@ -1,1 +1,1 @@
-[Download](https://github.com/YuryShchasny/Moovich/blob/dev/Moovich.apk)
+[Download](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/YuryShchasny/Moovich/blob/master/Moovich.apk)
