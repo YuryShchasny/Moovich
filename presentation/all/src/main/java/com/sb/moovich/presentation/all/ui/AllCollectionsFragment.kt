@@ -57,6 +57,8 @@ class AllCollectionsFragment : BaseFragment<FragmentAllCollectionsBinding>() {
                     when (state) {
                         AllCollectionsState.Loading -> {}
                         is AllCollectionsState.Collections -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.recyclerView.visibility = View.VISIBLE
                             val scrollState = binding.recyclerView.layoutManager?.onSaveInstanceState()
                             adapter.submitList(state.collections) {
                                 binding.recyclerView.layoutManager?.onRestoreInstanceState(scrollState)

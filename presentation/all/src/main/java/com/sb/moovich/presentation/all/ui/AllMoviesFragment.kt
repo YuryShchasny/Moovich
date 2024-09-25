@@ -67,9 +67,14 @@ class AllMoviesFragment : BaseFragment<FragmentAllMoviesBinding>() {
                     when (state) {
                         AllMoviesState.Loading -> {}
                         is AllMoviesState.Movies -> {
-                            val scrollState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+                            binding.progressBar.visibility = View.GONE
+                            binding.recyclerView.visibility = View.VISIBLE
+                            val scrollState =
+                                binding.recyclerView.layoutManager?.onSaveInstanceState()
                             adapter.submitList(state.movieList) {
-                                binding.recyclerView.layoutManager?.onRestoreInstanceState(scrollState)
+                                binding.recyclerView.layoutManager?.onRestoreInstanceState(
+                                    scrollState
+                                )
                             }
                         }
                     }

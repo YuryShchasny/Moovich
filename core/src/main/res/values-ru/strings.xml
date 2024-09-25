@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moovich</string>
+    <string name="title_home">Главная</string>
+    <string name="search">Поиск</string>
+    <string name="title_watch_list">Избранное</string>
+    <string name="recommendations">Рекомендации</string>
+    <string name="see_all">Посмотреть все</string>
+    <string name="hours">ч</string>
+    <string name="minutes">м</string>
+    <string name="watch">Смотреть</string>
+    <string name="description">Описание</string>
+    <string name="actors">Актеры</string>
+    <string name="similar_movies">Похожие фильмы</string>
+    <string name="oops">Упс!…</string>
+    <string name="error_empty_watch_list">Вы ничго не добавили в изранное</string>
+    <string name="search_hint">Введите название фильма</string>
+    <string name="recent">Смотрели ранее</string>
+    <string name="results">Результат</string>
+    <string name="see_all_history">Посмотреть всю историю</string>
+    <string name="filter">Фильтр</string>
+    <string name="reset">Сбросить</string>
+    <string name="all">Все</string>
+    <string name="movies">Фильмы</string>
+    <string name="series">Сериалы</string>
+    <string name="cartoons">Мультфильмы</string>
+    <string name="count">Всего: %d</string>
+    <string name="auth_error">Ваш ключ недействителен, попробуйте еще раз с другим ключом авторизации.</string>
+    <string name="server_error">Сервер в настоящее время недоступен, повторите попытку позже.</string>
+    <string name="not_found_error">По данному запросу результатов не найдено</string>
+    <string name="bad_request_error">В приложении произошла ошибка, сообщите об этом разработчику</string>
+    <string name="another_error">Похоже, произошла ошибка %s</string>
+    <string name="authorization">Авторизация</string>
+    <string name="auth_description">
+        Данное приложение является бесплатным и не предназначено для коммерческого использования.
+        \n\nПриложение использует предоставляемую информацию сервиса Кинопоиск и неофициальное открытое API.
+        \n\nРазработчик никак не связан с предоставляемым API и не несет ответственность за предоставляемую информацию и работу сервера.
+        \n\nДля того, чтобы войти в приложение, вам необходимо авторизоваться у бота в Telegram и получить личный токен, который будет использоваться в приложении.
+        \n\nОт токена будет зависеть ограничение по запросам к серверу. Если вы достигните лимита по запросам, приложение работать не будет.
+    </string>
+    <string name="your_auth_key">Ваш ключ авторизации</string>
+    <string name="login">Войти</string>
+    <string name="get_api_key"><u>Получить API-ключ</u></string>
+    <string name="kinopoisk"><u>Кинопоиск</u></string>
+    <string name="api_documentation"><u>Документация по API</u></string>
+    <string name="top_10_months">Топ 10 Месяца</string>
+    <string name="collections">Коллекции</string>
+    <string name="top_10_series">Топ 10 сериалов</string>
+    <string name="genre">Жанр</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="popularity">Популярность</string>
+    <string name="latest_release">Дата выхода</string>
+    <string name="rating">Рейтинг</string>
+    <string name="year">Год</string>
+    <string name="country">Страна</string>
+    <string name="apply_filters">Применить фильтры (%d)</string>
+    <string name="unfortunately_nothing_was_found_for_your_request">К сожалению, по вашему запросу ничего не найдено.</string>
+    <string name="request_limit">Вы использовали все доступные вам запросы</string>
+</resources>

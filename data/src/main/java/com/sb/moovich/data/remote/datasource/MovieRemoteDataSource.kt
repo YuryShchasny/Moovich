@@ -10,7 +10,9 @@ import com.sb.moovich.domain.entity.GetAllType
 import com.sb.moovich.domain.entity.Movie
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MovieRemoteDataSource @Inject constructor(
     @MovieApiProvide private val movieApi: MovieApi,
     private val movieDtoMapper: MovieDtoMapper,

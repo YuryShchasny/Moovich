@@ -6,7 +6,9 @@ import com.sb.moovich.data.mapper.RecentMovieDboMapper
 import com.sb.moovich.data.mapper.WatchMovieDboMapper
 import com.sb.moovich.domain.entity.Movie
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MovieLocalDataSource @Inject constructor(
     private val watchMovieDao: WatchMovieDao,
     private val recentMovieDao: RecentMovieDao,

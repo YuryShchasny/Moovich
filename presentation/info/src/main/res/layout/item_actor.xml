@@ -17,7 +17,6 @@
             android:id="@+id/imageViewActorPhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/actor_photo"
             android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 

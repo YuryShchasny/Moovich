@@ -92,14 +92,8 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         val items = genreListAdapter.currentList
         val newItems =
             items.map { item -> item.copy(isChecked = filter.genres.contains(item.genre)) }
-        genreListAdapter.onItemClickListener = { genre, isChecked ->
-            val newList = filter.genres.toMutableList().apply {
-                if (isChecked) add(genre)
-                else remove(genre)
-            }
-            viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(filter.copy(genres = newList)))
-        }
         genreListAdapter.submitList(newItems)
+        setGenreClickListener(filter)
     }
 
     private fun updateCountries(filter: Filter) {
@@ -203,6 +197,17 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>() {
         }
         binding.genreRecyclerView.adapter = genreListAdapter
         genreListAdapter.submitList(genres)
+        setGenreClickListener(filter)
+    }
+
+    private fun setGenreClickListener(filter: Filter) {
+        genreListAdapter.onItemClickListener = { genre, isChecked ->
+            val newList = filter.genres.toMutableList().apply {
+                if (isChecked) add(genre)
+                else remove(genre)
+            }
+            viewModel.fetchEvent(FilterFragmentEvent.UpdateFilter(filter.copy(genres = newList)))
+        }
     }
 
     private fun setCountrySpinner(filter: Filter, countryList: List<String>) {

@@ -11,19 +11,12 @@
     <string name="description">Description</string>
     <string name="actors">Actors</string>
     <string name="similar_movies">Similar movies</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="movie_poster">Movie poster</string>
-    <string name="backdrop">Backdrop</string>
-    <string name="bookmark_button">Bookmark button</string>
     <string name="oops">Oops!…</string>
     <string name="error_empty_watch_list">You haven\'t added anything to "Watch List" </string>
-    <string name="search_hint">Type title, categories, years, etc</string>
+    <string name="search_hint">Enter movie title</string>
     <string name="recent">Recent</string>
     <string name="results">Results</string>
     <string name="see_all_history">See all history</string>
-    <string name="filter_movies_button">Filter movies button</string>
-    <string name="actor_photo">Actor photo</string>
-    <string name="search_icon">Search icon</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
     <string name="all">All</string>
@@ -36,13 +29,14 @@
     <string name="not_found_error">No results found for this search</string>
     <string name="bad_request_error">There is an error in the application, please report it to the developer</string>
     <string name="another_error">Looks like there was an error %s</string>
+    <string name="request_limit">You have used all the queries available to you</string>
     <string name="authorization">Authorization</string>
     <string name="auth_description">
-        Данное приложение является бесплатным и не предназначено для коммерческого использования.
-        \n\nПриложение использует предоставляемую информацию сервиса Кинопоиск и неофициальное открытое API.
-        \n\nРазработчик никак не связан с предоставляемым API и не несет ответственность за предоставляемую информацию и работу сервера.
-        \n\nДля того, чтобы войти в приложение, вам необходимо авторизоваться у бота в Telegram и получить личный токен, который будет использоваться в приложении.
-        \n\nОт токена будет зависеть ограничение по запросам к серверу. Если вы достигните лимита по запросам, приложение работать не будет.
+        This application is free and not intended for commercial use.
+        \n\nThe application uses the information provided by the Kinopoisk service and an unofficial open API.
+        \n\nThe developer is in no way associated with the provided API and is not responsible for the information provided and the operation of the server.
+        \n\nIn order to enter the application, you need to log in to the bot in Telegram and receive a personal token that will be used in the application.
+        \n\nThe limit on requests to the server will depend on the token. If you reach your request limit, the application will not work.
     </string>
     <string name="your_auth_key">Your authorization key</string>
     <string name="login">Log in</string>

@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.sb.moovich.domain.entity.Filter
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class FilterLocalDataSource @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
