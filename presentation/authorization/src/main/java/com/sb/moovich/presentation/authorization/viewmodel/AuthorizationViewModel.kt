@@ -5,7 +5,7 @@ import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.entity.DataResult
 import com.sb.moovich.domain.entity.ErrorType
 import com.sb.moovich.domain.usecases.auth.LoginUseCase
-import com.sb.moovich.presentation.authorization.ui.AuthState
+import com.sb.moovich.presentation.authorization.ui.model.AuthorizationFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ class AuthorizationViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AuthState())
+    private val _state = MutableStateFlow(AuthorizationFragmentState())
     val state = _state.asStateFlow()
 
     private val _error = MutableSharedFlow<DataResult.Error>()

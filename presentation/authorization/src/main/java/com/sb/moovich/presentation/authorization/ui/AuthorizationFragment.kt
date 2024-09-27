@@ -9,16 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.authorization.databinding.FragmentAuthorizationBinding
 import com.sb.moovich.presentation.authorization.viewmodel.AuthorizationViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -82,18 +78,10 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
     }
 
     private fun setObservable() {
-        lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    if (state.isAuthorized) navigation.navigateToHome()
-                }
+        collectWithLifecycle(viewModel.state) { state ->
+            if (state.isAuthorized) navigation.navigateToHome()
         }
-        lifecycleScope.launch {
-            viewModel.error
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.CREATED)
-                .collect { it.showMessage(requireContext()) }
-        }
+        collectWithLifecycle(viewModel.error) { it.showMessage(requireContext()) }
     }
 
     private fun openTelegramBot() {

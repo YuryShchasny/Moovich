@@ -26,7 +26,7 @@ fun bindStringList(
     textView: TextView,
     genres: List<String>?,
 ) {
-    textView.text = genres?.joinToString { "$it " }
+    textView.text = genres?.joinToString { it }
 }
 
 @SuppressLint("SetTextI18n")

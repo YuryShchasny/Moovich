@@ -37,7 +37,7 @@ class SearchRepositoryImpl @Inject constructor(
         return movieRemoteDataSource.findMovie(name, count)
     }
 
-    override suspend fun findMoviesWithFilter(filter: Filter, count: Int): Flow<List<Movie>> {
+    override suspend fun findMoviesWithFilter(filter: Filter): Flow<List<Movie>> {
         val type = when (filter.type) {
             MovieType.ALL -> null
             MovieType.MOVIES -> "movie"
@@ -49,7 +49,7 @@ class SearchRepositoryImpl @Inject constructor(
             SortType.LATEST -> "year"
             SortType.RATING -> "rating.kp"
         }
-        return movieRemoteDataSource.findMoviesWithFilter(filter, count, sortType, type)
+        return movieRemoteDataSource.findMoviesWithFilter(filter, sortType, type)
     }
 
     override suspend fun movieNextPage() {

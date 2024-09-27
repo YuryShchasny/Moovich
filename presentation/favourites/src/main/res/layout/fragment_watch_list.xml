@@ -8,7 +8,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/layoutErrorState"
+            android:id="@+id/layoutEmptyContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -55,8 +55,11 @@
             android:id="@+id/recyclerViewWatchList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginHorizontal="16dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingTop="60dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_medium_movie_card"
             tools:visibility="visible" />
@@ -65,11 +68,13 @@
             android:id="@+id/recyclerViewGenres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginTop="@dimen/vertical_margin"
             android:orientation="horizontal"
-            android:layout_gravity="top"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_genre" />
+            tools:listitem="@layout/item_genre"
+            tools:visibility="visible" />
 
         <com.sb.moovich.core.views.SearchProgressBar
             android:id="@+id/progressBar"

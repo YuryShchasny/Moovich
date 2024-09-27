@@ -4,26 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
+import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.extensions.dpToPx
-import com.sb.moovich.core.navigation.INavigation
+import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.favourites.adapter.Genre
 import com.sb.moovich.presentation.favourites.adapter.GenreItemListAdapter
 import com.sb.moovich.presentation.favourites.databinding.FragmentWatchListBinding
+import com.sb.moovich.presentation.favourites.ui.model.WatchListFragmentEvent
+import com.sb.moovich.presentation.favourites.ui.model.WatchListFragmentState
 import com.sb.moovich.presentation.favourites.viewmodel.WatchListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
-    @Inject lateinit var navigation: INavigation
+
     private val viewModel: WatchListViewModel by viewModels()
     private val moviesAdapter = MediumMovieItemListAdapter()
     private val genresAdapter = GenreItemListAdapter()
@@ -40,64 +36,60 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.init()
         initRecyclerViews()
-        viewModel.getMovies()
+        setClickListener()
         observeWatchList()
     }
 
     private fun observeWatchList() {
-        lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    when (state) {
-                        is WatchListFragmentState.Content -> {
-                            binding.progressBar.visibility = View.GONE
-                            setClickListener()
-                            moviesAdapter.submitList(state.movieList)
-                            val genresList = mutableSetOf<String>()
-                            state.movieList.forEach {
-                                genresList.addAll(it.genres)
-                            }
-                            genresAdapter.submitList(genresList.map { Genre(it, false) })
-                            genresAdapter.onGenreItemClickListener = { genreContainer, position ->
-                                genreContainer.isChecked = !genreContainer.isChecked
-                                genresAdapter.notifyItemChanged(position)
-                                var filteredMovieList = state.movieList
-                                genresAdapter.currentList.forEach { genre ->
-                                    if (genre.isChecked) {
-                                        filteredMovieList =
-                                            filteredMovieList.filter { it.genres.contains(genre.name) }
-                                    }
-                                }
-                                moviesAdapter.submitList(filteredMovieList)
-                            }
-                        }
-
-                        is WatchListFragmentState.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            binding.recyclerViewWatchList.visibility = View.GONE
-                            binding.layoutErrorState.visibility = View.VISIBLE
-                            binding.textViewErrorMessage.text =
-                                ContextCompat.getString(requireContext(), state.msgResId)
-                        }
-
-                        WatchListFragmentState.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                    }
+        collectWithLifecycle(viewModel.state) { state ->
+            when (state) {
+                is WatchListFragmentState.Content -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.layoutEmptyContent.visibility = View.GONE
+                    binding.recyclerViewGenres.visibility = View.VISIBLE
+                    binding.recyclerViewWatchList.visibility = View.VISIBLE
+                    moviesAdapter.submit(filterMovies(state.movieList, state.genres))
+                    genresAdapter.submitList(state.genres)
                 }
+
+                is WatchListFragmentState.EmptyContent -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerViewWatchList.visibility = View.GONE
+                    binding.recyclerViewGenres.visibility = View.GONE
+                    binding.layoutEmptyContent.visibility = View.VISIBLE
+                    binding.textViewErrorMessage.text =
+                        getStringCompat(R.string.error_empty_watch_list)
+                }
+
+                WatchListFragmentState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
+    private fun filterMovies(movies: List<Movie>, genres: List<Genre>): List<Movie> {
+        var filteredMovieList = movies
+        genres.forEach { genre ->
+            if (genre.isChecked)
+                filteredMovieList = filteredMovieList.filter { it.genres.contains(genre.name) }
+        }
+        return filteredMovieList
+    }
+
     private fun initRecyclerViews() {
-        binding.recyclerViewWatchList.adapter = moviesAdapter.apply { topMargin = 60.dpToPx() }
+        binding.recyclerViewWatchList.adapter = moviesAdapter
         binding.recyclerViewGenres.adapter = genresAdapter
     }
 
     private fun setClickListener() {
-        moviesAdapter.onMovieItemClickListener = { movieId ->
-            navigation.navigateToMovie(movieId)
+        moviesAdapter.onMovieItemClickListener = { movie ->
+            viewModel.fetchEvent(WatchListFragmentEvent.OnMovieClick(movie))
+        }
+        genresAdapter.onGenreItemClickListener = { genre ->
+            viewModel.fetchEvent(WatchListFragmentEvent.OnGenreClick(genre))
         }
     }
 }

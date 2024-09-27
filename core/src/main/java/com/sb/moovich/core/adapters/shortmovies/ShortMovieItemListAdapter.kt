@@ -2,12 +2,11 @@ package com.sb.moovich.core.adapters.shortmovies
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.sb.moovich.domain.entity.Movie
 
 class ShortMovieItemListAdapter :
-    ListAdapter<ShortMovie, ShortMovieItemViewHolder>(ShortMovieItemListDiffCallback()) {
-    var onMovieItemClickListener: ((Int) -> Unit)? = null
+    ListAdapter<Movie, ShortMovieItemViewHolder>(ShortMovieItemListDiffCallback()) {
+    var onMovieItemClickListener: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortMovieItemViewHolder {
         return ShortMovieItemViewHolder.from(parent)
@@ -17,11 +16,11 @@ class ShortMovieItemListAdapter :
         holder: ShortMovieItemViewHolder,
         position: Int,
     ) {
-        val item = currentList[position]
+        val movie = currentList[position]
         holder.bind(
-            item,
+            movie,
             onClickListener = {
-                onMovieItemClickListener?.invoke(item.id)
+                onMovieItemClickListener?.invoke(movie)
             })
     }
 }

@@ -39,6 +39,7 @@
                     android:layout_height="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="4dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/ic_search"
                     app:tint="@color/hint" />
 
@@ -67,6 +68,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="0"
                 android:background="@drawable/ic_filter_background"
+                android:importantForAccessibility="no"
                 android:src="@drawable/ic_filter" />
         </LinearLayout>
 
@@ -81,7 +83,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/linearLayoutRecent"
+                        android:id="@+id/linearLayoutTopBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
@@ -133,6 +135,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center_vertical"
+                                android:importantForAccessibility="no"
                                 app:srcCompat="@drawable/ic_close" />
                         </LinearLayout>
 
@@ -148,7 +151,7 @@
                 </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layoutErrorState"
+                android:id="@+id/layoutNotFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

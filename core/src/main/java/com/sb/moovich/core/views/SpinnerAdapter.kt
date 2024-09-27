@@ -15,7 +15,7 @@ class SpinnerAdapter(
     var items: List<SpinnerItem>,
 ) : ArrayAdapter<SpinnerItem>(context, resource, items) {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    var onItemCheckBoxChanged: ((String, Boolean) -> Unit)? = null
+    var onCountryClick: ((String) -> Unit)? = null
 
     override fun getView(
         position: Int,
@@ -44,9 +44,8 @@ class SpinnerAdapter(
             if (resource == R.layout.item_spinner_dropdown) {
                 val checkbox: CheckBox = view.findViewById(R.id.checkboxCountry)
                 checkbox.isChecked = item.isChecked
-                checkbox.isClickable = false
                 view.setOnClickListener {
-                    onItemCheckBoxChanged?.invoke(item.country, !checkbox.isChecked)
+                    onCountryClick?.invoke(item.country)
                 }
             }
         } catch (_: Exception) {

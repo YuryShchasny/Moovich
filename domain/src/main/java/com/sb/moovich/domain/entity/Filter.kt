@@ -1,5 +1,7 @@
 package com.sb.moovich.domain.entity
 
+import java.util.Calendar
+
 data class Filter(
     val type: MovieType = MovieType.ALL,
     val sortType: SortType = SortType.POPULARITY,
@@ -12,7 +14,7 @@ data class Filter(
 ) {
     companion object {
         private const val YEAR_FROM = 1937
-        private const val YEAR_TO = 2024
+        private val YEAR_TO = Calendar.getInstance().get(Calendar.YEAR)
     }
     fun getFiltersCount(): Int {
         val plusYears = if(yearFrom == YEAR_FROM && yearTo == YEAR_TO) 0 else 1

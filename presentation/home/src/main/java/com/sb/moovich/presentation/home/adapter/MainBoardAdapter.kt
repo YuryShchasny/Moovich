@@ -8,7 +8,7 @@ import coil.load
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.databinding.ItemMainboardBinding
 
-class MainBoardAdapter(private val list: List<Movie>, private val onClickListener: (Int) -> Unit) : PagerAdapter() {
+class MainBoardAdapter(private val list: List<Movie>, private val onClickListener: (Movie) -> Unit) : PagerAdapter() {
 
     override fun getCount(): Int = list.size
 
@@ -26,7 +26,7 @@ class MainBoardAdapter(private val list: List<Movie>, private val onClickListene
         binding.backdropImageView.load(item.poster)
         binding.titleTextView.text = item.name
         binding.descriptionTextView.text = item.description
-        binding.root.setOnClickListener { onClickListener(item.id) }
+        binding.root.setOnClickListener { onClickListener(item) }
 
         container.addView(binding.root)
         return binding.root

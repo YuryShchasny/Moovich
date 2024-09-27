@@ -6,16 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.sb.moovich.core.databinding.ItemShortMovieCardBinding
+import com.sb.moovich.domain.entity.Movie
 import java.util.Locale
 
 class ShortMovieItemViewHolder(
     private val binding: ItemShortMovieCardBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: ShortMovie, onClickListener: () -> Unit) {
-        if(item.poster.isNotBlank()) {
-            binding.imageViewMoviePoster.load(item.poster)
-        }
+    fun bind(item: Movie, onClickListener: () -> Unit) {
+        binding.imageViewMoviePoster.load(item.poster)
         binding.textViewMovieName.text = item.name
         if (item.rating == 0.0) {
             binding.textViewMovieRating.visibility = View.GONE

@@ -9,6 +9,12 @@ import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment<ViewBindingType : ViewDataBinding> : Fragment() {
 
@@ -45,9 +51,10 @@ abstract class BaseFragment<ViewBindingType : ViewDataBinding> : Fragment() {
         _binding = null
     }
 
-    fun addAnimationView(vararg view:View) {
+    fun addAnimationView(vararg view: View) {
         listOfAnimationView.addAll(view)
     }
+
     fun addAnimator(vararg animator: Animator) {
         listOfAnimators.addAll(animator)
     }
@@ -64,4 +71,14 @@ abstract class BaseFragment<ViewBindingType : ViewDataBinding> : Fragment() {
 
     fun getDrawableCompat(id: Int) = ContextCompat.getDrawable(requireContext(), id)
 
+    fun <T> collectWithLifecycle(
+        flow: Flow<T>,
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        collector: FlowCollector<T>
+    ) {
+        lifecycleScope.launch {
+            flow.flowWithLifecycle(viewLifecycleOwner.lifecycle, state)
+                .collect(collector)
+        }
+    }
 }

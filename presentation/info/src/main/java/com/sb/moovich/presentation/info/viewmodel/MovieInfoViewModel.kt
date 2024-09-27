@@ -2,12 +2,14 @@ package com.sb.moovich.presentation.info.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.usecases.movie.GetMovieByIdUseCase
 import com.sb.moovich.domain.usecases.recent.AddMovieToRecentUseCase
 import com.sb.moovich.domain.usecases.watch.AddMovieToWatchListUseCase
 import com.sb.moovich.domain.usecases.watch.DeleteMovieFromWatchListUseCase
 import com.sb.moovich.domain.usecases.watch.GetWatchMovieByIdUseCase
-import com.sb.moovich.presentation.info.ui.MovieInfoFragmentState
+import com.sb.moovich.presentation.info.ui.model.MovieInfoFragmentEvent
+import com.sb.moovich.presentation.info.ui.model.MovieInfoFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,12 +18,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieInfoViewModel @Inject constructor(
+    private val navigation: INavigation,
     private val getMovieByIdUseCase: GetMovieByIdUseCase,
     private val addMovieToWatchListUseCase: AddMovieToWatchListUseCase,
     private val deleteMovieFromWatchListUseCase: DeleteMovieFromWatchListUseCase,
     private val getWatchMovieByIdUseCase: GetWatchMovieByIdUseCase,
     private val addMovieToRecentUseCase: AddMovieToRecentUseCase,
 ) : ViewModel() {
+
     private val _state = MutableStateFlow<MovieInfoFragmentState>(MovieInfoFragmentState.Loading)
     val state = _state.asStateFlow()
 
@@ -35,7 +39,7 @@ class MovieInfoViewModel @Inject constructor(
                     )
                 val bookMarkChecked = getWatchMovieByIdUseCase(filteredMovie.id) != null
                 _state.value = MovieInfoFragmentState.Content(
-                    currencyMovie = filteredMovie,
+                    movie = filteredMovie,
                     bookMarkChecked = bookMarkChecked
                 )
                 addMovieToRecentUseCase(filteredMovie)
@@ -43,19 +47,27 @@ class MovieInfoViewModel @Inject constructor(
         }
     }
 
-    fun reverseBookmarkValue() {
-        _state.update { state ->
-            (state as MovieInfoFragmentState.Content).let {
-                launch {
-                    if(it.bookMarkChecked) deleteMovieFromWatchListUseCase(it.currencyMovie.id)
-                    else addMovieToWatchListUseCase(it.currencyMovie)
-                }
-                it.copy(bookMarkChecked = !it.bookMarkChecked)
-            }
+    fun fetchEvent(event: MovieInfoFragmentEvent) {
+        when(event) {
+            MovieInfoFragmentEvent.OnBookmarkClick -> reverseBookmark()
+            is MovieInfoFragmentEvent.OnSimilarMovieClick -> navigation.navigateToMovie(event.movie.id)
+            MovieInfoFragmentEvent.SeeAllActors -> seeAll()
         }
     }
 
-    fun seeAll() {
+    private fun reverseBookmark() {
+        _state.update { state ->
+            (state as? MovieInfoFragmentState.Content)?.let {
+                launch {
+                    if(state.bookMarkChecked) deleteMovieFromWatchListUseCase(it.movie.id)
+                    else addMovieToWatchListUseCase(it.movie)
+                }
+                state.copy(bookMarkChecked = !it.bookMarkChecked)
+            } ?: state
+        }
+    }
+
+    private fun seeAll() {
         _state.update {
             (it as MovieInfoFragmentState.Content).copy(
                 seeAllActors = !it.seeAllActors

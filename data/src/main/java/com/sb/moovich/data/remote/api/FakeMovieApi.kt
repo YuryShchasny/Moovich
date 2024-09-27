@@ -29,7 +29,7 @@ class FakeMovieApi : MovieApi {
             137,
             "movie",
             2012,
-            listOf(GenreDto("фантастика"), GenreDto("боевик"), GenreDto("фэнтэзи")),
+            listOf(GenreDto("фантастика"), GenreDto("боевик"), GenreDto("фэнтези")),
             listOf(
                 PersonDto(
                     10096,

@@ -9,18 +9,13 @@ import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.sb.moovich.core.adapters.shortmovies.ShortMovie
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.dpToPx
-import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Collection
-import com.sb.moovich.domain.entity.GetAllType
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.R
 import com.sb.moovich.presentation.home.adapter.CollectionsAdapter
@@ -29,17 +24,17 @@ import com.sb.moovich.presentation.home.adapter.GenreAdapter
 import com.sb.moovich.presentation.home.adapter.MainBoardAdapter
 import com.sb.moovich.presentation.home.adapter.MovieCarouselAdapter
 import com.sb.moovich.presentation.home.databinding.FragmentHomeBinding
+import com.sb.moovich.presentation.home.ui.model.HomeFragmentEvent
+import com.sb.moovich.presentation.home.ui.model.HomeFragmentState
 import com.sb.moovich.presentation.home.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    @Inject
-    lateinit var navigation: INavigation
+
     private val viewModel: HomeViewModel by viewModels()
     private val recommendedListAdapter = ShortMovieItemListAdapter()
     private val seriesListAdapter = ShortMovieItemListAdapter()
@@ -51,10 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setObservable()
@@ -68,60 +60,49 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun setObservable() {
-        lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    bindingOrNull?.let {
-                        when (state) {
-                            is HomeFragmentState.Content -> {
-                                binding.preloader.visibility = View.GONE
-                                binding.main.visibility = View.VISIBLE
-                                setClickListener()
-                                setMainBoard(state.mainBoardList)
-                                setTop10Month(state.top10MonthList)
-                                setRecommendedList(state.recommendedList)
-                                setCollections(state.collections)
-                                setTop10Series(state.top10Series)
-                                setGenres(state.genres)
-                            }
+        collectWithLifecycle(viewModel.state) { state ->
+            bindingOrNull?.let {
+                when (state) {
+                    is HomeFragmentState.Content -> {
+                        binding.preloader.visibility = View.GONE
+                        binding.main.visibility = View.VISIBLE
+                        setClickListener()
+                        setMainBoard(state.mainBoardList)
+                        setTop10Month(state.top10MonthList)
+                        setRecommendedList(state.recommendedList)
+                        setCollections(state.collections)
+                        setTop10Series(state.top10Series)
+                        setGenres(state.genres)
+                    }
 
-                            is HomeFragmentState.Error -> {
-
-                            }
-
-                            HomeFragmentState.Loading -> {
-                                binding.preloader.visibility = View.VISIBLE
-                            }
-                        }
+                    HomeFragmentState.Loading -> {
+                        binding.preloader.visibility = View.VISIBLE
                     }
                 }
+            }
         }
     }
 
     private fun setGenres(list: List<String>) {
         binding.recyclerViewGenres.adapter = GenreAdapter(list, onClickListener = {
-            navigation.navigateToAllMovies(GetAllType.Genre(it))
+            viewModel.fetchEvent(HomeFragmentEvent.OnGenreClick(it))
         })
     }
 
     private fun setTop10Series(list: List<Movie>) {
-        seriesListAdapter.submitList(list.map {
-            ShortMovie(it.id, it.name, it.rating, it.poster)
-        })
-
+        seriesListAdapter.submitList(list)
     }
 
     private fun setCollections(list: List<Collection>) {
         binding.recyclerViewCollections.adapter = CollectionsAdapter(list, onClickListener = {
-            navigation.navigateToCollection(it)
+            viewModel.fetchEvent(HomeFragmentEvent.OnCollectionClick(it))
         })
     }
 
     private fun setTop10Month(list: List<Movie>) {
         val lm = CustomCarouselLayoutManager(requireContext(), binding.carouselRecyclerView)
         val adapter = MovieCarouselAdapter(list, onClickListener = {
-            navigation.navigateToMovie(it)
+            viewModel.fetchEvent(HomeFragmentEvent.OnMovieClick(it))
         })
         binding.carouselRecyclerView.adapter = adapter
         binding.carouselRecyclerView.layoutManager = lm
@@ -132,14 +113,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun setRecommendedList(list: List<Movie>) {
-        recommendedListAdapter.submitList(list.map {
-            ShortMovie(it.id, it.name, it.rating, it.poster)
-        })
+        recommendedListAdapter.submitList(list)
     }
 
     private fun setMainBoard(list: List<Movie>) {
         binding.mainBoardPager.adapter = MainBoardAdapter(list, onClickListener = {
-            navigation.navigateToMovie(it)
+            viewModel.fetchEvent(HomeFragmentEvent.OnMovieClick(it))
         })
         addMainBoardPoints()
         addMainBoardListener()
@@ -206,16 +185,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-
     private fun setClickListener() {
-        recommendedListAdapter.onMovieItemClickListener = { movieId ->
-            navigation.navigateToMovie(movieId)
+        recommendedListAdapter.onMovieItemClickListener = { movie ->
+            viewModel.fetchEvent(HomeFragmentEvent.OnMovieClick(movie))
         }
-        seriesListAdapter.onMovieItemClickListener = { movieId ->
-            navigation.navigateToMovie(movieId)
+        seriesListAdapter.onMovieItemClickListener = { movie ->
+            viewModel.fetchEvent(HomeFragmentEvent.OnMovieClick(movie))
         }
-        binding.seeAllRecommendations.setOnClickListener { navigation.navigateToAllMovies(GetAllType.Recommendations) }
-        binding.seeAllSeries.setOnClickListener { navigation.navigateToAllMovies(GetAllType.Series) }
-        binding.seeAllCollectionsTextView.setOnClickListener { navigation.navigateToAllCollections() }
+        binding.seeAllRecommendations.setOnClickListener { viewModel.fetchEvent(HomeFragmentEvent.SeeAllRecommendations) }
+        binding.seeAllSeries.setOnClickListener { viewModel.fetchEvent(HomeFragmentEvent.SeeAllSeries) }
+        binding.seeAllCollectionsTextView.setOnClickListener {
+            viewModel.fetchEvent(
+                HomeFragmentEvent.SeeAllCollections
+            )
+        }
     }
 }

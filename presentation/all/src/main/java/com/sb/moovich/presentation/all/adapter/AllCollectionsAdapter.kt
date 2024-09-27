@@ -1,55 +1,58 @@
 package com.sb.moovich.presentation.all.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.sb.moovich.domain.entity.Collection
-import com.sb.moovich.presentation.all.databinding.ItemAllCollectionBinding
 
-class AllCollectionsAdapter: ListAdapter<Collection,AllCollectionsViewHolder>(CollectionDiffCallback()) {
+class AllCollectionsAdapter :
+    ListAdapter<CollectionItem, RecyclerView.ViewHolder>(CollectionDiffCallback()) {
 
     var onCollectionItemClickListener: ((Collection) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllCollectionsViewHolder = AllCollectionsViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
+            INFO_TYPE -> AllCollectionsViewHolder.from(parent)
+            SHIMMER_TYPE -> AllCollectionShimmerViewHolder.from(parent)
+            else -> throw IllegalArgumentException()
+        }
 
-    override fun onBindViewHolder(holder: AllCollectionsViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
-        holder.itemView.setOnClickListener {
-            onCollectionItemClickListener?.invoke(item)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val collection = currentList[position]) {
+            is CollectionItem.Info -> {
+                (holder as AllCollectionsViewHolder).bind(collection.collection)
+                onCollectionItemClickListener?.let { listener ->
+                    holder.itemView.setOnClickListener {
+                        listener.invoke(collection.collection)
+                    }
+                }
+            }
+
+            CollectionItem.Shimmer -> (holder as AllCollectionShimmerViewHolder).bind()
         }
     }
-}
 
-class AllCollectionsViewHolder(private val binding: ItemAllCollectionBinding): RecyclerView.ViewHolder(binding.root) {
-    fun bind(collection: Collection) {
-        binding.name.text = collection.name
-        binding.count.text = binding.root.context.getString(com.sb.moovich.core.R.string.count, collection.count)
-        binding.image.load(collection.cover)
+    override fun getItemViewType(position: Int): Int {
+        return when (currentList[position]) {
+            is CollectionItem.Info -> INFO_TYPE
+            CollectionItem.Shimmer -> SHIMMER_TYPE
+        }
+    }
+
+    fun submit(list: List<Collection>, withShimmer: Boolean = false) {
+        val mappedList = list.map { CollectionItem.Info(it) }
+        val resultList = if(withShimmer) mappedList + CollectionItem.Shimmer else mappedList
+        submitList(resultList)
+    }
+
+    fun submit(list: List<Collection>, withShimmer: Boolean = false, commitCallback: Runnable?) {
+        val mappedList = list.map { CollectionItem.Info(it) }
+        val resultList = if(withShimmer) mappedList + CollectionItem.Shimmer else mappedList
+        submitList(resultList, commitCallback)
     }
 
     companion object {
-        fun from(parent: ViewGroup): AllCollectionsViewHolder {
-           return AllCollectionsViewHolder(
-               ItemAllCollectionBinding.inflate(
-                   LayoutInflater.from(parent.context),
-                   parent,
-                   false
-               )
-           )
-        }
-    }
-}
-
-class CollectionDiffCallback(): DiffUtil.ItemCallback<Collection>() {
-    override fun areItemsTheSame(oldItem: Collection, newItem: Collection): Boolean {
-        return oldItem.slug == newItem.slug
-    }
-
-    override fun areContentsTheSame(oldItem: Collection, newItem: Collection): Boolean {
-        return oldItem == newItem
+        private const val INFO_TYPE = 0
+        private const val SHIMMER_TYPE = 1
     }
 }

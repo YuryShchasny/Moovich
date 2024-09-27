@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textViewGenre"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/gilroy_medium"
-    android:textColor="@color/white"
-    android:textSize="14sp"
-    android:background="@drawable/genre_back_shape"
-    android:layout_marginHorizontal="8dp"
-    android:textAlignment="center"
-    tools:text="Comedy">
+<layout>
 
-</TextView>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/textViewGenre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/genre_back_shape"
+        android:fontFamily="@font/gilroy_medium"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        tools:text="Comedy">
+
+    </TextView>
+</layout>

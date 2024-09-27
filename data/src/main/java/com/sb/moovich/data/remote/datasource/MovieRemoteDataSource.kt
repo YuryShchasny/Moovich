@@ -120,7 +120,6 @@ class MovieRemoteDataSource @Inject constructor(
 
     suspend fun findMoviesWithFilter(
         filter: Filter,
-        count: Int,
         sortType: String,
         type: String?
     ): Flow<List<Movie>> {
@@ -128,7 +127,6 @@ class MovieRemoteDataSource @Inject constructor(
             request = { page ->
                 movieApi.filterMovie(
                     page = page,
-                    limit = count,
                     sortField = sortType,
                     type = type,
                     year = "${filter.yearFrom}-${filter.yearTo}",

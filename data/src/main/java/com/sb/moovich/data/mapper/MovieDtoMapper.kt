@@ -10,8 +10,7 @@ import javax.inject.Inject
 class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
     companion object {
         private const val KINOPOISK_URL = "https://www.kinopoisk.ru/film/"
-        private const val KINOPOISK_POSTER_PLACEHOLDER =
-            "https://yastatic.net/s3/kinopoisk-frontend/common-static/img/projector-logo/placeholder.svg"
+        private const val PLACEHOLDER = "https://www.formulatv.com/images/carteltvmovies_m1.jpg"
     }
 
     override suspend fun mapDataToEntity(data: MovieDto): Movie = mapDataToEntity(data, true)
@@ -73,5 +72,5 @@ class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
         }
     }
 
-    private fun getPoster(data: MovieDto) = data.poster?.previewUrl ?: data.poster?.url ?: KINOPOISK_POSTER_PLACEHOLDER
+    private fun getPoster(data: MovieDto) = data.poster?.previewUrl ?: data.poster?.url ?: PLACEHOLDER
 }

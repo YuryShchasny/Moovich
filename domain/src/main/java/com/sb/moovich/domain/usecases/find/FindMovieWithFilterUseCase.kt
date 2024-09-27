@@ -7,8 +7,5 @@ import javax.inject.Inject
 class FindMovieWithFilterUseCase @Inject constructor(
     private val repository: SearchRepository,
 ) {
-    suspend operator fun invoke(
-        filter: Filter,
-        count: Int,
-    ) = repository.findMoviesWithFilter(filter, count)
+    suspend operator fun invoke(filter: Filter) = repository.findMoviesWithFilter(filter)
 }

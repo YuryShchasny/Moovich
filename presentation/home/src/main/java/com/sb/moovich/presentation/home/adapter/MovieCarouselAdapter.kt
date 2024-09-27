@@ -17,7 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MovieCarouselAdapter(private val movies: List<Movie>, private val onClickListener: (Int) -> Unit) :
+class MovieCarouselAdapter(private val movies: List<Movie>, private val onClickListener: (Movie) -> Unit) :
     RecyclerView.Adapter<MovieCarouselViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCarouselViewHolder =
@@ -36,10 +36,10 @@ class MovieCarouselViewHolder(private val binding: ItemCarouselBinding) : ViewHo
     private val asyncLoaderScope = CoroutineScope(Dispatchers.IO)
     private val asyncLoadJob: Job? = null
 
-    fun bind(movie: Movie, position: Int, onClickListener: (Int) -> Unit) {
+    fun bind(movie: Movie, position: Int, onClickListener: (Movie) -> Unit) {
         val context = binding.root.context
         binding.image.load(movie.poster)
-        binding.card.setOnClickListener { onClickListener(movie.id) }
+        binding.card.setOnClickListener { onClickListener(movie) }
         val imageLoader = ImageLoader(context)
         val request = ImageRequest.Builder(context)
             .data(movie.poster)

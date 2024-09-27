@@ -2,13 +2,14 @@ package com.sb.moovich.presentation.search.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
+import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Filter
 import com.sb.moovich.domain.usecases.filter.GetCountriesUseCase
 import com.sb.moovich.domain.usecases.filter.GetGenresUseCase
 import com.sb.moovich.domain.usecases.filter.GetSearchFilterUseCase
 import com.sb.moovich.domain.usecases.filter.SaveSearchFilterUseCase
-import com.sb.moovich.presentation.search.model.filter.FilterFragmentEvent
-import com.sb.moovich.presentation.search.model.filter.FilterFragmentState
+import com.sb.moovich.presentation.search.ui.model.filter.FilterFragmentEvent
+import com.sb.moovich.presentation.search.ui.model.filter.FilterFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,11 +18,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
+    private val navigation: INavigation,
     getSearchFilterUseCase: GetSearchFilterUseCase,
     getGenresUseCase: GetGenresUseCase,
     getCountriesUseCase: GetCountriesUseCase,
     private val saveSearchFilterUseCase: SaveSearchFilterUseCase,
 ) : ViewModel() {
+
     private val _state = MutableStateFlow<FilterFragmentState>(FilterFragmentState.Loading)
     val state = _state.asStateFlow()
 
@@ -40,34 +43,86 @@ class FilterViewModel @Inject constructor(
                 launch {
                     saveSearchFilterUseCase(Filter())
                 }
+                navigation.navigateUp()
             }
 
             is FilterFragmentEvent.SaveFilter -> {
                 launch {
-                    saveSearchFilterUseCase(event.filter)
+                    val state = _state.value as FilterFragmentState.Content
+                    saveSearchFilterUseCase(state.filter)
                 }
-            }
-
-            is FilterFragmentEvent.UpdateFilter -> _state.update {
-                when (it) {
-                    is FilterFragmentState.Content -> FilterFragmentState.FilterState(event.filter)
-                    is FilterFragmentState.FilterState -> FilterFragmentState.FilterState(event.filter)
-                    FilterFragmentState.Loading -> throw RuntimeException("Incorrect FilterFragmentState")
-                }
+                navigation.navigateUp()
             }
 
             is FilterFragmentEvent.UpdateSliders -> {
-                (state.value as? FilterFragmentState.FilterState)?.filter?.let { filter ->
-                    fetchEvent(
-                        FilterFragmentEvent.UpdateFilter(
-                            filter.copy(
+                _state.update { state ->
+                    (state as? FilterFragmentState.Content)?.let {
+                        state.copy(
+                            filter = state.filter.copy(
                                 yearFrom = event.yearFrom,
                                 yearTo = event.yearTo,
                                 ratingFrom = event.ratingFrom,
                                 ratingTo = event.ratingTo
                             )
                         )
-                    )
+                    } ?: state
+                }
+            }
+
+            FilterFragmentEvent.OnBackPressed -> navigation.navigateUp()
+            is FilterFragmentEvent.OnGenreClick -> {
+                _state.update { state ->
+                    (state as? FilterFragmentState.Content)?.let {
+                        state.copy(
+                            filter = state.filter.copy(
+                                genres =
+                                state.filter.genres.toMutableList().apply {
+                                    if (contains(event.genre)) remove(event.genre)
+                                    else add(event.genre)
+                                }
+                            )
+                        )
+                    } ?: state
+                }
+            }
+
+            is FilterFragmentEvent.OnCountryClick -> {
+                _state.update { state ->
+                    (state as? FilterFragmentState.Content)?.let {
+                        state.copy(
+                            filter = state.filter.copy(
+                                countries =
+                                state.filter.countries.toMutableList().apply {
+                                    if (contains(event.country)) remove(event.country)
+                                    else add(event.country)
+                                }
+                            )
+                        )
+                    } ?: state
+                }
+            }
+
+            is FilterFragmentEvent.OnTabClick -> {
+                _state.update { state ->
+                    (state as? FilterFragmentState.Content)?.let {
+                        state.copy(
+                            filter = state.filter.copy(
+                                type = event.type
+                            )
+                        )
+                    } ?: state
+                }
+            }
+
+            is FilterFragmentEvent.OnSortViewClick -> {
+                _state.update { state ->
+                    (state as? FilterFragmentState.Content)?.let {
+                        state.copy(
+                            filter = state.filter.copy(
+                                sortType = event.sortType
+                            )
+                        )
+                    } ?: state
                 }
             }
         }

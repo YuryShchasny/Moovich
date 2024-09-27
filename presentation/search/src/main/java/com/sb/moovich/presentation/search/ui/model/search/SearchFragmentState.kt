@@ -1,17 +1,13 @@
-package com.sb.moovich.presentation.search.model.search
+package com.sb.moovich.presentation.search.ui.model.search
 
 import com.sb.moovich.domain.entity.Movie
 
-sealed class SearchFragmentState {
-    data object Loading : SearchFragmentState()
-
-    data class Error(
-        val msg: String,
-    ) : SearchFragmentState()
+sealed interface SearchFragmentState {
+    data object Loading : SearchFragmentState
 
     sealed class Content(
-        var seeAll: Boolean,
-    ) : SearchFragmentState() {
+        val seeAll: Boolean,
+    ) : SearchFragmentState {
         data class FindList(
             val findList: List<Movie>,
             val searchName: String,
@@ -26,6 +22,7 @@ sealed class SearchFragmentState {
         data class FilterList(
             val findList: List<Movie>,
             val filtersCount: Int,
+            val lastPage: Boolean = false,
         ) : Content(false)
     }
 }

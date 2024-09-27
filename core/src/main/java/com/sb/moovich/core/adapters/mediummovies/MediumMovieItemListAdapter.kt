@@ -1,81 +1,57 @@
 package com.sb.moovich.core.adapters.mediummovies
 
-import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.sb.moovich.core.R
-import com.sb.moovich.core.extensions.dpToPx
 import com.sb.moovich.domain.entity.Movie
-import java.util.Locale
 
 class MediumMovieItemListAdapter :
-    ListAdapter<Movie, MediumMovieItemViewHolder>(
-        MediumMovieItemListDiffCallback()
-    ) {
-    var onMovieItemClickListener: ((Int) -> Unit)? = null
-    var topMargin = 0
+    ListAdapter<MediumMovie, RecyclerView.ViewHolder>(MediumMovieItemListDiffCallback()) {
+    var onMovieItemClickListener: ((Movie) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediumMovieItemViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return MediumMovieItemViewHolder(
-            inflater.inflate(
-                R.layout.item_medium_movie_card,
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: MediumMovieItemViewHolder, position: Int) {
-        val context = holder.itemView.context
-        val currentMovie = getItem(position)
-        if (currentMovie.poster.isNotBlank()) {
-            holder.imageViewMoviePoster.load(currentMovie.poster)
-        } else {
-            holder.imageViewMoviePoster.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.poster_placeholder
-                )
-            )
-        }
-        holder.textViewMovieName.text = currentMovie.name
-        holder.textViewDescription.text = currentMovie.description
-        getLength(currentMovie.movieLength, holder.textViewLength)
-        holder.textViewGenres.text =
-            currentMovie.genres.joinToString(separator = ", ")
-        if (currentMovie.year != 0) holder.textViewYear.text = currentMovie.year.toString()
-        if (currentMovie.rating == 0.0) {
-            holder.textViewMovieRating.visibility = View.GONE
-        } else {
-            holder.textViewMovieRating.text =
-                String.format(Locale.getDefault(), "%.1f", currentMovie.rating)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
+            INFO_TYPE -> MediumMovieItemViewHolder.from(parent)
+            SHIMMER_TYPE -> MediumMovieShimmerViewHolder.from(parent)
+            else -> throw IllegalArgumentException()
         }
 
-        onMovieItemClickListener?.let { listener ->
-            holder.itemView.setOnClickListener {
-                listener.invoke(currentMovie.id)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val movie = currentList[position]) {
+            is MediumMovie.Info -> {
+                (holder as MediumMovieItemViewHolder).bind(movie.movie)
+                onMovieItemClickListener?.let { listener ->
+                    holder.itemView.setOnClickListener {
+                        listener.invoke(movie.movie)
+                    }
+                }
             }
-        }
 
-        holder.itemView.updateLayoutParams<RecyclerView.LayoutParams> {
-            setMargins(0, (if(position == 0) this@MediumMovieItemListAdapter.topMargin else 0) + 8.dpToPx(), 0, 8.dpToPx())
+            MediumMovie.Shimmer -> (holder as MediumMovieShimmerViewHolder).bind()
         }
     }
 
-    // TODO DATA BINDING
-    @SuppressLint("SetTextI18n")
-    private fun getLength(length: Int, textView: TextView) {
-        if (length <= 0) textView.visibility = View.GONE
-        val hoursChar = textView.context.getString(R.string.hours)
-        val minutesChar = textView.context.getString(R.string.minutes)
-        textView.text = "${length / 60} $hoursChar ${length % 60} $minutesChar"
+    override fun getItemViewType(position: Int): Int {
+        return when (currentList[position]) {
+            is MediumMovie.Info -> INFO_TYPE
+            MediumMovie.Shimmer -> SHIMMER_TYPE
+        }
+    }
+
+    fun submit(list: List<Movie>, withShimmer: Boolean = false) {
+        val mappedList = list.map { MediumMovie.Info(it) }
+        val resultList = if(withShimmer) mappedList + MediumMovie.Shimmer else mappedList
+        submitList(resultList)
+    }
+
+    fun submit(list: List<Movie>, withShimmer: Boolean = false, commitCallback: Runnable?) {
+        val mappedList = list.map { MediumMovie.Info(it) }
+        val resultList = if(withShimmer) mappedList + MediumMovie.Shimmer else mappedList
+        submitList(resultList, commitCallback)
+    }
+
+    companion object {
+        private const val INFO_TYPE = 0
+        private const val SHIMMER_TYPE = 1
     }
 }

@@ -22,7 +22,7 @@ interface SearchRepository {
         count: Int,
     ): List<Movie>
 
-    suspend fun findMoviesWithFilter(filter: Filter, count: Int): Flow<List<Movie>>
+    suspend fun findMoviesWithFilter(filter: Filter): Flow<List<Movie>>
 
     suspend fun movieNextPage()
 }

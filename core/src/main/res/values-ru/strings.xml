@@ -17,7 +17,7 @@
     <string name="search_hint">Введите название фильма</string>
     <string name="recent">Смотрели ранее</string>
     <string name="results">Результат</string>
-    <string name="see_all_history">Посмотреть всю историю</string>
+    <string name="see_all_history">Вся история</string>
     <string name="filter">Фильтр</string>
     <string name="reset">Сбросить</string>
     <string name="all">Все</string>

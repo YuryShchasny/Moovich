@@ -9,5 +9,5 @@ class StringListConverter {
     }
 
     @TypeConverter
-    fun fromMovieRating(stringList: List<String>): String = stringList.joinToString(separator = ", ")
+    fun fromMovieRating(stringList: List<String>): String = stringList.joinToString { it }
 }

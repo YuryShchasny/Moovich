@@ -5,24 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.presentation.all.adapter.AllCollectionsAdapter
 import com.sb.moovich.presentation.all.databinding.FragmentAllCollectionsBinding
+import com.sb.moovich.presentation.all.ui.model.AllCollectionsFragmentEvent
+import com.sb.moovich.presentation.all.ui.model.AllCollectionsFragmentState
 import com.sb.moovich.presentation.all.viewmodel.AllCollectionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AllCollectionsFragment : BaseFragment<FragmentAllCollectionsBinding>() {
-    @Inject
-    lateinit var navigation: INavigation
+
     private val viewModel: AllCollectionsViewModel by viewModels()
     private val adapter = AllCollectionsAdapter()
 
@@ -37,7 +32,7 @@ class AllCollectionsFragment : BaseFragment<FragmentAllCollectionsBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter.apply {
             onCollectionItemClickListener = {
-                navigation.navigateToCollection(it)
+                viewModel.fetchEvent(AllCollectionsFragmentEvent.OnCollectionClick(it))
             }
         }
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -50,22 +45,18 @@ class AllCollectionsFragment : BaseFragment<FragmentAllCollectionsBinding>() {
                 }
             }
         })
-        lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    when (state) {
-                        AllCollectionsState.Loading -> {}
-                        is AllCollectionsState.Collections -> {
-                            binding.progressBar.visibility = View.GONE
-                            binding.recyclerView.visibility = View.VISIBLE
-                            val scrollState = binding.recyclerView.layoutManager?.onSaveInstanceState()
-                            adapter.submitList(state.collections) {
-                                binding.recyclerView.layoutManager?.onRestoreInstanceState(scrollState)
-                            }
-                        }
+        collectWithLifecycle(viewModel.state) { state ->
+            when (state) {
+                AllCollectionsFragmentState.Loading -> {}
+                is AllCollectionsFragmentState.Collections -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    val scrollState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+                    adapter.submit(state.collections, !state.lastPage) {
+                        binding.recyclerView.layoutManager?.onRestoreInstanceState(scrollState)
                     }
                 }
+            }
         }
     }
 }
