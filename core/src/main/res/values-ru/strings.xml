@@ -57,4 +57,8 @@
     <string name="apply_filters">Применить фильтры (%d)</string>
     <string name="unfortunately_nothing_was_found_for_your_request">К сожалению, по вашему запросу ничего не найдено.</string>
     <string name="request_limit">Вы использовали все доступные вам запросы</string>
+    <string name="enter_your_message">Введите ваше сообщение…</string>
+    <string name="assistant">Ассистент</string>
+    <string name="hello_message">Привет! 👋 Нужен фильм?\nРасскажи, какое у тебя настроение, и я найду идеальный вариант! 🎬</string>
+    <string name="sending">Отправка…</string>
 </resources>

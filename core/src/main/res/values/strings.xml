@@ -2,6 +2,7 @@
     <string name="app_name">Moovich</string>
     <string name="title_home">Home</string>
     <string name="search">Search</string>
+    <string name="assistant">Assistant</string>
     <string name="title_watch_list">Watch list</string>
     <string name="recommendations">Recommendations</string>
     <string name="see_all">See all</string>
@@ -56,4 +57,7 @@
     <string name="country">Country</string>
     <string name="apply_filters">Apply filters (%d)</string>
     <string name="unfortunately_nothing_was_found_for_your_request">Unfortunately, nothing was found for your request</string>
+    <string name="enter_your_message">Enter your message…</string>
+    <string name="hello_message">👋 Hey there! Need a movie?\nTell me your mood, and I\'ll find the perfect flick! 🎬</string>
+    <string name="sending">Sending…</string>
 </resources>

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kspAnnotationPlugin)
     alias(libs.plugins.kapt)
     alias(libs.plugins.androidx.navigation.safeargs.ktx)
+    alias(libs.plugins.gradle.secrets)
 }
 
 android {
@@ -31,8 +32,12 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
         }
         debug {
+            buildConfigField("String", "GPT_BASE_URL", "\"https://lk.neuroapi.host/v1/\"")
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
         }
+    }
+    secrets {
+        propertiesFileName = "secrets.properties"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -61,6 +66,7 @@ dependencies {
     implementation(projects.presentation.all)
     implementation(projects.presentation.collection)
     implementation(projects.presentation.authorization)
+    implementation(projects.presentation.gpt)
     implementation(projects.core)
 
     implementation(libs.androidx.core.ktx)

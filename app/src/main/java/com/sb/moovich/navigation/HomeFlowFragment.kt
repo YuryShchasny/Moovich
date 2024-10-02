@@ -24,17 +24,22 @@ class HomeFlowFragment : Fragment() {
             childFragmentManager.findFragmentById(R.id.homeFlowFragmentContainer) as NavHostFragment
         val menu = listOf(
             MoovichBottomNavigationView.MenuItem(
-                "navigation_search",
+                "assistant",
+                ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_moovich_gpt)!!,
+                getString(com.sb.moovich.core.R.string.assistant)
+            ),
+            MoovichBottomNavigationView.MenuItem(
+                "search",
                 ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_search)!!,
                 getString(com.sb.moovich.core.R.string.search)
             ),
             MoovichBottomNavigationView.MenuItem(
-                "navigation_home",
+                "home",
                 ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_home)!!,
                 getString(com.sb.moovich.core.R.string.title_home)
             ),
             MoovichBottomNavigationView.MenuItem(
-                "navigation_watch_list",
+                "watch_list",
                 ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_watch_list)!!,
                 getString(com.sb.moovich.core.R.string.title_watch_list)
             ),

@@ -1,6 +1,6 @@
 package com.sb.moovich.data.remote.datasource
 
-import com.sb.moovich.data.di.MovieApiProvide
+import com.sb.moovich.data.di.FakeMovieApiProvide
 import com.sb.moovich.data.mapper.CollectionDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.remote.pagination.IPaginator
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CollectionRemoteDataSource @Inject constructor(
-    @MovieApiProvide private val movieApi: MovieApi,
+    @FakeMovieApiProvide private val movieApi: MovieApi,
     private val collectionDtoMapper: CollectionDtoMapper,
 ) {
     private var collectionPaginator: IPaginator<Collection>? = null
@@ -38,7 +38,7 @@ class CollectionRemoteDataSource @Inject constructor(
         return collectionPaginator!!.data
     }
 
-    suspend fun collectionNextPage() {
+    fun collectionNextPage() {
         collectionPaginator?.nextPage()
     }
 }

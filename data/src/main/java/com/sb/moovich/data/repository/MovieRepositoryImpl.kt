@@ -37,9 +37,9 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieById(id: Int): Movie? {
-        return movieLocalDataSource.getMovieFromWatchList(id)
+        return movieRemoteDataSource.getMovieById(id)
             ?: movieLocalDataSource.getMovieFromRecentList(id)
-            ?: movieRemoteDataSource.getMovieById(id)
+            ?: movieLocalDataSource.getMovieFromWatchList(id)
     }
 
     override suspend fun getAllMovies(type: GetAllType): Flow<List<Movie>> {

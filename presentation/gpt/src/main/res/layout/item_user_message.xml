@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="32dp"
+        app:cardBackgroundColor="@color/on_background"
+        app:cardCornerRadius="8dp"
+        app:contentPadding="16dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gilroy_light"
+                android:textColor="@color/secondary"
+                android:textSize="12sp"
+                tools:text="2024-05-27 12:56:21" />
+
+            <TextView
+                android:id="@+id/messageTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_50"
+                tools:text="Конечно! Я предлагаю посмотреть тебе фильм Исходный код (Source Code) с Джейком Джилленхолом в главной роли. Этот триллер сочетает в себе элементы науки-фантастики и детектива, рассказывая захватывающий и загадочный расследование теракта в поезде. Надеюсь, он тебе понравится!!" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -61,6 +61,7 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
 
     init {
         setWillNotDraw(false)
+        setBackgroundColor(Color.TRANSPARENT)
     }
 
     fun setNavMenu(menu: List<MenuItem>) {
@@ -98,7 +99,7 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
 
     fun setupWithNavController(navController: NavController) {
         this.navController = navController
-        selectedItem = menu.find { it.label == navController.currentDestination?.label }
+        selectedItem = menu.find { it.route == navController.currentDestination?.route }
         selectedItem?.let { onItemSelect(it) }
     }
 
@@ -178,7 +179,7 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
             }
             restoreState = true
         }
-        val destination = navController?.graph?.find { it.label == menuItem.label }
+        val destination = navController?.graph?.find { it.route == menuItem.route }
         destination?.let {
             navController?.navigate(it.id, null, options)
         }

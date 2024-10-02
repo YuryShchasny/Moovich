@@ -9,3 +9,7 @@ annotation class FakeMovieApiProvide
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class MovieApiProvide
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class GPTApiKeyProvide

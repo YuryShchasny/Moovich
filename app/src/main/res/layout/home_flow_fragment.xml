@@ -22,6 +22,7 @@
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_nav_height"
+            android:background="@android:color/transparent"
             android:orientation="horizontal"
             android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -6,19 +6,25 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import com.sb.moovich.BuildConfig
 import com.sb.moovich.data.di.FakeMovieApiProvide
+import com.sb.moovich.data.di.GPTApiKeyProvide
 import com.sb.moovich.data.di.MovieApiProvide
 import com.sb.moovich.data.local.AppDatabase
 import com.sb.moovich.data.local.dao.ActorDao
+import com.sb.moovich.data.local.dao.MessageDao
 import com.sb.moovich.data.local.dao.RecentMovieDao
 import com.sb.moovich.data.local.dao.WatchMovieDao
 import com.sb.moovich.data.remote.api.FakeMovieApi
+import com.sb.moovich.data.remote.api.GPTApi
 import com.sb.moovich.data.remote.api.MovieApi
+import com.sb.moovich.data.remote.interceptor.GPTInterceptor
 import com.sb.moovich.data.remote.interceptor.TokenInterceptor
 import com.sb.moovich.data.repository.AuthRepositoryImpl
+import com.sb.moovich.data.repository.GPTRepositoryImpl
 import com.sb.moovich.data.repository.MovieRepositoryImpl
 import com.sb.moovich.data.repository.SearchRepositoryImpl
 import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
 import com.sb.moovich.domain.repository.AuthRepository
+import com.sb.moovich.domain.repository.GPTRepository
 import com.sb.moovich.domain.repository.MovieRepository
 import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.domain.repository.WatchMovieRepository
@@ -27,7 +33,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -54,7 +59,15 @@ interface DataModule {
     @Singleton
     fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 
+    @Binds
+    @Singleton
+    fun bindGPTRepository(impl: GPTRepositoryImpl): GPTRepository
+
     companion object {
+
+        @Provides
+        @GPTApiKeyProvide
+        fun provideGPTKey(): String = BuildConfig.GPT_API_KEY
 
         @Provides
         @Singleton
@@ -80,6 +93,27 @@ interface DataModule {
             .client(okHttpClient)
             .build()
 
+        @Provides
+        @Singleton
+        fun provideGPTApi(
+            interceptor: GPTInterceptor
+        ): GPTApi {
+            val client = OkHttpClient
+                .Builder()
+                .addInterceptor(interceptor)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build()
+            return Retrofit
+                .Builder()
+                .baseUrl(BuildConfig.GPT_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+                .create(GPTApi::class.java)
+        }
+
         @MovieApiProvide
         @Provides
         @Singleton
@@ -101,6 +135,10 @@ interface DataModule {
         @Provides
         @Singleton
         fun provideRecentMovieDao(database: AppDatabase): RecentMovieDao = database.recentMovieDao()
+
+        @Provides
+        @Singleton
+        fun provideMessageDao(database: AppDatabase): MessageDao = database.messagesDao()
 
         @Provides
         @Singleton
