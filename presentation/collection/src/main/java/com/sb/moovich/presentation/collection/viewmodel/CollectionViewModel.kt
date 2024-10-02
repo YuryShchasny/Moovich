@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.GetAllType
-import com.sb.moovich.domain.usecases.all.GetAllMoviesUseCase
-import com.sb.moovich.domain.usecases.all.MovieNextPageUseCase
+import com.sb.moovich.domain.repository.MovieRepository
 import com.sb.moovich.presentation.collection.ui.model.CollectionFragmentEvent
 import com.sb.moovich.presentation.collection.ui.model.CollectionFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     private val navigation: INavigation,
-    private val getAllMoviesUseCase: GetAllMoviesUseCase,
-    private val movieNextPageUseCase: MovieNextPageUseCase
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CollectionFragmentState>(CollectionFragmentState.Loading)
@@ -26,7 +24,7 @@ class CollectionViewModel @Inject constructor(
 
     fun init(slug: String) {
         launch {
-            getAllMoviesUseCase(GetAllType.Collection(slug)).collect { list ->
+            movieRepository.getAllMovies(GetAllType.Collection(slug)).collect { list ->
                 _state.update {
                     val movies =
                         if (it is CollectionFragmentState.Movies) it.movieList + list else list
@@ -47,7 +45,7 @@ class CollectionViewModel @Inject constructor(
 
     fun nextPage() {
         launch {
-            movieNextPageUseCase()
+            movieRepository.movieNextPage()
         }
     }
 }

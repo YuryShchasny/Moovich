@@ -3,8 +3,7 @@ package com.sb.moovich.presentation.all.viewmodel
 import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
-import com.sb.moovich.domain.usecases.all.CollectionsNextPageUseCase
-import com.sb.moovich.domain.usecases.all.GetAllCollectionsUseCase
+import com.sb.moovich.domain.repository.MovieRepository
 import com.sb.moovich.presentation.all.ui.model.AllCollectionsFragmentEvent
 import com.sb.moovich.presentation.all.ui.model.AllCollectionsFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AllCollectionsViewModel @Inject constructor(
     private val navigation: INavigation,
-    private val getAllCollectionsUseCase: GetAllCollectionsUseCase,
-    private val collectionsNextPageUseCase: CollectionsNextPageUseCase
+    private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
     private val _state =
@@ -26,7 +24,7 @@ class AllCollectionsViewModel @Inject constructor(
 
     init {
         launch {
-            getAllCollectionsUseCase().collect { list ->
+            movieRepository.getAllCollections().collect { list ->
                 _state.update {
                     val collections =
                         if (it is AllCollectionsFragmentState.Collections) it.collections + list
@@ -50,7 +48,7 @@ class AllCollectionsViewModel @Inject constructor(
 
     fun nextPage() {
         launch {
-            collectionsNextPageUseCase()
+            movieRepository.collectionNextPage()
         }
     }
 }

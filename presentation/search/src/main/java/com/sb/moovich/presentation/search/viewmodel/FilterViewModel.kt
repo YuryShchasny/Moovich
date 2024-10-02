@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Filter
-import com.sb.moovich.domain.usecases.filter.GetCountriesUseCase
-import com.sb.moovich.domain.usecases.filter.GetGenresUseCase
-import com.sb.moovich.domain.usecases.filter.GetSearchFilterUseCase
-import com.sb.moovich.domain.usecases.filter.SaveSearchFilterUseCase
+import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.presentation.search.ui.model.filter.FilterFragmentEvent
 import com.sb.moovich.presentation.search.ui.model.filter.FilterFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FilterViewModel @Inject constructor(
     private val navigation: INavigation,
-    getSearchFilterUseCase: GetSearchFilterUseCase,
-    getGenresUseCase: GetGenresUseCase,
-    getCountriesUseCase: GetCountriesUseCase,
-    private val saveSearchFilterUseCase: SaveSearchFilterUseCase,
+    private val searchRepository: SearchRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<FilterFragmentState>(FilterFragmentState.Loading)
@@ -30,9 +24,9 @@ class FilterViewModel @Inject constructor(
 
     init {
         launch {
-            val genres = getGenresUseCase()
-            val countries = getCountriesUseCase()
-            val filter = getSearchFilterUseCase()
+            val genres = searchRepository.getGenres()
+            val countries = searchRepository.getCountries()
+            val filter = searchRepository.getFilter()
             _state.update { FilterFragmentState.Content(filter, genres, countries) }
         }
     }
@@ -41,7 +35,7 @@ class FilterViewModel @Inject constructor(
         when (event) {
             FilterFragmentEvent.Reset -> {
                 launch {
-                    saveSearchFilterUseCase(Filter())
+                    searchRepository.saveFilter(Filter())
                 }
                 navigation.navigateUp()
             }
@@ -49,7 +43,7 @@ class FilterViewModel @Inject constructor(
             is FilterFragmentEvent.SaveFilter -> {
                 launch {
                     val state = _state.value as FilterFragmentState.Content
-                    saveSearchFilterUseCase(state.filter)
+                    searchRepository.saveFilter(state.filter)
                 }
                 navigation.navigateUp()
             }

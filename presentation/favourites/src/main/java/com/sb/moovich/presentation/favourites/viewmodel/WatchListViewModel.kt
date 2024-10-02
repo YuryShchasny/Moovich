@@ -3,7 +3,7 @@ package com.sb.moovich.presentation.favourites.viewmodel
 import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
-import com.sb.moovich.domain.usecases.watch.GetWatchMoviesUseCase
+import com.sb.moovich.domain.repository.WatchMovieRepository
 import com.sb.moovich.presentation.favourites.adapter.Genre
 import com.sb.moovich.presentation.favourites.ui.model.WatchListFragmentEvent
 import com.sb.moovich.presentation.favourites.ui.model.WatchListFragmentState
@@ -18,7 +18,7 @@ class WatchListViewModel
 @Inject
 constructor(
     private val navigation: INavigation,
-    private val getWatchMoviesUseCase: GetWatchMoviesUseCase,
+    private val watchMovieRepository: WatchMovieRepository
 ) : ViewModel() {
     private val _state =
         MutableStateFlow<WatchListFragmentState>(WatchListFragmentState.Loading)
@@ -27,7 +27,7 @@ constructor(
     fun init() {
         launch {
             _state.update { state ->
-                val list = getWatchMoviesUseCase()
+                val list = watchMovieRepository.getWatchMovies()
                 if (list.isEmpty()) {
                     WatchListFragmentState.EmptyContent
                 } else {

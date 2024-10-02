@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.domain.entity.DataResult
 import com.sb.moovich.domain.entity.ErrorType
-import com.sb.moovich.domain.usecases.auth.LoginUseCase
+import com.sb.moovich.domain.repository.AuthRepository
 import com.sb.moovich.presentation.authorization.ui.model.AuthorizationFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthorizationViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val repository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AuthorizationFragmentState())
@@ -27,7 +27,7 @@ class AuthorizationViewModel @Inject constructor(
 
     fun login(token: String) {
         launch(onError = { _error.emit(DataResult.Error(ErrorType.Another)) }) {
-            when (val result = loginUseCase(token)) {
+            when (val result = repository.login(token)) {
                 is DataResult.Error -> _error.emit(result)
                 DataResult.Success -> _state.update { it.copy(isAuthorized = true) }
             }

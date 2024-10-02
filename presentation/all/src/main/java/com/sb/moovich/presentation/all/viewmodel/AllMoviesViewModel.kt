@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.GetAllType
-import com.sb.moovich.domain.usecases.all.GetAllMoviesUseCase
-import com.sb.moovich.domain.usecases.all.MovieNextPageUseCase
+import com.sb.moovich.domain.repository.MovieRepository
 import com.sb.moovich.presentation.all.ui.model.AllMoviesFragmentEvent
 import com.sb.moovich.presentation.all.ui.model.AllMoviesFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AllMoviesViewModel @Inject constructor(
     private val navigation: INavigation,
-    private val getAllMoviesUseCase: GetAllMoviesUseCase,
-    private val movieNextPageUseCase: MovieNextPageUseCase
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AllMoviesFragmentState>(AllMoviesFragmentState.Loading)
@@ -26,7 +24,7 @@ class AllMoviesViewModel @Inject constructor(
 
     fun initMovies(type: GetAllType) {
         launch {
-            getAllMoviesUseCase(type).collect { list ->
+            movieRepository.getAllMovies(type).collect { list ->
                 _state.update {
                     val movies =
                         if (it is AllMoviesFragmentState.Movies) it.movieList + list else list
@@ -47,7 +45,7 @@ class AllMoviesViewModel @Inject constructor(
 
     fun nextPage() {
         launch {
-            movieNextPageUseCase()
+            movieRepository.movieNextPage()
         }
     }
 }

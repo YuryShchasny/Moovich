@@ -4,12 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Filter
-import com.sb.moovich.domain.usecases.all.MovieNextPageUseCase
-import com.sb.moovich.domain.usecases.filter.GetSearchFilterUseCase
-import com.sb.moovich.domain.usecases.filter.SaveSearchFilterUseCase
-import com.sb.moovich.domain.usecases.find.FindMovieUseCase
-import com.sb.moovich.domain.usecases.find.FindMovieWithFilterUseCase
-import com.sb.moovich.domain.usecases.recent.GetRecentMoviesUseCase
+import com.sb.moovich.domain.repository.MovieRepository
+import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentEvent
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,12 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val navigation: INavigation,
-    private val getRecentMoviesUseCase: GetRecentMoviesUseCase,
-    private val getFilterUseCase: GetSearchFilterUseCase,
-    private val findMovieUseCase: FindMovieUseCase,
-    private val findMovieWithFilterUseCase: FindMovieWithFilterUseCase,
-    private val saveSearchFilterUseCase: SaveSearchFilterUseCase,
-    private val movieNextPageUseCase: MovieNextPageUseCase
+    private val searchRepository: SearchRepository,
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     companion object {
@@ -42,7 +34,7 @@ class SearchViewModel @Inject constructor(
 
     fun init() {
         launch {
-            val filter = getFilterUseCase()
+            val filter = searchRepository.getFilter()
             if (filter.hasFilters()) findMoviesWithFilter(filter)
             else fetchEvent(SearchFragmentEvent.RecentMovies)
         }
@@ -66,7 +58,7 @@ class SearchViewModel @Inject constructor(
     fun nextPage() {
         if (_state.value is SearchFragmentState.Content.FilterList) {
             launch {
-                movieNextPageUseCase()
+                movieRepository.movieNextPage()
             }
         }
     }
@@ -88,7 +80,7 @@ class SearchViewModel @Inject constructor(
 
     private fun resetFilters() {
         launch {
-            saveSearchFilterUseCase.invoke(Filter())
+            searchRepository.saveFilter(Filter())
         }
         getRecentMovies()
     }
@@ -96,7 +88,7 @@ class SearchViewModel @Inject constructor(
     private fun getRecentMovies() {
         launch {
             _state.update {
-                SearchFragmentState.Content.RecentList(getRecentMoviesUseCase())
+                SearchFragmentState.Content.RecentList(searchRepository.getRecentMovies())
             }
         }
     }
@@ -105,7 +97,7 @@ class SearchViewModel @Inject constructor(
         _state.update { SearchFragmentState.Loading }
         filterJob?.cancel()
         filterJob = launch {
-            findMovieWithFilterUseCase(filter).collect { list ->
+            searchRepository.findMoviesWithFilter(filter).collect { list ->
                 _state.update { state ->
                     val newList =
                         if (state is SearchFragmentState.Content.FilterList)
@@ -129,7 +121,7 @@ class SearchViewModel @Inject constructor(
             val count = if (seeAll) MAX_SEARCH_COUNT else DEFAULT_SEARCH_COUNT
             _state.update { SearchFragmentState.Loading }
             launch {
-                val list = findMovieUseCase(name, count)
+                val list = searchRepository.findMovie(name, count)
                 _state.update {
                     SearchFragmentState.Content.FindList(
                         list
