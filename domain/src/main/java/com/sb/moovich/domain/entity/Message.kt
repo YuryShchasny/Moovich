@@ -18,7 +18,7 @@ data class Message(
         return date?.let {
             return if(it == 0L)  ""
             else Instant.ofEpochSecond(it).atZone(ZoneId.systemDefault())
-                .format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy"))
+                .format(DateTimeFormatter.ofPattern("HH:mm:ss\tdd.MM.yyyy"))
         }
     }
 }

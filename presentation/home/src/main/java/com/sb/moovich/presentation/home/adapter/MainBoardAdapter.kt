@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import coil.load
+import com.sb.moovich.core.extensions.load
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.databinding.ItemMainboardBinding
 

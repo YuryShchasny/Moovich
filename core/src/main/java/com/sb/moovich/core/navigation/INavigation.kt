@@ -20,4 +20,6 @@ interface INavigation {
     fun navigateToCollection(collection: Collection)
 
     fun navigateToHome()
+
+    fun navigateToAuth()
 }

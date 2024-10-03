@@ -3,7 +3,7 @@ package com.sb.moovich.presentation.home.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
+import com.sb.moovich.core.extensions.load
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.presentation.home.databinding.ItemCollectionBinding
 

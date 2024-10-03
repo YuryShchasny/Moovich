@@ -21,11 +21,13 @@ import com.sb.moovich.data.remote.interceptor.TokenInterceptor
 import com.sb.moovich.data.repository.AuthRepositoryImpl
 import com.sb.moovich.data.repository.GPTRepositoryImpl
 import com.sb.moovich.data.repository.MovieRepositoryImpl
+import com.sb.moovich.data.repository.ProfileRepositoryImpl
 import com.sb.moovich.data.repository.SearchRepositoryImpl
 import com.sb.moovich.data.repository.WatchMovieRepositoryImpl
 import com.sb.moovich.domain.repository.AuthRepository
 import com.sb.moovich.domain.repository.GPTRepository
 import com.sb.moovich.domain.repository.MovieRepository
+import com.sb.moovich.domain.repository.ProfileRepository
 import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.domain.repository.WatchMovieRepository
 import dagger.Binds
@@ -62,6 +64,10 @@ interface DataModule {
     @Binds
     @Singleton
     fun bindGPTRepository(impl: GPTRepositoryImpl): GPTRepository
+
+    @Binds
+    @Singleton
+    fun bindProfileRepository(impl: ProfileRepositoryImpl): ProfileRepository
 
     companion object {
 

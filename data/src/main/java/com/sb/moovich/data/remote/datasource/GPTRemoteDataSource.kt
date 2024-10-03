@@ -17,7 +17,7 @@ class GPTRemoteDataSource @Inject constructor(
         val systemMessage = MessageDto(SYSTEM_ROLE, SYSTEM_MESSAGE)
         val userMessage = mapper.mapEntityToData(message)
         val messages =
-            listOf(systemMessage) + history.map { mapper.mapEntityToData(it) } + userMessage
+            listOf(systemMessage) + history.takeLast(10).map { mapper.mapEntityToData(it) } + userMessage
         val response = api.sendMessage(SendMessageRequestDto(GPT_MODEL, messages))
         val responseMessage = response.body()?.choices?.first()?.message
         return responseMessage?.let {

@@ -56,4 +56,15 @@ class Navigation @Inject constructor(): INavigation {
             navController?.navigate(MobileNavigationDirections.toHome(), options)
         }
     }
+
+    override fun navigateToAuth() {
+        navController?.let {
+            val options = navOptions {
+                popUpTo(it.graph.startDestinationId) {
+                    inclusive = true
+                }
+            }
+            navController?.navigate(MobileNavigationDirections.toAuth(), options)
+        }
+    }
 }

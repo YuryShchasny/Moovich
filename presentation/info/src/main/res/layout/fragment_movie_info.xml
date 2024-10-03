@@ -13,6 +13,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:background="@color/black"
         tools:context=".presentation.movie_info.MovieInfoFragment">
 
         <com.sb.moovich.core.views.SearchProgressBar
@@ -38,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:foreground="@drawable/backdrop_foreground"
+                    android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
                     app:load="@{movie.backdrop}" />
 
@@ -136,6 +138,7 @@
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginVertical="4dp"
                         android:layout_weight="0.1"
+                        android:importantForAccessibility="no"
                         android:src="@drawable/ic_bookmark" />
 
                 </LinearLayout>

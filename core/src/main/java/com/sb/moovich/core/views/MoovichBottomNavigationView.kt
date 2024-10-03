@@ -19,6 +19,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.navOptions
 import com.sb.moovich.core.R
 import com.sb.moovich.core.extensions.dpToPx
@@ -86,11 +87,12 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
             val textView = TextView(context).apply {
                 text = menuItem.label
                 gravity = CENTER_HORIZONTAL
+                textSize = 12f
             }
             row.addView(iconView)
             row.addView(textView)
             row.setOnClickListener {
-                onItemSelect(menuItem)
+                navigate(menuItem.route)
             }
             iconsView.add(row)
             this.addView(row, index, row.layoutParams)
@@ -100,7 +102,12 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
     fun setupWithNavController(navController: NavController) {
         this.navController = navController
         selectedItem = menu.find { it.route == navController.currentDestination?.route }
-        selectedItem?.let { onItemSelect(it) }
+        selectedItem?.let { navigate(it.route) }
+    }
+
+    fun destinationChanged(destination: NavDestination) {
+        onItemSelect(menu.find { it.route == destination.route }
+            ?: throw IllegalArgumentException())
     }
 
     @SuppressLint("DrawAllocation")
@@ -153,7 +160,6 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
         item: MenuItem,
     ) {
         val index = menu.indexOf(item)
-        navigate(item)
         iconsView.forEachIndexed { i, view ->
             val tint = if (index == i) R.color.primary else R.color.grey
             ((view as LinearLayout).children.first() as ImageView).setColorFilter(
@@ -171,7 +177,7 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
     }
 
 
-    private fun navigate(menuItem: MenuItem) {
+    private fun navigate(route: String) {
         val options = navOptions {
             launchSingleTop = true
             popUpTo(navController?.graph?.startDestinationId ?: 0) {
@@ -179,7 +185,7 @@ class MoovichBottomNavigationView @JvmOverloads constructor(
             }
             restoreState = true
         }
-        val destination = navController?.graph?.find { it.route == menuItem.route }
+        val destination = navController?.graph?.find { it.route == route }
         destination?.let {
             navController?.navigate(it.id, null, options)
         }

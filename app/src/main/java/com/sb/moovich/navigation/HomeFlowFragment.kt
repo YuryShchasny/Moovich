@@ -22,6 +22,7 @@ class HomeFlowFragment : Fragment() {
         val binding = HomeFlowFragmentBinding.inflate(inflater, container, false)
         val host =
             childFragmentManager.findFragmentById(R.id.homeFlowFragmentContainer) as NavHostFragment
+        val navController = host.navController
         val menu = listOf(
             MoovichBottomNavigationView.MenuItem(
                 "assistant",
@@ -43,9 +44,17 @@ class HomeFlowFragment : Fragment() {
                 ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_watch_list)!!,
                 getString(com.sb.moovich.core.R.string.title_watch_list)
             ),
+            MoovichBottomNavigationView.MenuItem(
+                "profile",
+                ContextCompat.getDrawable(requireContext(), com.sb.moovich.core.R.drawable.ic_profile)!!,
+                getString(com.sb.moovich.core.R.string.profile)
+            ),
         )
         binding.bottomNavigationView.setNavMenu(menu)
-        binding.bottomNavigationView.setupWithNavController(host.navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.bottomNavigationView.destinationChanged(destination)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigationView) { v, insets ->
             v.setPadding(0, 0, 0, 0)
             insets

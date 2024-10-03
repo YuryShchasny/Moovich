@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.sb.moovich.core.extensions.load
 import com.sb.moovich.core.R
 import com.sb.moovich.core.databinding.ItemMediumMovieCardBinding
 import com.sb.moovich.domain.entity.Movie

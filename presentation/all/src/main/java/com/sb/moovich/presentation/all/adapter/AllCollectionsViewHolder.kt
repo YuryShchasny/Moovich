@@ -3,7 +3,7 @@ package com.sb.moovich.presentation.all.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.sb.moovich.core.extensions.load
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.presentation.all.databinding.ItemAllCollectionBinding
 

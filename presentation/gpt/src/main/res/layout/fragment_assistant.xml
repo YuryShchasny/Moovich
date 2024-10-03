@@ -59,9 +59,11 @@
 
                 <ImageView
                     android:id="@+id/sendButtonIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:importantForAccessibility="no"
+                    android:layout_gravity="center"
+                    android:rotation="-90"
                     app:srcCompat="@drawable/ic_send" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>

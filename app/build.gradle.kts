@@ -67,6 +67,7 @@ dependencies {
     implementation(projects.presentation.collection)
     implementation(projects.presentation.authorization)
     implementation(projects.presentation.gpt)
+    implementation(projects.presentation.profile)
     implementation(projects.core)
 
     implementation(libs.androidx.core.ktx)

@@ -21,4 +21,10 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun checkLogin(): Boolean {
         return authLocalDataSource.token.isNotEmpty()
     }
+
+    override suspend fun logout() {
+        authLocalDataSource.saveToken("")
+    }
+
+    override fun getToken(): String = authLocalDataSource.token
 }

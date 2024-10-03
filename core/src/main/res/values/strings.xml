@@ -4,6 +4,7 @@
     <string name="search">Search</string>
     <string name="assistant">Assistant</string>
     <string name="title_watch_list">Watch list</string>
+    <string name="profile">Profile</string>
     <string name="recommendations">Recommendations</string>
     <string name="see_all">See all</string>
     <string name="hours">h</string>
@@ -60,4 +61,17 @@
     <string name="enter_your_message">Enter your message…</string>
     <string name="hello_message">👋 Hey there! Need a movie?\nTell me your mood, and I\'ll find the perfect flick! 🎬</string>
     <string name="sending">Sending…</string>
+    <string name="your_api_key">Your API Key</string>
+    <string name="clear_assistant_history">Clear assistant history</string>
+    <string name="mb">%.2fMB</string>
+    <string name="developer_information">Developer information</string>
+    <string name="manage">Manage</string>
+    <string name="log_out">Log Out</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="log_out_description">Once you log out, your token will be deleted and you will need to re-enter it</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="clear_history_description">Your communication history with the Assistant will be deleted. The assistant will forget the context of your conversation</string>
+    <string name="messages_count">%d messages</string>
 </resources>

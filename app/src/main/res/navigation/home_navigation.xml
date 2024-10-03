@@ -7,15 +7,15 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.sb.moovich.presentation.search.ui.SearchFragment"
+        android:label="@string/search"
         app:route="search"
         tools:layout="@layout/fragment_search" />
-
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.sb.moovich.presentation.home.ui.HomeFragment"
+        android:label="@string/title_home"
         app:route="home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
         android:id="@+id/navigation_watch_list"
         android:name="com.sb.moovich.presentation.favourites.ui.WatchListFragment"
@@ -25,7 +25,13 @@
     <fragment
         android:id="@+id/navigation_assistant"
         android:name="com.sb.moovich.presentation.gpt.ui.AssistantFragment"
-        android:label="AssistantFragment"
+        android:label="@string/assistant"
         app:route="assistant"
         tools:layout="@layout/fragment_assistant" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.sb.moovich.presentation.profile.ui.ProfileFragment"
+        android:label="@string/profile"
+        app:route="profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

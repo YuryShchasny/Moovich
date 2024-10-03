@@ -37,15 +37,12 @@
 
     <action
         android:id="@+id/toHome"
-        app:destination="@id/homeFlowFragment"
-        app:popUpTo="@id/authorizationFragment"
-        app:popUpToInclusive="true" />
+        app:destination="@id/homeFlowFragment" />
     <fragment
         android:id="@+id/homeFlowFragment"
         android:name="com.sb.moovich.navigation.HomeFlowFragment"
         android:label="HomeFlowFragment"
-        tools:layout="@layout/home_flow_fragment" >
-    </fragment>
+        tools:layout="@layout/home_flow_fragment" />
 
     <action
         android:id="@+id/toAllMovies"
@@ -93,6 +90,10 @@
             android:name="collection"
             app:argType="com.sb.moovich.domain.entity.Collection" />
     </fragment>
+
+    <action
+        android:id="@+id/toAuth"
+        app:destination="@id/authorizationFragment" />
     <fragment
         android:id="@+id/authorizationFragment"
         android:name="com.sb.moovich.presentation.authorization.ui.AuthorizationFragment"
