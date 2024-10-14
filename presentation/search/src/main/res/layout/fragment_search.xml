@@ -45,8 +45,10 @@
 
                 <EditText
                     android:id="@+id/searchEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:fontFamily="@font/gilroy_medium"
                     android:hint="@string/search_hint"
@@ -57,6 +59,15 @@
                     android:textColorHint="@color/hint"
                     android:textCursorDrawable="@drawable/search_cursor"
                     android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/microphoneButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_micro" />
             </LinearLayout>
 
             <ImageView
@@ -77,78 +88,78 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
                 <LinearLayout
+                    android:id="@+id/linearLayoutTopBar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/gilroy_medium"
+                        android:text="@string/recent"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/textViewSearchSeeAll"
+                        style="@style/clickable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:fontFamily="@font/gilroy_medium"
+                        android:text="@string/see_all_history"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <LinearLayout
-                        android:id="@+id/linearLayoutTopBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="horizontal">
+                        android:id="@+id/filterCountLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/filter_count_shape"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
-                            android:id="@+id/textViewTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gilroy_medium"
-                            android:text="@string/recent"
-                            android:textColor="@color/white"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:id="@+id/textViewSearchSeeAll"
-                            style="@style/clickable"
+                            android:id="@+id/filterCountText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end|center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="10dp"
                             android:fontFamily="@font/gilroy_medium"
-                            android:text="@string/see_all_history"
                             android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
-                        <LinearLayout
-                            android:id="@+id/filterCountLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/filter_count_shape"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/filterCountText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="10dp"
-                                android:fontFamily="@font/gilroy_medium"
-                                android:textColor="@color/white"
-                                android:textSize="14sp" />
-
-                            <ImageView
-                                android:id="@+id/filterResetIcon"
-                                style="@style/clickable_rounded"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="center_vertical"
-                                android:importantForAccessibility="no"
-                                app:srcCompat="@drawable/ic_close" />
-                        </LinearLayout>
-
+                        <ImageView
+                            android:id="@+id/filterResetIcon"
+                            style="@style/clickable_rounded"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:importantForAccessibility="no"
+                            app:srcCompat="@drawable/ic_close" />
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewRecentAndResults"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_medium_movie_card" />
                 </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecentAndResults"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_medium_movie_card" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layoutNotFound"
@@ -185,6 +196,13 @@
 
             <com.sb.moovich.core.views.SearchProgressBar
                 android:id="@+id/progressBarSearch"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <com.sb.moovich.core.views.MicrophoneView
+                android:id="@+id/microphoneView"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"

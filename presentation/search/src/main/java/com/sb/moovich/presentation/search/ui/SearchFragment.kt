@@ -1,15 +1,21 @@
 package com.sb.moovich.presentation.search.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.base.MySpeechRecognize
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentEvent
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentState
@@ -21,6 +27,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: SearchViewModel by viewModels()
     private val adapter = MediumMovieItemListAdapter()
+    private val permissionRegistry =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+            if (result) startRecord()
+        }
+    private val speechRecognizer by lazy {
+        MySpeechRecognize(requireContext())
+    }
 
     override fun setupViewBinding(
         inflater: LayoutInflater,
@@ -39,6 +52,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         setObservable()
         setSearchListener()
         setClickListeners()
+        setRecognizerListeners()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        speechRecognizer.destroy()
     }
 
     private fun setAdapter() {
@@ -145,6 +164,51 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         binding.textViewSearchSeeAll.setOnClickListener {
             viewModel.fetchEvent(SearchFragmentEvent.OnSeeAllClick)
         }
+        binding.microphoneButton.setOnClickListener {
+            if (checkMicroPermission()) {
+                startRecord()
+            } else {
+                permissionRegistry.launch(Manifest.permission.RECORD_AUDIO)
+            }
+        }
+    }
+
+    private fun setRecognizerListeners() {
+        speechRecognizer.setOnRmsChangedListener { rms ->
+            bindingOrNull?.microphoneView?.rms = rms
+        }
+        speechRecognizer.setOnResultsListener { result ->
+            bindingOrNull?.let { binding ->
+                if (result.isNotEmpty()) {
+                    binding.searchEditText.setText(result)
+                    binding.searchEditText.setSelection(result.length)
+                    viewModel.fetchEvent(SearchFragmentEvent.FindMovie(result))
+                }
+            }
+        }
+        speechRecognizer.setOnPartitionResultsListener { part ->
+            bindingOrNull?.let { binding ->
+                if (part.isNotEmpty()) {
+                    binding.searchEditText.setText(part)
+                    binding.searchEditText.setSelection(part.length)
+                }
+            }
+        }
+        speechRecognizer.setOnEndOfSpeechListener {
+            bindingOrNull?.microphoneView?.visibility = View.GONE
+        }
+    }
+
+    private fun startRecord() {
+        binding.microphoneView.visibility = View.VISIBLE
+        speechRecognizer.startRecord()
+    }
+
+    private fun checkMicroPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun setSeeAll(state: SearchFragmentState.Content) {

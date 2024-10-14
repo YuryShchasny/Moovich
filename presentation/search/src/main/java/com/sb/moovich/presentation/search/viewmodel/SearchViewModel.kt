@@ -132,6 +132,8 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }
+        } else if (_state.value !is SearchFragmentState.Content.RecentList) {
+            getRecentMovies()
         }
     }
 }
