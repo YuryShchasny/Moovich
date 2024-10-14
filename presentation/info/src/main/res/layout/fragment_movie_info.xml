@@ -139,7 +139,7 @@
                         android:layout_marginVertical="4dp"
                         android:layout_weight="0.1"
                         android:importantForAccessibility="no"
-                        android:src="@drawable/ic_bookmark" />
+                        tools:src="@drawable/ic_bookmark" />
 
                 </LinearLayout>
 

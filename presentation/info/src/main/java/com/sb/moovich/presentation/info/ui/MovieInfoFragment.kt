@@ -1,7 +1,8 @@
 package com.sb.moovich.presentation.info.ui
 
+import android.animation.ValueAnimator
 import android.content.Intent
-import android.content.res.ColorStateList
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.domain.entity.Actor
 import com.sb.moovich.domain.entity.Movie
+import com.sb.moovich.presentation.info.R
 import com.sb.moovich.presentation.info.adapter.actors.ActorItemListAdapter
 import com.sb.moovich.presentation.info.databinding.FragmentMovieInfoBinding
 import com.sb.moovich.presentation.info.ui.model.MovieInfoFragmentEvent
@@ -26,6 +28,7 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
     private val viewModel: MovieInfoViewModel by viewModels()
     private val actorAdapter = ActorItemListAdapter()
     private val similarMoviesAdapter = ShortMovieItemListAdapter()
+    private var rotationValueAnimator: ValueAnimator? = null
 
     override fun setupViewBinding(
         inflater: LayoutInflater,
@@ -69,10 +72,35 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
     }
 
     private fun setBookMarkView(isChecked: Boolean) {
-        binding.imageViewBookmark.imageTintList = ColorStateList.valueOf(
-            if (isChecked) getColorCompat(com.sb.moovich.core.R.color.primary)
-            else getColorCompat(com.sb.moovich.core.R.color.white)
-        )
+        rotationValueAnimator?.cancel()
+        if (isChecked) {
+            val animatedVectorDrawable =
+                getDrawableCompat(R.drawable.animated_ic_bookmark) as AnimatedVectorDrawable
+            binding.imageViewBookmark.setImageDrawable(animatedVectorDrawable.apply {
+                setTint(getColorCompat(com.sb.moovich.core.R.color.primary))
+            })
+            if (rotationValueAnimator != null) {
+                rotationValueAnimator?.start()
+                animatedVectorDrawable.start()
+            } else {
+                binding.imageViewBookmark.setImageDrawable(getDrawableCompat(R.drawable.ic_bookmark_filled))
+            }
+        } else {
+            binding.imageViewBookmark.rotation = 0f
+            binding.imageViewBookmark.setImageDrawable(
+                getDrawableCompat(com.sb.moovich.core.R.drawable.ic_bookmark)?.apply {
+                    setTint(getColorCompat(com.sb.moovich.core.R.color.white))
+                }
+            )
+        }
+        if (rotationValueAnimator == null) rotationValueAnimator =
+            ValueAnimator.ofFloat(0f, 15f, 0f, -15f, 0f, 15f, 0f, -15f, 0f).apply {
+                duration = 1000
+                addUpdateListener { valueAnimator ->
+                    val animatedValue = valueAnimator.animatedValue as Float
+                    binding.imageViewBookmark.rotation = animatedValue
+                }
+            }
     }
 
     private fun setAdapters() {
