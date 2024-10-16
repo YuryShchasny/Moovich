@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.domain.entity.Actor
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.info.R
@@ -68,6 +69,9 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
                     binding.scrollView.visibility = View.GONE
                 }
             }
+        }
+        collectWithLifecycle(viewModel.error, Lifecycle.State.CREATED) {
+            it.showMessage(binding.root)
         }
     }
 

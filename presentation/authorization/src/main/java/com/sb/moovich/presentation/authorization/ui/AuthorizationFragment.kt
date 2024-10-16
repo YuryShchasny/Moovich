@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.core.navigation.INavigation
@@ -40,7 +41,7 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
     private fun setEditText() {
         binding.tokenEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not used in this case}
+                // Not used in this case
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -81,7 +82,9 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
         collectWithLifecycle(viewModel.state) { state ->
             if (state.isAuthorized) navigation.navigateToHome()
         }
-        collectWithLifecycle(viewModel.error) { it.showMessage(requireContext()) }
+        collectWithLifecycle(viewModel.error, Lifecycle.State.CREATED) {
+            it.showMessage(binding.root)
+        }
     }
 
     private fun openTelegramBot() {

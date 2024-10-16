@@ -41,6 +41,7 @@
                     android:foreground="@drawable/backdrop_foreground"
                     android:importantForAccessibility="no"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/poster_placeholder"
                     app:load="@{movie.backdrop}" />
 
                 <TextView

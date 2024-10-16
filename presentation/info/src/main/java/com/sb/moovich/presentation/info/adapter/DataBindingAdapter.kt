@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.sb.moovich.core.extensions.load
+import com.sb.moovich.core.extensions.loadCoil
 import java.util.Locale
 
 @BindingAdapter("load")
@@ -13,11 +13,7 @@ fun bindImageView(
     imageView: ImageView,
     imageUrl: String?,
 ) {
-    imageUrl?.let {
-        if (imageUrl.isNotBlank()) {
-            imageView.load(imageUrl)
-        }
-    }
+    imageView.loadCoil(imageUrl)
 }
 
 @SuppressLint("SetTextI18n")

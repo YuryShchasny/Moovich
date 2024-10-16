@@ -4,6 +4,7 @@ import com.sb.moovich.data.mapper.MessageDtoMapper
 import com.sb.moovich.data.remote.api.GPTApi
 import com.sb.moovich.data.remote.dto.MessageDto
 import com.sb.moovich.data.remote.dto.SendMessageRequestDto
+import com.sb.moovich.data.utils.process
 import com.sb.moovich.domain.entity.Message
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,12 +18,11 @@ class GPTRemoteDataSource @Inject constructor(
         val systemMessage = MessageDto(SYSTEM_ROLE, SYSTEM_MESSAGE)
         val userMessage = mapper.mapEntityToData(message)
         val messages =
-            listOf(systemMessage) + history.takeLast(10).map { mapper.mapEntityToData(it) } + userMessage
-        val response = api.sendMessage(SendMessageRequestDto(GPT_MODEL, messages))
-        val responseMessage = response.body()?.choices?.first()?.message
-        return responseMessage?.let {
-            mapper.mapDataToEntity(it)
-        }
+            listOf(systemMessage) + history.takeLast(10)
+                .map { mapper.mapEntityToData(it) } + userMessage
+        return api.sendMessage(SendMessageRequestDto(GPT_MODEL, messages)).process {
+            it?.choices?.first()?.message
+        }?.let { mapper.mapDataToEntity(it) }
     }
 
     companion object {

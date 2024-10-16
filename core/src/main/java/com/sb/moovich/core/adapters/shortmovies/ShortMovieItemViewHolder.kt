@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sb.moovich.core.extensions.load
 import com.sb.moovich.core.databinding.ItemShortMovieCardBinding
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Movie
 import java.util.Locale
 
@@ -14,7 +14,7 @@ class ShortMovieItemViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Movie, onClickListener: () -> Unit) {
-        binding.imageViewMoviePoster.load(item.poster)
+        binding.imageViewMoviePoster.loadCoil(item.poster)
         binding.textViewMovieName.text = item.name
         if (item.rating == 0.0) {
             binding.textViewMovieRating.visibility = View.GONE

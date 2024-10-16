@@ -1,9 +1,8 @@
 package com.sb.moovich.presentation.authorization.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.sb.moovich.core.exceptions.ResponseExceptions
 import com.sb.moovich.core.extensions.launch
-import com.sb.moovich.domain.entity.DataResult
-import com.sb.moovich.domain.entity.ErrorType
 import com.sb.moovich.domain.repository.AuthRepository
 import com.sb.moovich.presentation.authorization.ui.model.AuthorizationFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,14 +21,13 @@ class AuthorizationViewModel @Inject constructor(
     private val _state = MutableStateFlow(AuthorizationFragmentState())
     val state = _state.asStateFlow()
 
-    private val _error = MutableSharedFlow<DataResult.Error>()
+    private val _error = MutableSharedFlow<ResponseExceptions>()
     val error = _error.asSharedFlow()
 
     fun login(token: String) {
-        launch(onError = { _error.emit(DataResult.Error(ErrorType.Another)) }) {
-            when (val result = repository.login(token)) {
-                is DataResult.Error -> _error.emit(result)
-                DataResult.Success -> _state.update { it.copy(isAuthorized = true) }
+        launch(_error) {
+            _state.update {
+                it.copy(isAuthorized = repository.login(token))
             }
         }
     }

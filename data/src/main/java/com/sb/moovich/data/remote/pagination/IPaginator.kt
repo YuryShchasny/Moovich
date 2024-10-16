@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface IPaginator<Entity> {
     val data: Flow<List<Entity>>
-    fun nextPage()
+    suspend fun nextPage()
 }

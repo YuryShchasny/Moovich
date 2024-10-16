@@ -9,12 +9,14 @@ import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.sb.moovich.core.adapters.shortmovies.ShortMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.extensions.dpToPx
+import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.R
@@ -80,6 +82,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
             }
+        }
+        collectWithLifecycle(viewModel.error, Lifecycle.State.CREATED) {
+            it.showMessage(binding.root)
         }
     }
 

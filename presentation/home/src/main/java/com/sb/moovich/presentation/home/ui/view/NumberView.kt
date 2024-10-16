@@ -10,6 +10,8 @@ import android.graphics.Path
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.sb.moovich.core.extensions.dpToPx
 
 class NumberView @JvmOverloads constructor(
@@ -19,6 +21,16 @@ class NumberView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     var text: String = ""
     private var bitmap: Bitmap? = null
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        setBitmap(
+            ContextCompat.getDrawable(
+                context,
+                com.sb.moovich.core.R.drawable.poster_placeholder
+            )!!.toBitmap()
+        )
+    }
 
     fun setBitmap(bitmap: Bitmap) {
         this.bitmap = bitmap
@@ -53,7 +65,7 @@ class NumberView @JvmOverloads constructor(
     private fun cropCenter(bitmap: Bitmap, targetWidth: Int, targetHeight: Int): Bitmap {
         val x = (bitmap.width - targetWidth) / 2
         val y = (bitmap.height - targetHeight) / 2
-        return if(x < 0 && y < 0) Bitmap.createBitmap(bitmap, x, y, targetWidth, targetHeight)
+        return if (x < 0 && y < 0) Bitmap.createBitmap(bitmap, x, y, targetWidth, targetHeight)
         else bitmap
     }
 }

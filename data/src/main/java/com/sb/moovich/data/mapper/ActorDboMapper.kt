@@ -1,6 +1,5 @@
 package com.sb.moovich.data.mapper
 
-import com.sb.moovich.data.local.dao.ActorDao
 import com.sb.moovich.data.local.dbo.ActorDbo
 import com.sb.moovich.domain.entity.Actor
 import javax.inject.Inject

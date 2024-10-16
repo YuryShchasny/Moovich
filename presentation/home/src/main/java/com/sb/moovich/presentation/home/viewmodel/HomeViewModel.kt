@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.sb.moovich.core.exceptions.ResponseExceptions
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.GetAllType
@@ -9,7 +10,9 @@ import com.sb.moovich.domain.repository.SearchRepository
 import com.sb.moovich.presentation.home.ui.model.HomeFragmentEvent
 import com.sb.moovich.presentation.home.ui.model.HomeFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -23,9 +26,12 @@ class HomeViewModel @Inject constructor(
     private val _state = MutableStateFlow<HomeFragmentState>(HomeFragmentState.Loading)
     val state = _state.asStateFlow()
 
+    private val _error = MutableSharedFlow<ResponseExceptions>()
+    val error = _error.asSharedFlow()
+
     init {
-        launch {
-            _state.update {
+        launch(_error) {
+            _state.update() {
                 HomeFragmentState.Content(
                     movieRepository.getMainBoardMovies(),
                     movieRepository.getTop10MonthMovies(),

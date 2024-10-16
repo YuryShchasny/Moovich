@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class ActorDbo(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val photo: String,
+    val photo: String?,
     val name: String,
     val description: String,
 )

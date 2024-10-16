@@ -6,16 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
 import com.sb.moovich.core.base.MySpeechRecognize
+import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentEvent
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentState
@@ -153,6 +154,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     }
                 }
             }
+        }
+        collectWithLifecycle(viewModel.error, Lifecycle.State.CREATED) {
+            it.showMessage(binding.root)
         }
     }
 

@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.info.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.sb.moovich.core.exceptions.ResponseExceptions
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.repository.MovieRepository
@@ -9,7 +10,9 @@ import com.sb.moovich.domain.repository.WatchMovieRepository
 import com.sb.moovich.presentation.info.ui.model.MovieInfoFragmentEvent
 import com.sb.moovich.presentation.info.ui.model.MovieInfoFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -25,8 +28,11 @@ class MovieInfoViewModel @Inject constructor(
     private val _state = MutableStateFlow<MovieInfoFragmentState>(MovieInfoFragmentState.Loading)
     val state = _state.asStateFlow()
 
+    private val _error = MutableSharedFlow<ResponseExceptions>()
+    val error = _error.asSharedFlow()
+
     fun getMovieById(movieId: Int) {
-        launch {
+        launch(_error) {
             movieRepository.getMovieById(movieId)?.let { movieInfo ->
                 val filteredMovie =
                     movieInfo.copy(

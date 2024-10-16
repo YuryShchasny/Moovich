@@ -2,8 +2,6 @@ package com.sb.moovich.data.local.dbo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sb.moovich.domain.entity.Actor
-import com.sb.moovich.domain.entity.Movie
 
 @Entity("watch")
 data class WatchMovieDbo(
@@ -12,8 +10,8 @@ data class WatchMovieDbo(
     val name: String,
     val description: String,
     val rating: Double,
-    val poster: String,
-    val backdrop: String,
+    val poster: String?,
+    val backdrop: String?,
     val movieLength: Int,
     val urlWatch: String,
     val year: Int,

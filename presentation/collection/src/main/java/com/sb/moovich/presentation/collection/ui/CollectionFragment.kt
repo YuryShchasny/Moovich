@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sb.moovich.core.extensions.load
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.presentation.collection.databinding.FragmentCollectionBinding
 import com.sb.moovich.presentation.collection.ui.model.CollectionFragmentEvent
@@ -51,7 +51,7 @@ class CollectionFragment : BaseFragment<FragmentCollectionBinding>() {
         binding.textViewName.text = collection.name
         binding.textViewCount.text =
             getString(com.sb.moovich.core.R.string.count, collection.count)
-        binding.imageViewBackdrop.load(collection.cover)
+        binding.imageViewBackdrop.loadCoil(collection.cover)
     }
 
     private fun setObservable() {

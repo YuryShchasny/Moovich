@@ -74,4 +74,5 @@
     <string name="clear_cache">Clear cache</string>
     <string name="clear_history_description">Your communication history with the Assistant will be deleted. The assistant will forget the context of your conversation</string>
     <string name="messages_count">%d messages</string>
+    <string name="its_clear">OK</string>
 </resources>

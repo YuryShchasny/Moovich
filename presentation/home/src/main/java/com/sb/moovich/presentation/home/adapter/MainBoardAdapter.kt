@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import com.sb.moovich.core.extensions.load
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.databinding.ItemMainboardBinding
 
@@ -23,7 +23,7 @@ class MainBoardAdapter(private val list: List<Movie>, private val onClickListene
             ItemMainboardBinding.inflate(LayoutInflater.from(container.context), container, false)
         val item = list[position]
 
-        binding.backdropImageView.load(item.poster)
+        binding.backdropImageView.loadCoil(item.poster)
         binding.titleTextView.text = item.name
         binding.descriptionTextView.text = item.description
         binding.root.setOnClickListener { onClickListener(item) }

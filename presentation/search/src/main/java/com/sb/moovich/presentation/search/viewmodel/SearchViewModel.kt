@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation.search.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.sb.moovich.core.exceptions.ResponseExceptions
 import com.sb.moovich.core.extensions.launch
 import com.sb.moovich.core.navigation.INavigation
 import com.sb.moovich.domain.entity.Filter
@@ -10,7 +11,9 @@ import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentEvent
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -32,8 +35,11 @@ class SearchViewModel @Inject constructor(
     private val _state = MutableStateFlow<SearchFragmentState>(SearchFragmentState.Loading)
     val state = _state.asStateFlow()
 
+    private val _error = MutableSharedFlow<ResponseExceptions>()
+    val error = _error.asSharedFlow()
+
     fun init() {
-        launch {
+        launch(_error) {
             val filter = searchRepository.getFilter()
             if (filter.hasFilters()) findMoviesWithFilter(filter)
             else fetchEvent(SearchFragmentEvent.RecentMovies)
@@ -96,7 +102,7 @@ class SearchViewModel @Inject constructor(
     private fun findMoviesWithFilter(filter: Filter) {
         _state.update { SearchFragmentState.Loading }
         filterJob?.cancel()
-        filterJob = launch {
+        filterJob = launch(_error) {
             searchRepository.findMoviesWithFilter(filter).collect { list ->
                 _state.update { state ->
                     val newList =
@@ -120,7 +126,7 @@ class SearchViewModel @Inject constructor(
         if (name.isNotEmpty()) {
             val count = if (seeAll) MAX_SEARCH_COUNT else DEFAULT_SEARCH_COUNT
             _state.update { SearchFragmentState.Loading }
-            launch {
+            launch(_error) {
                 val list = searchRepository.findMovie(name, count)
                 _state.update {
                     SearchFragmentState.Content.FindList(

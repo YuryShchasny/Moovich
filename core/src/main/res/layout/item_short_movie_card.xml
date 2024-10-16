@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="@dimen/item_movie_card_width"
@@ -11,8 +11,8 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            style="@style/clickable"
             android:id="@+id/cardView"
+            style="@style/clickable"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             app:cardBackgroundColor="@color/black"
@@ -23,7 +23,9 @@
                 android:id="@+id/imageViewMoviePoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:src="@drawable/poster_placeholder" />
         </androidx.cardview.widget.CardView>
 
         <TextView

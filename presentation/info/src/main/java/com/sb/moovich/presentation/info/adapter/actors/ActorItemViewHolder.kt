@@ -3,14 +3,14 @@ package com.sb.moovich.presentation.info.adapter.actors
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sb.moovich.core.extensions.load
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Actor
 import com.sb.moovich.presentation.info.databinding.ItemActorBinding
 
 class ActorItemViewHolder(private val binding: ItemActorBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(actor: Actor) {
-        binding.imageViewActorPhoto.load(actor.photo)
+        binding.imageViewActorPhoto.loadCoil(actor.photo)
         val name = actor.name
         val parts = name.split(" ")
         binding.textViewActorFirstName.text = parts[0]

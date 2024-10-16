@@ -3,7 +3,7 @@ package com.sb.moovich.presentation.home.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.sb.moovich.core.extensions.load
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.presentation.home.databinding.ItemCollectionBinding
 
@@ -23,7 +23,7 @@ class CollectionViewHolder(private val binding: ItemCollectionBinding) : ViewHol
 
     fun bind(collection: Collection, onClickListener: (Collection) -> Unit) {
         binding.card.setOnClickListener { onClickListener(collection) }
-        binding.image.load(collection.cover)
+        binding.image.loadCoil(collection.cover)
         binding.name.text = collection.name
     }
 

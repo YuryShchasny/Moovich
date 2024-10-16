@@ -1,6 +1,5 @@
 package com.sb.moovich.data.remote.api
 
-import com.sb.moovich.data.remote.dto.BackdropDto
 import com.sb.moovich.data.remote.dto.CollectionDocDto
 import com.sb.moovich.data.remote.dto.CollectionDto
 import com.sb.moovich.data.remote.dto.CoverDto
@@ -21,11 +20,11 @@ class FakeMovieApi : MovieApi {
             "The Avengers",
             "Локи, сводный брат Тора, возвращается, и в этот раз он не один. Земля оказывается на грани порабощения, и только лучшие из лучших могут спасти человечество. Глава международной организации Щ.И.Т. Ник Фьюри собирает выдающихся поборников справедливости и добра, чтобы отразить атаку. Под предводительством Капитана Америки Железный Человек, Тор, Невероятный Халк, Соколиный Глаз и Чёрная Вдова вступают в войну с захватчиком.",
             MovieRatingDto(8.1, 5.6),
-            MoviePosterDto(
+            /*MoviePosterDto(
                 "https://image.openmoviedb.com/kinopoisk-images/1898899/972b7f43-9677-40ce-a9bc-02a88ad3919d/x1000",
                 "https://image.openmoviedb.com/kinopoisk-images/1898899/972b7f43-9677-40ce-a9bc-02a88ad3919d/x1000"
-            ),
-            BackdropDto("https://image.openmoviedb.com/kinopoisk-ott-images/374297/2a00000168e7cbf1bf723879ea306ad8f363/orig"),
+            ),*/ null,
+           /* BackdropDto("https://image.openmoviedb.com/kinopoisk-ott-images/374297/2a00000168e7cbf1bf723879ea306ad8f363/orig"),*/ null,
             137,
             "movie",
             2012,
@@ -33,7 +32,7 @@ class FakeMovieApi : MovieApi {
             listOf(
                 PersonDto(
                     10096,
-                    "https://image.openmoviedb.com/kinopoisk-st-images//actor_iphone/iphone360_10096.jpg",
+                    null,
                     "Роберт Дауни мл.",
                     "Tony Stark / Iron Man",
                     "actor"
@@ -156,8 +155,8 @@ class FakeMovieApi : MovieApi {
     private val collections = listOf(
         CollectionDto(
             "Озвучено студией «Кубик в кубе", "Озвучено студией «Кубик в кубе", 25, CoverDto(
-                "https://avatars.mds.yandex.net/get-bunker/56833/4a2969f3525706ce01799173e78f2716b0566b28/orig",
-                "https://avatars.mds.yandex.net/get-bunker/56833/4a2969f3525706ce01799173e78f2716b0566b28/orig"
+                /*"https://avatars.mds.yandex.net/get-bunker/56833/4a2969f3525706ce01799173e78f2716b0566b28/orig"*/ null,
+                /*"https://avatars.mds.yandex.net/get-bunker/56833/4a2969f3525706ce01799173e78f2716b0566b28/orig"*/ null,
             )
         ),
         CollectionDto(

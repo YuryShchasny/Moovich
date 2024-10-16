@@ -5,6 +5,7 @@ import com.sb.moovich.data.mapper.CollectionDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.remote.pagination.IPaginator
 import com.sb.moovich.data.remote.pagination.Paginator
+import com.sb.moovich.data.utils.process
 import com.sb.moovich.domain.entity.Collection
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -18,13 +19,9 @@ class CollectionRemoteDataSource @Inject constructor(
     private var collectionPaginator: IPaginator<Collection>? = null
 
     suspend fun getCollections(): List<Collection> {
-        val response = movieApi.getCollections()
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return collectionDtoMapper.mapDataToEntityList(it.docs ?: emptyList())
-            }
+        return movieApi.getCollections().process { body ->
+            collectionDtoMapper.mapDataToEntityList(body?.docs ?: emptyList())
         }
-        return emptyList()
     }
 
     suspend fun getAllCollections(): Flow<List<Collection>> {
@@ -38,7 +35,7 @@ class CollectionRemoteDataSource @Inject constructor(
         return collectionPaginator!!.data
     }
 
-    fun collectionNextPage() {
+    suspend fun collectionNextPage() {
         collectionPaginator?.nextPage()
     }
 }

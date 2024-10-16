@@ -10,7 +10,7 @@ class CollectionDtoMapper @Inject constructor(): IDataMapper<CollectionDto, Coll
             slug = data.slug ?: "",
             name = data.name ?: "",
             count = data.count ?: 0,
-            cover = data.cover?.url ?: ""
+            cover = data.cover?.url
         )
     }
 

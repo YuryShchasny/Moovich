@@ -10,7 +10,6 @@ import javax.inject.Inject
 class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
     companion object {
         private const val KINOPOISK_URL = "https://www.kinopoisk.ru/film/"
-        private const val PLACEHOLDER = "https://www.formulatv.com/images/carteltvmovies_m1.jpg"
     }
 
     override suspend fun mapDataToEntity(data: MovieDto): Movie = mapDataToEntity(data, true)
@@ -49,7 +48,7 @@ class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
             list.map {
                 Actor(
                     id = it.id ?: throw DataException.NoActorWithThisID(it.id),
-                    photo = it.photo ?: "",
+                    photo = it.photo,
                     name = it.name ?: "",
                     description = it.description ?: ""
                 )
@@ -72,5 +71,5 @@ class MovieDtoMapper @Inject constructor(): IDataMapper<MovieDto, Movie> {
         }
     }
 
-    private fun getPoster(data: MovieDto) = data.poster?.previewUrl ?: data.poster?.url ?: PLACEHOLDER
+    private fun getPoster(data: MovieDto) = data.poster?.previewUrl ?: data.poster?.url
 }

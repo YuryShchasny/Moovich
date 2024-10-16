@@ -26,7 +26,7 @@
     <string name="series">Сериалы</string>
     <string name="cartoons">Мультфильмы</string>
     <string name="count">Всего: %d</string>
-    <string name="auth_error">Ваш ключ недействителен, попробуйте еще раз с другим ключом авторизации.</string>
+    <string name="auth_error">Ваш ключ недействителен, попробуйте другой ключ авторизации.</string>
     <string name="server_error">Сервер в настоящее время недоступен, повторите попытку позже.</string>
     <string name="not_found_error">По данному запросу результатов не найдено</string>
     <string name="bad_request_error">В приложении произошла ошибка, сообщите об этом разработчику</string>
@@ -75,4 +75,5 @@
     <string name="clear">Очистить</string>
     <string name="clear_cache">Очистить кэш</string>
     <string name="messages_count">%d сообщений</string>
+    <string name="its_clear">Понятно</string>
 </resources>

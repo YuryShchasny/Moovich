@@ -5,6 +5,7 @@ import com.sb.moovich.data.mapper.MovieDtoMapper
 import com.sb.moovich.data.remote.api.MovieApi
 import com.sb.moovich.data.remote.pagination.IPaginator
 import com.sb.moovich.data.remote.pagination.Paginator
+import com.sb.moovich.data.utils.process
 import com.sb.moovich.domain.entity.Filter
 import com.sb.moovich.domain.entity.GetAllType
 import com.sb.moovich.domain.entity.Movie
@@ -20,53 +21,33 @@ class MovieRemoteDataSource @Inject constructor(
     private var moviePaginator: IPaginator<Movie>? = null
 
     suspend fun getRecommendedMovies(): List<Movie> {
-        val response = movieApi.getRecommendedMovies()
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntityList(it.docs ?: emptyList())
-            }
+        return movieApi.getRecommendedMovies().process {
+            movieDtoMapper.mapDataToEntityList(it?.docs ?: emptyList())
         }
-        return emptyList()
     }
 
     suspend fun getMainBoardMovies(): List<Movie> {
-        val response = movieApi.getTop5Movies()
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntityList(it.docs ?: emptyList())
-            }
+        return movieApi.getTop5Movies().process {
+            movieDtoMapper.mapDataToEntityList(it?.docs ?: emptyList())
         }
-        return emptyList()
     }
 
     suspend fun getTop10MonthMovies(): List<Movie> {
-        val response = movieApi.getTop10MonthMovies()
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntityList(it.docs ?: emptyList())
-            }
+        return movieApi.getTop10MonthMovies().process {
+            movieDtoMapper.mapDataToEntityList(it?.docs ?: emptyList())
         }
-        return emptyList()
     }
 
     suspend fun getTop10Series(): List<Movie> {
-        val response = movieApi.getTop10Series()
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntityList(it.docs ?: emptyList())
-            }
+        return movieApi.getTop10Series().process {
+            movieDtoMapper.mapDataToEntityList(it?.docs ?: emptyList())
         }
-        return emptyList()
     }
 
     suspend fun getMovieById(id: Int): Movie? {
-        val response = movieApi.getMovieById(id)
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntity(it)
-            }
+        return movieApi.getMovieById(id).process {
+            movieDtoMapper.mapDataToEntity(it ?: return@process null)
         }
-        return null
     }
 
     suspend fun getAllMovies(type: GetAllType): Flow<List<Movie>> {
@@ -109,13 +90,9 @@ class MovieRemoteDataSource @Inject constructor(
         name: String,
         count: Int,
     ): List<Movie> {
-        val response = movieApi.findMovie(name = name, limit = count)
-        if (response.isSuccessful) {
-            response.body()?.let {
-                return movieDtoMapper.mapDataToEntityList(it.docs ?: listOf())
-            }
+        return movieApi.findMovie(name = name, limit = count).process {
+            movieDtoMapper.mapDataToEntityList(it?.docs ?: listOf())
         }
-        return emptyList()
     }
 
     suspend fun findMoviesWithFilter(
@@ -140,7 +117,7 @@ class MovieRemoteDataSource @Inject constructor(
         return moviePaginator!!.data
     }
 
-    fun movieNextPage() {
+    suspend fun movieNextPage() {
         moviePaginator?.nextPage()
     }
 }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.sb.moovich.core.extensions.load
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Movie
 import com.sb.moovich.presentation.home.databinding.ItemCarouselBinding
 
@@ -27,7 +27,7 @@ class MovieCarouselAdapter(private val movies: List<Movie>, private val onClickL
 class MovieCarouselViewHolder(private val binding: ItemCarouselBinding) : ViewHolder(binding.root) {
 
     fun bind(movie: Movie, position: Int, onClickListener: (Movie) -> Unit) {
-        binding.image.load(movie.poster) {
+        binding.image.loadCoil(movie.poster) {
             binding.numberView.setBitmap(it.toBitmap())
         }
         binding.card.setOnClickListener { onClickListener(movie) }

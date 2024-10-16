@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sb.moovich.core.extensions.load
 import com.sb.moovich.core.R
 import com.sb.moovich.core.databinding.ItemMediumMovieCardBinding
+import com.sb.moovich.core.extensions.loadCoil
 import com.sb.moovich.domain.entity.Movie
 import java.util.Locale
 
 class MediumMovieItemViewHolder(private val binding: ItemMediumMovieCardBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(movie: Movie) {
-        binding.imageViewMoviePoster.load(movie.poster)
+        binding.imageViewMoviePoster.loadCoil(movie.poster)
         binding.textViewMovieName.text = movie.name
         binding.textViewDescription.text = movie.description
         setMovieLength(binding.textViewLength, movie.movieLength)
