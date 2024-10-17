@@ -8,6 +8,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import com.sb.moovich.core.base.BaseFragment
@@ -36,6 +38,11 @@ class AuthorizationFragment : BaseFragment<FragmentAuthorizationBinding>() {
         setObservable()
         setEditText()
         setClickListeners()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.descriptionTextView) { v, insets ->
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            binding.descriptionTextView.maxLines = if (ime.bottom > 0) 2 else Integer.MAX_VALUE
+            insets
+        }
     }
 
     private fun setEditText() {

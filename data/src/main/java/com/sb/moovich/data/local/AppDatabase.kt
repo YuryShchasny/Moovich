@@ -17,7 +17,7 @@ import com.sb.moovich.data.local.dbo.WatchMovieDbo
 
 @Database(
     entities = [RecentMovieDbo::class, WatchMovieDbo::class, ActorDbo::class, MessageDbo::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 @TypeConverters(StringListConverter::class, IntListConverter::class, RoleConverter::class)

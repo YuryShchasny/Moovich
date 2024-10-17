@@ -29,6 +29,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "GPT_BASE_URL", "\"https://lk.neuroapi.host/v1/\"")
             buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
         }
         debug {
