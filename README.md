@@ -1,7 +1,7 @@
 
 # Moovich
 
-<img src="https://i.ibb.co/5RdLrQQ/logo.png" align="left" width="200" hspace="10" vspace="10">
+<img src="https://i.ibb.co/5RdLrQQ/logo.png" align="left" width="200" hspace="10" vspace="100">
 
 ![Languages](https://img.shields.io/badge/Languages-RU|EN-blue.svg)
 ![Version](https://img.shields.io/badge/Verison-1.0.0-green.svg)
