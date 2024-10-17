@@ -97,14 +97,17 @@ class MovieInfoFragment : BaseFragment<FragmentMovieInfoBinding>() {
                 }
             )
         }
-        if (rotationValueAnimator == null) rotationValueAnimator =
-            ValueAnimator.ofFloat(0f, 15f, 0f, -15f, 0f, 15f, 0f, -15f, 0f).apply {
-                duration = 1000
-                addUpdateListener { valueAnimator ->
-                    val animatedValue = valueAnimator.animatedValue as Float
-                    binding.imageViewBookmark.rotation = animatedValue
+        if (rotationValueAnimator == null) {
+            rotationValueAnimator =
+                ValueAnimator.ofFloat(0f, 15f, 0f, -15f, 0f, 15f, 0f, -15f, 0f).apply {
+                    duration = 1000
+                    addUpdateListener { valueAnimator ->
+                        val animatedValue = valueAnimator.animatedValue as Float
+                        bindingOrNull?.imageViewBookmark?.rotation = animatedValue
+                    }
                 }
-            }
+            addAnimator(rotationValueAnimator!!)
+        }
     }
 
     private fun setAdapters() {
