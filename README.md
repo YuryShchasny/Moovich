@@ -1,6 +1,6 @@
 ## This project is under development
 ![Languages](https://img.shields.io/badge/Languages-RU|EN-blue.svg)
-![Version](https://img.shields.io/badge/Verison-0.1.0-green.svg)
+![Version](https://img.shields.io/badge/Verison-1.0.0-green.svg)
 
 # Moovich
 <img src="https://i.ibb.co/5RdLrQQ/logo.png" align="left" width="200" hspace="10" vspace="10">
@@ -13,7 +13,9 @@ Looking for a new movie to watch? No problem! Just enter the name or use the con
 
 ## Screenshots
 <div style="display:flex;" >
-<img src="screenshots/Screenshot_main.png" width="24%" >
-<img src="screenshots/Screenshot_movie.png" width="24%" >
-<img src="screenshots/Screenshot_search.png" width="24%" >
-<img src="screenshots/Screenshot_watch.png" width="24%" >
+<img src="screenshots/Screenshot_main.png" width="16%" >
+<img src="screenshots/Screenshot_movie.png" width="16%" >
+<img src="screenshots/Screenshot_search.png" width="16%" >
+<img src="screenshots/Screenshot_watch.png" width="16%" >
+<img src="screenshots/Screenshot_assist.png" width="16%" >
+<img src="screenshots/Screenshot_filter.png" width="16%" >
