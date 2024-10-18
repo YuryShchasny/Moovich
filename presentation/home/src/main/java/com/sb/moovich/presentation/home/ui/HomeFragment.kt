@@ -179,7 +179,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         repeat(5) {
             binding.pointsLayout.addView(
                 ImageView(requireContext()).apply {
-                    setImageDrawable(getDrawableCompat(R.drawable.point))
+                    setImageDrawable(getDrawableCompat(com.sb.moovich.core.R.drawable.point))
                     drawable.alpha = (255 * 0.4).toInt()
                 },
                 LinearLayout.LayoutParams(if (it == 0) 40.dpToPx() else 10.dpToPx(), 10.dpToPx())

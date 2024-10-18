@@ -75,4 +75,13 @@
     <string name="clear_history_description">Your communication history with the Assistant will be deleted. The assistant will forget the context of your conversation</string>
     <string name="messages_count">%d messages</string>
     <string name="its_clear">OK</string>
+    <string name="skip"><u>Skip</u></string>
+    <string name="next">Next</string>
+    <string name="awesome">Awesome</string>
+    <string name="onboarding_title_1">Huge movie collection</string>
+    <string name="onboarding_title_2">Search, select, watch</string>
+    <string name="onboarding_title_3">AI Assistant</string>
+    <string name="onboarding_description_1">Watch thousands of movies and TV shows in one app! Anywhere. Anytime.</string>
+    <string name="onboarding_description_2">Various filters will help you to find the best one among various characteristics of movies.</string>
+    <string name="onboarding_description_3">Smart assistant based on artificial intelligence. Will help you choose a movie for the evening.</string>
 </resources>

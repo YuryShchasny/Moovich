@@ -76,4 +76,13 @@
     <string name="clear_cache">Очистить кэш</string>
     <string name="messages_count">%d сообщений</string>
     <string name="its_clear">Понятно</string>
+    <string name="skip"><u>Пропустить</u></string>
+    <string name="next">Далее</string>
+    <string name="awesome">Начать</string>
+    <string name="onboarding_title_1">Огромная коллекция фильмов</string>
+    <string name="onboarding_title_2">Ищите, выбирайте, смотрите</string>
+    <string name="onboarding_title_3">ИИ-ассистент</string>
+    <string name="onboarding_description_1">Смотрите тысячи фильмов и сериалов в одном приложении! Где угодно. В любое время.</string>
+    <string name="onboarding_description_2">Умные фильтры помогут вам найти лучший среди различных характеристик фильмов.</string>
+    <string name="onboarding_description_3">Умный ассистент на базе искусственного интеллекта. Поможет выбрать фильм на вечер.</string>
 </resources>

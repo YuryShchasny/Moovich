@@ -99,4 +99,10 @@
         android:name="com.sb.moovich.presentation.authorization.ui.AuthorizationFragment"
         android:label="AuthorizationFragment"
         tools:layout="@layout/fragment_authorization" />
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.sb.moovich.presentation.onboarding.ui.OnboardingFragment"
+        android:label="OnboardingFragment"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>

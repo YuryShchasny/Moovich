@@ -1,6 +1,7 @@
 package com.sb.moovich.presentation
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -27,8 +28,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    @Inject
-    lateinit var navigation: INavigation
+    @Inject lateinit var navigation: INavigation
+    @Inject lateinit var sharedPrefs: SharedPreferences
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private val navController by lazy {
@@ -57,7 +58,9 @@ class MainActivity : AppCompatActivity() {
                 .collect { isLoggedIn ->
                     isLoggedIn?.let {
                         val startDestination =
-                            if (it) R.id.homeFlowFragment else R.id.authorizationFragment
+                            if (checkFirstLogin()) R.id.onboardingFragment
+                            else if (it) R.id.homeFlowFragment
+                            else R.id.authorizationFragment
                         val graph =
                             navController.navInflater.inflate(R.navigation.app_navigation)
                         graph.setStartDestination(startDestination)
@@ -67,6 +70,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
         }
+    }
+
+    private fun checkFirstLogin(): Boolean {
+        return sharedPrefs.getBoolean(IS_FIRST_LOGIN_KEY, true)
     }
 
     private fun installLocalSplashScreen() {
@@ -101,9 +108,13 @@ class MainActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime()) // keyboard
-            val bottom = if(ime.bottom > 0) ime.bottom else systemBars.bottom
+            val bottom = if (ime.bottom > 0) ime.bottom else systemBars.bottom
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, bottom)
             insets
         }
+    }
+
+    companion object {
+        private const val IS_FIRST_LOGIN_KEY = "is_first_login"
     }
 }
