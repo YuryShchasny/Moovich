@@ -27,7 +27,7 @@ class CollectionRemoteDataSource @Inject constructor(
     suspend fun getAllCollections(): Flow<List<Collection>> {
         collectionPaginator = Paginator(
             request = { page ->
-                movieApi.getCollections(page = page, category = null)
+                movieApi.getCollections(page = page, category = null).process()
                     .body()?.docs?.filter { (it.count ?: 0) > 0 } ?: emptyList()
             },
             mapper = collectionDtoMapper,

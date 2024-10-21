@@ -55,6 +55,7 @@ class MovieRemoteDataSource @Inject constructor(
             is GetAllType.Genre -> Paginator(
                 request = { page ->
                     movieApi.getMoviesByGenre(genre = type.genre.lowercase(), page = page)
+                        .process()
                         .body()?.docs
                         ?: emptyList()
                 },
@@ -63,22 +64,27 @@ class MovieRemoteDataSource @Inject constructor(
 
             GetAllType.Recommendations -> Paginator(
                 request = { page ->
-                    movieApi.getRecommendedMovies(page = page).body()?.docs ?: emptyList()
+                    movieApi.getRecommendedMovies(page = page)
+                        .process()
+                        .body()?.docs ?: emptyList()
                 },
                 mapper = movieDtoMapper,
             )
 
             GetAllType.Series -> Paginator(
                 request = { page ->
-                    movieApi.getTop10Series(page = page).body()?.docs ?: emptyList()
+                    movieApi.getTop10Series(page = page)
+                        .process()
+                        .body()?.docs ?: emptyList()
                 },
                 mapper = movieDtoMapper,
             )
 
             is GetAllType.Collection -> Paginator(
                 request = { page ->
-                    movieApi.getMoviesByCollection(collection = type.slug, page = page).body()?.docs
-                        ?: emptyList()
+                    movieApi.getMoviesByCollection(collection = type.slug, page = page)
+                        .process()
+                        .body()?.docs ?: emptyList()
                 },
                 mapper = movieDtoMapper
             )
@@ -110,7 +116,7 @@ class MovieRemoteDataSource @Inject constructor(
                     rating = "${filter.ratingFrom}-${filter.ratingTo}",
                     genres = filter.genres.map { it.lowercase() }.toTypedArray(),
                     countries = filter.countries.map { "+$it" }.toTypedArray(),
-                ).body()?.docs ?: emptyList()
+                ).process().body()?.docs ?: emptyList()
             },
             mapper = movieDtoMapper,
         )

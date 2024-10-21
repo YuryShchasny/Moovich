@@ -19,7 +19,6 @@ import com.sb.moovich.core.extensions.dpToPx
 import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.domain.entity.Collection
 import com.sb.moovich.domain.entity.Movie
-import com.sb.moovich.presentation.home.R
 import com.sb.moovich.presentation.home.adapter.CollectionsAdapter
 import com.sb.moovich.presentation.home.adapter.CustomCarouselLayoutManager
 import com.sb.moovich.presentation.home.adapter.GenreAdapter
@@ -52,6 +51,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setObservable()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateMainBoardPoints()
+    }
+
+    private fun updateMainBoardPoints() {
+        val points = binding.pointsLayout.children.toList().filterIsInstance<ImageView>()
+        points.forEachIndexed { index, imageView ->
+            imageView.updateLayoutParams {
+                width =
+                    if (index == binding.mainBoardPager.currentItem) 40.dpToPx() else 10.dpToPx()
+            }
+            imageView.drawable.alpha =
+                if (index == binding.mainBoardPager.currentItem) 255 else (255 * 0.4f).toInt()
+        }
     }
 
     private fun initViews() {
@@ -152,6 +168,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     width = (40.dpToPx() - ((40 - 10) * positionOffset).dpToPx()).toInt()
                 }
                 points[position].drawable.alpha = (255 - (255 * 0.4 * positionOffset)).toInt()
+                if (positionOffsetPixels == 0) {
+                    updateMainBoardPoints()
+                }
             }
 
             override fun onPageSelected(position: Int) {
@@ -162,11 +181,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         ((binding.mainBoardPager.currentItem + 1) % 5),
                         true
                     )
-                }
-                points.forEachIndexed { index, imageView ->
-                    imageView.updateLayoutParams {
-                        width = if (index == position) 40.dpToPx() else 10.dpToPx()
-                    }
                 }
             }
 

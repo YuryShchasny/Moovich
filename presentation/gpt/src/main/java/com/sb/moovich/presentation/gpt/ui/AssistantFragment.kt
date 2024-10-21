@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.base.MySpeechRecognize
+import com.sb.moovich.core.base.MySpeechRecognizer
 import com.sb.moovich.domain.entity.Message
 import com.sb.moovich.presentation.gpt.adapter.MessagesAdapter
 import com.sb.moovich.presentation.gpt.databinding.FragmentAssistantBinding
@@ -36,7 +36,7 @@ class AssistantFragment : BaseFragment<FragmentAssistantBinding>() {
             if (result) startRecord()
         }
     private val speechRecognizer by lazy {
-        MySpeechRecognize(requireContext())
+        MySpeechRecognizer(requireContext())
     }
 
     override fun setupViewBinding(

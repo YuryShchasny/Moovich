@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sb.moovich.core.R
 import com.sb.moovich.core.adapters.mediummovies.MediumMovieItemListAdapter
 import com.sb.moovich.core.base.BaseFragment
-import com.sb.moovich.core.base.MySpeechRecognize
+import com.sb.moovich.core.base.MySpeechRecognizer
 import com.sb.moovich.core.extensions.showMessage
 import com.sb.moovich.presentation.search.databinding.FragmentSearchBinding
 import com.sb.moovich.presentation.search.ui.model.search.SearchFragmentEvent
@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             if (result) startRecord()
         }
     private val speechRecognizer by lazy {
-        MySpeechRecognize(requireContext())
+        MySpeechRecognizer(requireContext())
     }
 
     override fun setupViewBinding(
@@ -104,6 +104,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                         binding.textViewSearchSeeAll.visibility =
                             if (state is SearchFragmentState.Content.FilterList) View.GONE else View.VISIBLE
                         binding.layoutNotFound.visibility = View.GONE
+                        binding.linearLayoutTopBar.visibility = View.VISIBLE
                         when (state) {
                             is SearchFragmentState.Content.FindList -> {
                                 if (state.findList.isEmpty()) binding.layoutNotFound.visibility =
@@ -124,6 +125,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                                     getStringCompat(R.string.see_all_history)
                                 val list = if (state.seeAllRecentList) state.recentList
                                 else state.recentList.take(10)
+                                if(list.isEmpty()) binding.linearLayoutTopBar.visibility = View.GONE
                                 val scrollState =
                                     binding.recyclerViewRecentAndResults.layoutManager?.onSaveInstanceState()
                                 adapter.submit(list) {

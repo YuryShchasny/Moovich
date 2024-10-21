@@ -48,13 +48,19 @@ class SearchViewModel @Inject constructor(
 
     fun fetchEvent(event: SearchFragmentEvent) {
         when (event) {
-            is SearchFragmentEvent.FindMovie -> findMovie(
-                event.name,
-                (_state.value as? SearchFragmentState.Content)?.seeAll ?: false
-            )
+            is SearchFragmentEvent.FindMovie -> {
+                resetFilters()
+                findMovie(
+                    event.name,
+                    (_state.value as? SearchFragmentState.Content)?.seeAll ?: false
+                )
+            }
 
             SearchFragmentEvent.RecentMovies -> getRecentMovies()
-            SearchFragmentEvent.ResetFilters -> resetFilters()
+            SearchFragmentEvent.ResetFilters -> {
+                resetFilters()
+                getRecentMovies()
+            }
             SearchFragmentEvent.OnFilterClick -> navigation.navigateToFilter()
             is SearchFragmentEvent.OnMovieClick -> navigation.navigateToMovie(event.movie.id)
             SearchFragmentEvent.OnSeeAllClick -> changeSeeAllState()
@@ -88,7 +94,6 @@ class SearchViewModel @Inject constructor(
         launch {
             searchRepository.saveFilter(Filter())
         }
-        getRecentMovies()
     }
 
     private fun getRecentMovies() {

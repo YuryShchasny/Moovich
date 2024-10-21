@@ -1,5 +1,6 @@
 package com.sb.moovich.data.remote.pagination
 
+import com.sb.moovich.core.exceptions.ResponseExceptions
 import com.sb.moovich.data.mapper.IDataMapper
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
@@ -31,8 +32,9 @@ class Paginator<Dto, Entity>(
                         emit(entityList)
                     }
                     break
-                } catch (_: Exception) {
-                    delay(5000)
+                } catch (e: Exception) {
+                    if(e is ResponseExceptions) throw e
+                    else delay(5000)
                 }
             }
         }
