@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Moovich</string>
+    <string name="title_home">Главная</string>
+    <string name="search">Поиск</string>
+    <string name="title_watch_list">Избранное</string>
+    <string name="profile">Профиль</string>
+    <string name="recommendations">Рекомендации</string>
+    <string name="see_all">Посмотреть все</string>
+    <string name="hours">ч</string>
+    <string name="minutes">м</string>
+    <string name="watch">Смотреть</string>
+    <string name="description">Описание</string>
+    <string name="actors">Актеры</string>
+    <string name="similar_movies">Похожие фильмы</string>
+    <string name="oops">Упс!…</string>
+    <string name="error_empty_watch_list">Вы ничго не добавили в изранное</string>
+    <string name="search_hint">Введите название фильма</string>
+    <string name="recent">Смотрели ранее</string>
+    <string name="results">Результат</string>
+    <string name="see_all_history">Вся история</string>
+    <string name="filter">Фильтр</string>
+    <string name="reset">Сбросить</string>
+    <string name="all">Все</string>
+    <string name="movies">Фильмы</string>
+    <string name="series">Сериалы</string>
+    <string name="cartoons">Мультфильмы</string>
+    <string name="count">Всего: %d</string>
+    <string name="auth_error">Ваш ключ недействителен, попробуйте другой ключ авторизации.</string>
+    <string name="server_error">Сервер в настоящее время недоступен, повторите попытку позже.</string>
+    <string name="not_found_error">По данному запросу результатов не найдено</string>
+    <string name="bad_request_error">В приложении произошла ошибка, сообщите об этом разработчику</string>
+    <string name="another_error">Похоже, произошла ошибка %s</string>
+    <string name="authorization">Авторизация</string>
+    <string name="auth_description">
+        Данное приложение является бесплатным и не предназначено для коммерческого использования.
+        \n\nПриложение использует предоставляемую информацию сервиса Кинопоиск и неофициальное открытое API.
+        \n\nРазработчик никак не связан с предоставляемым API и не несет ответственность за предоставляемую информацию и работу сервера.
+        \n\nДля того, чтобы войти в приложение, вам необходимо авторизоваться у бота в Telegram и получить личный токен, который будет использоваться в приложении.
+        \n\nОт токена будет зависеть ограничение по запросам к серверу. Если вы достигните лимита по запросам, приложение работать не будет.
+    </string>
+    <string name="your_auth_key">Ваш ключ авторизации</string>
+    <string name="login">Войти</string>
+    <string name="get_api_key"><u>Получить API-ключ</u></string>
+    <string name="kinopoisk"><u>Кинопоиск</u></string>
+    <string name="api_documentation"><u>Документация по API</u></string>
+    <string name="developer_info"><u>Информация о разработчике</u></string>
+    <string name="top_10_months">Топ 10 Месяца</string>
+    <string name="collections">Коллекции</string>
+    <string name="top_10_series">Топ 10 сериалов</string>
+    <string name="genre">Жанр</string>
+    <string name="sort_by">Сортировать по</string>
+    <string name="popularity">Популярность</string>
+    <string name="latest_release">Дата выхода</string>
+    <string name="rating">Рейтинг</string>
+    <string name="year">Год</string>
+    <string name="country">Страна</string>
+    <string name="apply_filters">Применить фильтры (%d)</string>
+    <string name="unfortunately_nothing_was_found_for_your_request">К сожалению, по вашему запросу ничего не найдено.</string>
+    <string name="request_limit">Вы использовали все доступные вам запросы</string>
+    <string name="enter_your_message">Введите ваше сообщение…</string>
+    <string name="assistant">Ассистент</string>
+    <string name="hello_message">Привет! 👋 Нужен фильм?\nРасскажи, какое у тебя настроение, и я найду идеальный вариант! 🎬</string>
+    <string name="sending">Отправка…</string>
+    <string name="your_api_key">Ваш API ключ</string>
+    <string name="clear_assistant_history">Очистить историю ассистента</string>
+    <string name="mb">%.2fМб</string>
+    <string name="developer_information">Информация о разработчике</string>
+    <string name="manage">Настроить</string>
+    <string name="log_out">Выйти</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="log_out_description">Как только вы выйдете из системы, ваш токен будет удален, и вам нужно будет ввести его повторно</string>
+    <string name="cancel">Отмена</string>
+    <string name="clear_history_description">Ваша история общения с Ассистентом будет удалена. Ассистент забудет контекст вашего разговора</string>
+    <string name="clear">Очистить</string>
+    <string name="clear_cache">Очистить кэш</string>
+    <string name="messages_count">%d сообщений</string>
+    <string name="its_clear">Понятно</string>
+    <string name="skip"><u>Пропустить</u></string>
+    <string name="next">Далее</string>
+    <string name="awesome">Начать</string>
+    <string name="onboarding_title_1">Огромная коллекция фильмов</string>
+    <string name="onboarding_title_2">Ищите, выбирайте, смотрите</string>
+    <string name="onboarding_title_3">ИИ-ассистент</string>
+    <string name="onboarding_description_1">Смотрите тысячи фильмов и сериалов в одном приложении! Где угодно. В любое время.</string>
+    <string name="onboarding_description_2">Умные фильтры помогут вам найти лучший среди различных характеристик фильмов.</string>
+    <string name="onboarding_description_3">Умный ассистент на базе искусственного интеллекта. Поможет выбрать фильм на вечер.</string>
+</resources>

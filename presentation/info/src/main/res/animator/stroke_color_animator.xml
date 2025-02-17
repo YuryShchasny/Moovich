@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator android:duration="500"
+    android:propertyName="strokeColor"
+    android:valueFrom="@color/grey"
+    android:valueTo="#FFB6EA21"
+    android:valueType="intType"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

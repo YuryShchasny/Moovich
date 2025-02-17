@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSliderTheme" parent="Widget.MaterialComponents.Slider">
+        <item name="trackColorActive">@color/secondary</item>
+        <item name="trackColorInactive">@color/white_track_inactive</item>
+        <item name="haloColor">@color/white_30</item>
+        <item name="thumbColor">@color/white</item>
+        <item name="labelBehavior">gone</item>
+    </style>
+</resources>

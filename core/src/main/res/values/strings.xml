@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Moovich</string>
+    <string name="title_home">Home</string>
+    <string name="search">Search</string>
+    <string name="assistant">Assistant</string>
+    <string name="title_watch_list">Watch list</string>
+    <string name="profile">Profile</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="see_all">See all</string>
+    <string name="hours">h</string>
+    <string name="minutes">m</string>
+    <string name="watch">Watch</string>
+    <string name="description">Description</string>
+    <string name="actors">Actors</string>
+    <string name="similar_movies">Similar movies</string>
+    <string name="oops">Oops!…</string>
+    <string name="error_empty_watch_list">You haven\'t added anything to "Watch List" </string>
+    <string name="search_hint">Enter movie title</string>
+    <string name="recent">Recent</string>
+    <string name="results">Results</string>
+    <string name="see_all_history">All history</string>
+    <string name="filter">Filter</string>
+    <string name="reset">Reset</string>
+    <string name="all">All</string>
+    <string name="movies">Movies</string>
+    <string name="series">Series</string>
+    <string name="cartoons">Cartoons</string>
+    <string name="count">Amount: %d</string>
+    <string name="auth_error">Your key is not valid, try again with a different authorization key</string>
+    <string name="server_error">The server is currently unavailable, please try again later</string>
+    <string name="not_found_error">No results found for this search</string>
+    <string name="bad_request_error">There is an error in the application, please report it to the developer</string>
+    <string name="another_error">Looks like there was an error %s</string>
+    <string name="request_limit">You have used all the queries available to you</string>
+    <string name="authorization">Authorization</string>
+    <string name="auth_description">
+        This application is free and not intended for commercial use.
+        \n\nThe application uses the information provided by the Kinopoisk service and an unofficial open API.
+        \n\nThe developer is in no way associated with the provided API and is not responsible for the information provided and the operation of the server.
+        \n\nIn order to enter the application, you need to log in to the bot in Telegram and receive a personal token that will be used in the application.
+        \n\nThe limit on requests to the server will depend on the token. If you reach your request limit, the application will not work.
+    </string>
+    <string name="your_auth_key">Your authorization key</string>
+    <string name="login">Log in</string>
+    <string name="get_api_key"><u>Get the api-key</u></string>
+    <string name="kinopoisk"><u>Kinopoisk</u></string>
+    <string name="api_documentation"><u>API Documentation</u></string>
+    <string name="developer_info"><u>Developer Information</u></string>
+    <string name="top_10_months">Top 10 Months</string>
+    <string name="collections">Collections</string>
+    <string name="top_10_series">Top 10 Series</string>
+    <string name="genre">Genre</string>
+    <string name="sort_by">Sort by</string>
+    <string name="popularity">Popularity</string>
+    <string name="latest_release">Latest release</string>
+    <string name="rating">Rating</string>
+    <string name="year">Year</string>
+    <string name="country">Country</string>
+    <string name="apply_filters">Apply filters (%d)</string>
+    <string name="unfortunately_nothing_was_found_for_your_request">Unfortunately, nothing was found for your request</string>
+    <string name="enter_your_message">Enter your message…</string>
+    <string name="hello_message">👋 Hey there! Need a movie?\nTell me your mood, and I\'ll find the perfect flick! 🎬</string>
+    <string name="sending">Sending…</string>
+    <string name="your_api_key">Your API Key</string>
+    <string name="clear_assistant_history">Clear assistant history</string>
+    <string name="mb">%.2fMB</string>
+    <string name="developer_information">Developer information</string>
+    <string name="manage">Manage</string>
+    <string name="log_out">Log Out</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="log_out_description">Once you log out, your token will be deleted and you will need to re-enter it</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="clear_history_description">Your communication history with the Assistant will be deleted. The assistant will forget the context of your conversation</string>
+    <string name="messages_count">%d messages</string>
+    <string name="its_clear">OK</string>
+    <string name="skip"><u>Skip</u></string>
+    <string name="next">Next</string>
+    <string name="awesome">Awesome</string>
+    <string name="onboarding_title_1">Huge movie collection</string>
+    <string name="onboarding_title_2">Search, select, watch</string>
+    <string name="onboarding_title_3">AI Assistant</string>
+    <string name="onboarding_description_1">Watch thousands of movies and TV shows in one app! Anywhere. Anytime.</string>
+    <string name="onboarding_description_2">Various filters will help you to find the best one among various characteristics of movies.</string>
+    <string name="onboarding_description_3">Smart assistant based on artificial intelligence. Will help you choose a movie for the evening.</string>
+</resources>

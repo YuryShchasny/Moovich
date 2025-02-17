@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="19dp"
+    android:height="31dp"
+    android:viewportWidth="19"
+    android:viewportHeight="31">
+  <path
+      android:name="bookmark_path"
+      android:pathData="M15.111,3.5H4.111C3.007,3.5 2.111,4.395 2.111,5.5V24.978C2.111,25.883 3.219,26.323 3.84,25.663L8.883,20.303C9.278,19.883 9.945,19.883 10.34,20.303L15.383,25.663C16.004,26.323 17.111,25.883 17.111,24.978V5.5C17.111,4.395 16.216,3.5 15.111,3.5Z"
+      android:strokeLineJoin="round"
+      android:strokeWidth="2"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+</vector>
+

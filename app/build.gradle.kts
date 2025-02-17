@@ -1,8 +1,11 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kspAnnotationPlugin)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.androidx.navigation.safeargs.ktx)
+    alias(libs.plugins.gradle.secrets)
 }
 
 android {
@@ -26,7 +29,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "GPT_BASE_URL", "\"https://lk.neuroapi.host/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
         }
+        debug {
+            buildConfigField("String", "GPT_BASE_URL", "\"https://lk.neuroapi.host/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.kinopoisk.dev/v1.4/\"")
+        }
+    }
+    secrets {
+        propertiesFileName = "secrets.properties"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,12 +49,28 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
-
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 
 dependencies {
+    implementation(projects.domain)
+    implementation(projects.data)
+    implementation(projects.presentation.home)
+    implementation(projects.presentation.info)
+    implementation(projects.presentation.favourites)
+    implementation(projects.presentation.search)
+    implementation(projects.presentation.all)
+    implementation(projects.presentation.collection)
+    implementation(projects.presentation.authorization)
+    implementation(projects.presentation.gpt)
+    implementation(projects.presentation.profile)
+    implementation(projects.presentation.onboarding)
+    implementation(projects.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -59,18 +87,18 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+
+    implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.coil)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
-    implementation (libs.dagger)
-    ksp (libs.dagger.compiler)
-
-    implementation(libs.lottie)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.kapt)
 }
